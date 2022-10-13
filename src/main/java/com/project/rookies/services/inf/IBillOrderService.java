@@ -1,2 +1,7 @@
-package com.project.rookies.services.inf;public interface IBillOrderService {
+package com.project.rookies.services.inf;
+
+import com.project.rookies.entities.BillOrder;
+
+public interface IBillOrderService {
+    BillOrder saveBillOrder(BillOrder billOrder);
 }
