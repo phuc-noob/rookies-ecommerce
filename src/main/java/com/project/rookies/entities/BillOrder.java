@@ -1,29 +1,28 @@
-package com.project.rookies.entity;
+package com.project.rookies.entities;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Category {
+public class BillOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Long cate_id;
-    @Column(name = "cate_name")
-    private String cateName;
-    private String discription;
-    private String image;
+    private Long id;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+    private boolean status ;
+    private float total_price;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    private int amount;
-    @ManyToMany
-    private List<Product> products;
+    @Column(name = "payment_date")
+    private LocalDateTime paymentDay;
+    @ManyToOne
+    @MapsId("customerId")
+    private Customer customer;
 }

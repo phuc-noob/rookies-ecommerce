@@ -1,4 +1,4 @@
-package com.project.rookies.entity;
+package com.project.rookies.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +12,6 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "role_id", nullable = false)
     private Long roleId;
-    @Column(name = "role_name")
+    @Column(name = "role_name",unique = true)
     private String roleName;
 }
