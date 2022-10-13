@@ -25,5 +25,5 @@ public class Category {
     private LocalDateTime updatedAt;
     private int amount;
     @ManyToMany
-    private List<Product> products;
+    private List<Product> product;
 }

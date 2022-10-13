@@ -27,5 +27,5 @@ public class Product {
     @OneToMany(mappedBy = "product")
     List<Rate> rates;
     @OneToMany(mappedBy = "product")
-    private List<CartProduct> cartProducts;
+    private List<CartDetail> cartProducts;
 }
