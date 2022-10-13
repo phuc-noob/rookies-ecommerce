@@ -14,7 +14,7 @@ public class Admin {
     @Column(name = "admin_name",length = 100,unique = true)
     private String adminName;
     private String password;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch =FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 }

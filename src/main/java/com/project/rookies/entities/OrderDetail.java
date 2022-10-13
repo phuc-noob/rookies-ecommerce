@@ -1,15 +1,15 @@
 package com.project.rookies.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Getter@Setter
-public class OderDetail {
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -18,15 +18,14 @@ public class OderDetail {
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
     @ManyToOne
     @JoinColumn(name = "product_id",referencedColumnName = "id")
     private Product product;
-
     @ManyToOne
     @JoinColumn(name = "bill_order_id",referencedColumnName = "id")
     private BillOrder billOrder;
-
+    @Column(name = "unit_price")
+    private float unitPrice;
     private int mount;
     @Column(name = "order_item_price")
     private float orderItemPrice;

@@ -1,7 +1,6 @@
 package com.project.rookies.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,6 +8,8 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,5 +36,4 @@ public class Customer {
     private Role role;
     @OneToMany(mappedBy = "customer")
     private List<Rate> rates;
-
 }

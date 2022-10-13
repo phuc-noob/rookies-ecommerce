@@ -18,7 +18,7 @@ public class Cart {
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    @OneToOne(cascade =CascadeType.ALL)
+    @OneToOne(cascade =CascadeType.REMOVE)
     @JoinColumn(name = "customer_id",referencedColumnName = "id",unique = true)
     private Customer customer;
     private boolean status;
