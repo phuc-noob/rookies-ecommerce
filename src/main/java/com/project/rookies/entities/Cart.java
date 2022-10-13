@@ -1,4 +1,4 @@
-package com.project.rookies.entity;
+package com.project.rookies.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +19,7 @@ public class Cart {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     @OneToOne(cascade =CascadeType.ALL)
-    @JoinColumn(name = "customer_id",referencedColumnName = "id")
+    @JoinColumn(name = "customer_id",referencedColumnName = "id",unique = true)
     private Customer customer;
     private boolean status;
     @OneToMany(mappedBy = "cart")

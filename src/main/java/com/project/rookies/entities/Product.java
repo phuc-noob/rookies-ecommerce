@@ -1,4 +1,4 @@
-package com.project.rookies.entity;
+package com.project.rookies.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,18 +14,19 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long productId;
-    @Column(name = "product_name")
+    @Column(name = "product_name",columnDefinition = "TEXT",unique = true)
     private String productName;
+    @Column(name = "description",columnDefinition = "TEXT")
     private String description;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     private float price;
-    private String image;
     private int amount;
     @OneToMany(mappedBy = "product")
     List<Rate> rates;
     @OneToMany(mappedBy = "product")
     private List<CartDetail> cartProducts;
+
 }

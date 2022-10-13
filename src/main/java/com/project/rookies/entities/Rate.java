@@ -1,4 +1,4 @@
-package com.project.rookies.entity;
+package com.project.rookies.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +15,7 @@ public class Rate {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "rate_id", nullable = false)
     private Long rateId;
+    @Column(name = "content",columnDefinition = "TEXT")
     private String content;
     @Column(name = "created_at")
     private LocalDateTime createdAt;

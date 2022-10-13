@@ -1,4 +1,4 @@
-package com.project.rookies.entity;
+package com.project.rookies.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter@Setter
-@Table(name = "cart_product")
+@Table(name = "cart_detail")
 public class CartDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

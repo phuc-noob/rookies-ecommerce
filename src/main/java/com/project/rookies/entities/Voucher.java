@@ -1,4 +1,4 @@
-package com.project.rookies.entity;
+package com.project.rookies.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +15,7 @@ public class Voucher {
     @Column(name = "id", nullable = false)
     private Long id;
     private String name;
+    @Column(name = "description",columnDefinition = "TEXT")
     private String discription;
     private float discount;
     private boolean status;

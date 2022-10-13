@@ -1,4 +1,4 @@
-package com.project.rookies.entity;
+package com.project.rookies.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,14 +14,14 @@ public class BillOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_id",referencedColumnName = "cart_id")
-    private Cart cart;
     private boolean status ;
     private float total_price;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+    @Column(name = "payment_date")
+    private LocalDateTime paymentDay;
     @ManyToOne
     @MapsId("customerId")
     private Customer customer;
