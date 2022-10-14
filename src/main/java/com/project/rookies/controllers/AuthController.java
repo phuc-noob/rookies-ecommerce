@@ -1,2 +1,4 @@
-package com.project.rookies.controllers;public class AuthController {
+package com.project.rookies.controllers;
+
+public class AuthController {
 }
