@@ -3,6 +3,7 @@ package com.project.rookies.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,10 +22,13 @@ public class Customer {
     private String lastName;
     @Column(name="phone",length = 20,unique = true)
     private String phone;
+    @Email
     @Column(name="email",length = 50,unique = true)
     private String email;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
     private String password;
     private String address;
     @Column(name = "gender",length = 50)
