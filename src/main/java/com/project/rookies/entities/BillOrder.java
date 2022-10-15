@@ -27,7 +27,7 @@ public class BillOrder {
     private LocalDateTime updatedAt;
     @Column(name = "payment_date")
     private LocalDateTime paymentDay;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "customer_id",referencedColumnName = "id")
     private Customer customer;
     @OneToMany(mappedBy = "billOrder",cascade = CascadeType.ALL)

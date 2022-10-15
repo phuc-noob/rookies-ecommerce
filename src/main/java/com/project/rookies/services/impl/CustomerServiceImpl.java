@@ -2,6 +2,7 @@ package com.project.rookies.services.impl;
 
 import com.project.rookies.dto.request.CustomerDto;
 import com.project.rookies.dto.response.CustomerResponseDto;
+import com.project.rookies.dto.response.HttpResponseDto;
 import com.project.rookies.entities.Customer;
 import com.project.rookies.entities.Role;
 import com.project.rookies.exceptions.ApiRequestException;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -58,6 +60,17 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
+    public void deleteCustomer(Long id, HttpServletResponse response) {
+        try {
+            customerRepo.deleteById(id);
+            HttpResponseDto.responseMessage(response,"delete success",HttpStatus.OK);
+        }catch (Exception exception)
+        {
+            HttpResponseDto.responseMessage(response,"delete fail",HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
     public CustomerResponseDto updateCustomerById(CustomerDto customerDto, Long id) {
         try{
             customerRepo.findById(id).ifPresent(customer ->{
@@ -84,10 +97,9 @@ public class CustomerServiceImpl implements ICustomerService {
     public List<CustomerResponseDto> findCustomerById(Long id) {
         Optional<Customer> customers = customerRepo.findById(id);
 
-        if(customers == null)
+        if(customers.isEmpty())
         {
             throw new ApiRequestException("customer not found",HttpStatus.NOT_FOUND);
-
         }else{
             return customers.stream().map(customer -> modelMapper.map(customer,CustomerResponseDto.class)).collect(Collectors.toList());
         }

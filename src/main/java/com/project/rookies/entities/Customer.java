@@ -1,7 +1,6 @@
 package com.project.rookies.entities;
 
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
@@ -35,9 +34,11 @@ public class Customer {
     private String gender;
     @Column(name = "day_of_birth")
     private LocalDateTime dayOfBirth;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
     @OneToMany(mappedBy = "customer")
     private List<Rate> rates;
+    @OneToMany(mappedBy = "customer" ,cascade = {CascadeType.DETACH})
+    private List<BillOrder> billOrders;
 }

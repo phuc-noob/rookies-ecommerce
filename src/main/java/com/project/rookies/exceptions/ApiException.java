@@ -13,5 +13,4 @@ public class ApiException {
     private final int statusCode;
     private final HttpStatus httpStatus;
     private final ZonedDateTime timestamp;
-
 }
