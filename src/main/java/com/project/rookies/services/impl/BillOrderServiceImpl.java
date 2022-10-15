@@ -27,14 +27,11 @@ public class BillOrderServiceImpl implements IBillOrderService {
         if(isExistBillOrder(customerId)){
             throw new ApiRequestException("order was exist", HttpStatus.NOT_MODIFIED);
         }
-
-
-            BillOrder billOrder = modelMapper.map(billOrderDto,BillOrder.class);
-            Customer customer = customerRepo.findById(customerId).get();
-            billOrder.setCustomer(customer);
-            billOrder.setStatus(true);
-            return modelMapper.map(billOrderRepo.save(billOrder),BillOrderResponseDto.class) ;
-
+        BillOrder billOrder = modelMapper.map(billOrderDto,BillOrder.class);
+        Customer customer = customerRepo.findById(customerId).get();
+        billOrder.setCustomer(customer);
+        billOrder.setStatus(true);
+        return modelMapper.map(billOrderRepo.save(billOrder),BillOrderResponseDto.class) ;
     }
 
     @Override

@@ -41,6 +41,7 @@ public class CustomerServiceImpl implements ICustomerService {
                 customer.setPassword(passwordEncoder.encode(customerDto.getPassword()));
                 Role role = roleRepo.findByRoleName("ROLE_USER");
                 customer.setRole(role);
+                customer.setStatus(true);
                 customer.setCreatedAt(LocalDateTime.now());
                 return modelMapper.map(customerRepo.save(customer),CustomerResponseDto.class);
             }
@@ -68,6 +69,11 @@ public class CustomerServiceImpl implements ICustomerService {
         {
             HttpResponseDto.responseMessage(response,"delete fail",HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Override
+    public int updateStatusCustomer(boolean status, Long id) {
+        return customerRepo.updateCustomerStatus(status,id);
     }
 
     @Override
@@ -103,5 +109,19 @@ public class CustomerServiceImpl implements ICustomerService {
         }else{
             return customers.stream().map(customer -> modelMapper.map(customer,CustomerResponseDto.class)).collect(Collectors.toList());
         }
+    }
+
+    @Override
+    public List<CustomerResponseDto> findListCustomer(int page, int size) {
+        try {
+            return customerRepo.findListCustomer(page,size)
+                    .stream()
+                    .map(customer -> modelMapper.map(customer,CustomerResponseDto.class))
+                    .collect(Collectors.toList());
+        }catch (Exception ex)
+        {
+            throw new ApiRequestException(ex.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+
     }
 }

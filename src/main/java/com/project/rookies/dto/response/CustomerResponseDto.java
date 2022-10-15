@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter@Setter
 @NoArgsConstructor
 public class CustomerResponseDto {
+    private Long id;
     private String firstName;
     private String lastName;
     private String phone;

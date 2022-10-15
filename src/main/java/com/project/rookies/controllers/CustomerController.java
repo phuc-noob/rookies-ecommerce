@@ -25,9 +25,9 @@ public class CustomerController {
         return customerService.findCustomerById(id).get(0);
     }
     @GetMapping("/customers")
-    List<CustomerResponseDto> getListCustomer(@RequestParam(name = "page") String page, @RequestParam(name = "size") String size)
+    List<CustomerResponseDto> getListCustomer(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size)
     {
-        return null;
+        return customerService.findListCustomer(page,size);
     }
 
     @PostMapping("/customer")
@@ -43,6 +43,8 @@ public class CustomerController {
 
     @DeleteMapping("/customer/{id}")
     void deleteCustomer(@PathVariable Long id, HttpServletResponse response){
-        customerService.deleteCustomer(id,response);
+        int check = customerService.updateStatusCustomer(false,id);
+        if(check == 0) HttpResponseDto.responseMessage(response,"id not correct",HttpStatus.NOT_FOUND);
+        else HttpResponseDto.responseMessage(response,"delete success",HttpStatus.OK);
     }
 }

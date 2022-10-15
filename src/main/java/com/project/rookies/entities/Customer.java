@@ -28,6 +28,7 @@ public class Customer {
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    private Boolean status;
     private String password;
     private String address;
     @Column(name = "gender",length = 50)

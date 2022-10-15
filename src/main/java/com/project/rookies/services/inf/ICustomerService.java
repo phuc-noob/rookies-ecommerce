@@ -11,7 +11,8 @@ public interface ICustomerService {
     CustomerResponseDto saveCustomer(CustomerDto customer);
     CustomerResponseDto updateCustomerById(CustomerDto customerDto,Long id);
     List<CustomerResponseDto> findCustomerById(Long id);
+    List<CustomerResponseDto> findListCustomer(int page,int size);
     boolean isExistCustomer(CustomerDto customerDto);
     void deleteCustomer(Long id, HttpServletResponse response);
-
+    int updateStatusCustomer(boolean status,Long id);
 }
