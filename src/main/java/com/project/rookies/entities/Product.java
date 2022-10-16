@@ -22,8 +22,11 @@ public class Product {
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    @Column(name = "total_sold")
+    private int totalSold;
     private float price;
     private int amount;
+    private boolean status;
     @OneToMany(mappedBy = "product")
     List<Rate> rates;
     @OneToMany(mappedBy = "product")
