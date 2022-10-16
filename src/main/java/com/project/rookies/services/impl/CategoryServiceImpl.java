@@ -1,24 +1,33 @@
 package com.project.rookies.services.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.rookies.dto.request.CategoryDto;
 import com.project.rookies.dto.response.CategoryResponseDto;
+import com.project.rookies.dto.response.HttpResponseDto;
+import com.project.rookies.dto.response.ProductResponseDto;
 import com.project.rookies.entities.Category;
+import com.project.rookies.entities.Product;
 import com.project.rookies.exceptions.ApiRequestException;
 import com.project.rookies.repositories.CategoryRepo;
+import com.project.rookies.repositories.ProductRepo;
 import com.project.rookies.services.inf.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
+import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-@RequiredArgsConstructor
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements ICategoryService {
     private final CategoryRepo categoryRepo;
+    private final ProductRepo productRepo;
     private final ModelMapper modelMapper;
     @Override
     public CategoryResponseDto saveCategory(CategoryDto categoryDto) {
@@ -58,9 +67,31 @@ public class CategoryServiceImpl implements ICategoryService {
                 .map(category -> modelMapper.map(category,CategoryResponseDto.class))
                 .collect(Collectors.toList());
     }
+
     @Override
     public CategoryResponseDto getCategroybyId(Long id) {
         if(!categoryRepo.existsById(id)) throw new ApiRequestException("category not exist",HttpStatus.NOT_FOUND);
         return modelMapper.map(categoryRepo.getById(id),CategoryResponseDto.class) ;
+    }
+    @Override
+    @JsonIgnore
+    public CategoryResponseDto addProductToCategory(Long cateId, Long productId) {
+        Category category = categoryRepo.getById(cateId);
+        Product product = productRepo.getById(productId);
+        category.getProduct().add(product);
+        CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
+        modelMapper.map(category.getProduct(),categoryResponseDto.getProduct());
+        modelMapper.map(category,categoryResponseDto);
+        return categoryResponseDto;
+    }
+
+    @Override
+    public void deleteCategoryById(Long id, HttpServletResponse response) {
+        try{
+            categoryRepo.deleteById(id);
+            HttpResponseDto.responseMessage(response,"delete success",HttpStatus.OK);
+        }catch (Exception exception){
+            HttpResponseDto.responseMessage(response,"delete fail",HttpStatus.BAD_REQUEST);
+        }
     }
 }

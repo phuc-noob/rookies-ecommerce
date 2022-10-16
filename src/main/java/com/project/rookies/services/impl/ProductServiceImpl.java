@@ -94,4 +94,12 @@ public class ProductServiceImpl  implements IProductService {
         if(productRepo.findProductByProductNameAndStatus(producName,true) == null) return false;
         else return true;
     }
+
+    @Override
+    public List<ProductResponseDto> getProductsByCategoryBy(Long id, int page, int size) {
+        return productRepo.getProductByCategoryId(id, page, size)
+                .stream()
+                .map(product -> modelMapper.map(product,ProductResponseDto.class))
+                .collect(Collectors.toList());
+    }
 }

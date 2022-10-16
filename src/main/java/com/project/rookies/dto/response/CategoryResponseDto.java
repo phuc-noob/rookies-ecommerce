@@ -1,10 +1,12 @@
 package com.project.rookies.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.rookies.entities.Product;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 @Getter@Setter
 public class CategoryResponseDto {
@@ -15,5 +17,6 @@ public class CategoryResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private int amount;
-    private List<Product> product;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<Product> product = new ArrayList<>();
 }

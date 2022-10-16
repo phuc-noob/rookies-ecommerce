@@ -14,4 +14,5 @@ public interface IProductService {
     List<ProductResponseDto> getListProductBestSeller(int page,int size);
     int updateProductStatus(Boolean status,Long id);
     Boolean checkProductStatus(String productName);
+    List<ProductResponseDto> getProductsByCategoryBy(Long id,int page, int size);
 }

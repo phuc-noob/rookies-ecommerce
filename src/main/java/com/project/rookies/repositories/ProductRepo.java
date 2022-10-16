@@ -22,4 +22,7 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
     @Modifying
     @Query(value = "update product set status = :status where id = :id",nativeQuery = true)
     int updateProductStatusById(@Param("status") boolean status, @Param("id") Long id);
+    @Query(value = "select p.* from product p inner join category_product cp on p.id = cp.product_id " +
+            " where cp.category_id = :cateId and status is true order by total_sold desc limit :size offset :page ",nativeQuery = true)
+    List<Product> getProductByCategoryId(@Param("cateId") Long cateId, @Param("page") int page,@Param("size") int size );
 }
