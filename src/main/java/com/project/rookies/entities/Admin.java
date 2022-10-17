@@ -10,7 +10,7 @@ public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "admin_id", nullable = false)
-    private Long admin_id;
+    private Long adminId;
     @Column(name = "admin_name",length = 100,unique = true)
     private String adminName;
     private String password;

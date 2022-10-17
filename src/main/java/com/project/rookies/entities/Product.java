@@ -1,10 +1,12 @@
 package com.project.rookies.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,6 +32,6 @@ public class Product {
     @OneToMany(mappedBy = "product")
     List<Rate> rates;
     @OneToMany(mappedBy = "product")
-    private List<CartDetail> cartProducts;
+    private List<CartDetail> cartProducts = new ArrayList<>();
 
 }

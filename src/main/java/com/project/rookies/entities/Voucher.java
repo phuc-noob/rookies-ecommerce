@@ -16,7 +16,7 @@ public class Voucher {
     private Long id;
     private String name;
     @Column(name = "description",columnDefinition = "TEXT")
-    private String discription;
+    private String description;
     private float discount;
     private boolean status;
     @Column(name = "start_at")
@@ -25,4 +25,5 @@ public class Voucher {
     private LocalDateTime endAt;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Product> product;
+    // =>
 }

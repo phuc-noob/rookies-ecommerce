@@ -22,7 +22,7 @@ public class BillOrder {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     private boolean status ;
-    private float total_price;
+    private float totalPrice;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     @Column(name = "payment_date")

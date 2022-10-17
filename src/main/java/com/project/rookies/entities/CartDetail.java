@@ -16,7 +16,7 @@ public class CartDetail {
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")
     private Cart cart;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id",referencedColumnName = "id")
     private Product product;
     private int mount;

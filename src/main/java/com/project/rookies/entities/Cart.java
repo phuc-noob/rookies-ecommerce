@@ -21,7 +21,6 @@ public class Cart {
     @OneToOne(cascade =CascadeType.REMOVE)
     @JoinColumn(name = "customer_id",referencedColumnName = "id",unique = true)
     private Customer customer;
-    private boolean status;
     @OneToMany(mappedBy = "cart")
     private List<CartDetail> productList;
 }
