@@ -2,7 +2,7 @@ package com.project.rookies.controllers;
 
 import com.project.rookies.dto.request.CustomerDto;
 import com.project.rookies.dto.response.CustomerResponseDto;
-import com.project.rookies.dto.response.HttpResponseDto;
+import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.services.inf.ICustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,9 +42,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/customer/{id}")
-    void deleteCustomer(@PathVariable Long id, HttpServletResponse response){
-        int check = customerService.updateStatusCustomer(false,id);
-        if(check == 0) HttpResponseDto.responseMessage(response,"id not correct",HttpStatus.NOT_FOUND);
-        else HttpResponseDto.responseMessage(response,"delete success",HttpStatus.OK);
+    DeleteResponseDto deleteCustomer(@PathVariable Long id){
+        return customerService.deleteCustomer(id);
     }
 }

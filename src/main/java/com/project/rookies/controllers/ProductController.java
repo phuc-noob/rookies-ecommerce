@@ -1,15 +1,17 @@
 package com.project.rookies.controllers;
 
 import com.project.rookies.dto.request.ProductDto;
-import com.project.rookies.dto.response.HttpResponseDto;
+import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.dto.response.ProductResponseDto;
+import com.project.rookies.exceptions.ApiException;
 import com.project.rookies.exceptions.ApiRequestException;
 import com.project.rookies.services.inf.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
@@ -43,10 +45,9 @@ public class ProductController {
         return productService.getListProductBestSeller(page,size);
     }
     @DeleteMapping("/product/{id}")
-    void deleteProduct(@PathVariable Long id, HttpServletResponse response)
+    @ResponseBody
+    DeleteResponseDto deleteProduct(@PathVariable Long id)
     {
-        int checkDelete = productService.updateProductStatus(false,id);
-        if(checkDelete == 0) throw new ApiRequestException("delete fail",HttpStatus.BAD_REQUEST);
-        else HttpResponseDto.responseMessage(response,"delete success",HttpStatus.OK);
+        return productService.updateProductStatus(false,id) ;
     }
 }
