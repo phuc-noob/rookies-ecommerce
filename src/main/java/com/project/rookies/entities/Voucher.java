@@ -25,5 +25,4 @@ public class Voucher {
     private LocalDateTime endAt;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Product> product;
-    // =>
 }

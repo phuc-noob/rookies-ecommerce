@@ -2,9 +2,11 @@ package com.project.rookies.services.impl;
 
 import com.project.rookies.dto.request.CustomerDto;
 import com.project.rookies.dto.response.CustomerResponseDto;
-import com.project.rookies.dto.response.HttpResponseDto;
+import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.entities.Customer;
 import com.project.rookies.entities.Role;
+import com.project.rookies.entities.enums.ECustomerStatus;
+import com.project.rookies.entities.enums.ERoleType;
 import com.project.rookies.exceptions.ApiRequestException;
 import com.project.rookies.repositories.CustomerRepo;
 import com.project.rookies.repositories.RoleRepo;
@@ -39,9 +41,9 @@ public class CustomerServiceImpl implements ICustomerService {
             }else{
                 Customer customer = modelMapper.map(customerDto, Customer.class);
                 customer.setPassword(passwordEncoder.encode(customerDto.getPassword()));
-                Role role = roleRepo.findByRoleName("ROLE_USER");
+                Role role = roleRepo.findByRoleName(ERoleType.ROLE_USER);
                 customer.setRole(role);
-                customer.setStatus(true);
+                customer.setStatus(ECustomerStatus.ACTIVE);
                 customer.setCreatedAt(LocalDateTime.now());
                 return modelMapper.map(customerRepo.save(customer),CustomerResponseDto.class);
             }
@@ -52,8 +54,8 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public boolean isExistCustomer(CustomerDto customerDto) {
-        String email = customerDto.getEmail();
-        if (customerRepo.findByEmail(email) != null) {
+        //String email = customerDto.getEmail();
+        if (customerRepo.findByEmail(customerDto.getEmail()) != null) {
             return true;
         }else{
             return false;
@@ -61,20 +63,28 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
-    public void deleteCustomer(Long id, HttpServletResponse response) {
+    public DeleteResponseDto deleteCustomer(Long id) {
         try {
             customerRepo.deleteById(id);
-            HttpResponseDto.responseMessage(response,"delete success",HttpStatus.OK);
+            return new DeleteResponseDto("delete success",HttpStatus.OK.value(),HttpStatus.OK);
         }catch (Exception exception)
         {
-            HttpResponseDto.responseMessage(response,"delete fail",HttpStatus.BAD_REQUEST);
+            return new DeleteResponseDto("delete fail",HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @Override
-    public int updateStatusCustomer(boolean status, Long id) {
-        return customerRepo.updateCustomerStatus(status,id);
+    public DeleteResponseDto updateStatusCustomer(Long id, ECustomerStatus customerStatus) {
+        if(customerRepo.existsById(id)){
+            Customer customer = customerRepo.getById(id);
+            customer.setStatus(customerStatus);
+            customerRepo.save(customer);
+            return new DeleteResponseDto("delete success",HttpStatus.OK.value(), HttpStatus.OK);
+        }else {
+            return new DeleteResponseDto("delete fail",HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
+        }
     }
+
 
     @Override
     public CustomerResponseDto updateCustomerById(CustomerDto customerDto, Long id) {
@@ -88,14 +98,14 @@ public class CustomerServiceImpl implements ICustomerService {
                 customer.setDayOfBirth(customerDto.getDayOfBirth());
                 customer.setUpdatedAt(LocalDateTime.now());
                 customer.setGender(customerDto.getGender());
-                customer.setRole(roleRepo.findByRoleName("ROLE_USER"));
+                customer.setRole(roleRepo.findByRoleName(ERoleType.ROLE_USER));
                 customer.setPhone(customerDto.getPhone());
                 customerRepo.save(customer);
             });
             return modelMapper.map(customerDto,CustomerResponseDto.class);
         }catch (Exception ex)
         {
-            throw new ApiRequestException("update fial",HttpStatus.NOT_MODIFIED);
+            throw new ApiRequestException("update fail",HttpStatus.NOT_MODIFIED);
         }
     }
 
@@ -122,6 +132,5 @@ public class CustomerServiceImpl implements ICustomerService {
         {
             throw new ApiRequestException(ex.getMessage(),HttpStatus.BAD_REQUEST);
         }
-
     }
 }

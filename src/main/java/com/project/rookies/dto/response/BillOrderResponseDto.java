@@ -13,7 +13,7 @@ import java.util.List;
 public class BillOrderResponseDto {
     private Long id;
     private boolean status ;
-    private float total_price;
+    private float totalPrice;
     private LocalDateTime updatedAt;
     private LocalDateTime paymentDay;
     private CustomerResponseDto customer;

@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 @Getter@Setter
 public class CategoryResponseDto {
-    private Long cate_id;
+    private Long cateId;
     private String cateName;
-    private String discription;
+    private String description;
     private String image;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

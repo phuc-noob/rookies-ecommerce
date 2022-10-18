@@ -3,8 +3,7 @@ package com.project.rookies.services.impl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.rookies.dto.request.CategoryDto;
 import com.project.rookies.dto.response.CategoryResponseDto;
-import com.project.rookies.dto.response.HttpResponseDto;
-import com.project.rookies.dto.response.ProductResponseDto;
+import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.entities.Category;
 import com.project.rookies.entities.Product;
 import com.project.rookies.exceptions.ApiRequestException;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -86,12 +84,12 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public void deleteCategoryById(Long id, HttpServletResponse response) {
+    public DeleteResponseDto deleteCategoryById(Long id, HttpServletResponse response) {
         try{
             categoryRepo.deleteById(id);
-            HttpResponseDto.responseMessage(response,"delete success",HttpStatus.OK);
+            return new DeleteResponseDto("delete success",HttpStatus.OK.value(),HttpStatus.OK);
         }catch (Exception exception){
-            HttpResponseDto.responseMessage(response,"delete fail",HttpStatus.BAD_REQUEST);
+            return new DeleteResponseDto("delete fail",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 @Getter@Setter
 public class CategoryDto {
     private String cateName;
-    private String discription;
+    private String description;
     private String image;
     private int amount;
     private List<Product> product;

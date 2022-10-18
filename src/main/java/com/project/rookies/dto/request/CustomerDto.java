@@ -1,5 +1,7 @@
 package com.project.rookies.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.project.rookies.entities.enums.EGender;
 import lombok.*;
 import java.time.LocalDateTime;
 @Getter
@@ -11,6 +13,7 @@ public class CustomerDto {
     private String email;
     private String password;
     private String address;
-    private String gender;
+    @JsonValue
+    private EGender gender;
     private LocalDateTime dayOfBirth;
 }

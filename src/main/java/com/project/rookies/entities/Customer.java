@@ -1,5 +1,7 @@
 package com.project.rookies.entities;
 
+import com.project.rookies.entities.enums.ECustomerStatus;
+import com.project.rookies.entities.enums.EGender;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -28,11 +30,13 @@ public class Customer {
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    private Boolean status;
+    @Enumerated(EnumType.STRING)
+    private ECustomerStatus status;
     private String password;
     private String address;
     @Column(name = "gender",length = 50)
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private EGender gender;
     @Column(name = "day_of_birth")
     private LocalDateTime dayOfBirth;
     @OneToOne

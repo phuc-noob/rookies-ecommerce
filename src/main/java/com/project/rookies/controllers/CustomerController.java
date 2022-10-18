@@ -3,6 +3,7 @@ package com.project.rookies.controllers;
 import com.project.rookies.dto.request.CustomerDto;
 import com.project.rookies.dto.response.CustomerResponseDto;
 import com.project.rookies.dto.response.DeleteResponseDto;
+import com.project.rookies.entities.enums.ECustomerStatus;
 import com.project.rookies.services.inf.ICustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +44,6 @@ public class CustomerController {
 
     @DeleteMapping("/customer/{id}")
     DeleteResponseDto deleteCustomer(@PathVariable Long id){
-        return customerService.deleteCustomer(id);
+        return customerService.updateStatusCustomer(id, ECustomerStatus.DELETED);
     }
 }

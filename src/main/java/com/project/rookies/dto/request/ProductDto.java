@@ -1,5 +1,7 @@
 package com.project.rookies.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.project.rookies.entities.enums.EProductStatus;
 import lombok.Getter;
 import lombok.Setter;
 @Getter@Setter
@@ -9,5 +11,6 @@ public class ProductDto {
     private float price;
     private int amount;
     private int totalSold;
-    private boolean status;
+    @JsonValue
+    private EProductStatus status;
 }

@@ -2,6 +2,7 @@ package com.project.rookies.services.inf;
 
 import com.project.rookies.dto.request.CategoryDto;
 import com.project.rookies.dto.response.CategoryResponseDto;
+import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.dto.response.ProductResponseDto;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,5 +15,5 @@ public interface ICategoryService {
     List<CategoryResponseDto> getALlCategory();
     CategoryResponseDto getCategroybyId(Long id);
     CategoryResponseDto addProductToCategory(Long cateId,Long productId);
-    void deleteCategoryById(Long id, HttpServletResponse response);
+    DeleteResponseDto deleteCategoryById(Long id, HttpServletResponse response);
 }

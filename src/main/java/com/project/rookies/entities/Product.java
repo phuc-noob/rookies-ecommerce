@@ -1,6 +1,7 @@
 package com.project.rookies.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.rookies.entities.enums.EProductStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +29,8 @@ public class Product {
     private int totalSold;
     private float price;
     private int amount;
-    private boolean status;
+    @Enumerated(EnumType.STRING)
+    private EProductStatus status;
     @OneToMany(mappedBy = "product")
     List<Rate> rates;
     @OneToMany(mappedBy = "product")

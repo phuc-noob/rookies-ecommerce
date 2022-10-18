@@ -1,6 +1,7 @@
 package com.project.rookies.dto.response;
 
 import com.project.rookies.dto.request.CustomerDto;
+import com.project.rookies.entities.enums.EGender;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,6 @@ public class CustomerResponseDto {
     private String phone;
     private String email;
     private String address;
-    private String gender;
+    private EGender gender;
     private LocalDateTime dayOfBirth;
 }

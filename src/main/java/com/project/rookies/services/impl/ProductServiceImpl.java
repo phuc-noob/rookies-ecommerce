@@ -1,8 +1,11 @@
 package com.project.rookies.services.impl;
 
 import com.project.rookies.dto.request.ProductDto;
+import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.dto.response.ProductResponseDto;
+import com.project.rookies.entities.Customer;
 import com.project.rookies.entities.Product;
+import com.project.rookies.entities.enums.EProductStatus;
 import com.project.rookies.exceptions.ApiRequestException;
 import com.project.rookies.repositories.ProductRepo;
 import com.project.rookies.services.inf.IProductService;
@@ -29,7 +32,7 @@ public class ProductServiceImpl  implements IProductService {
         if(isExistProduct(productDto)){
             Product product = productRepo.findProductByProductName(productDto.getProductName());
             modelMapper.map(productDto,product);
-            product.setStatus(true);
+            product.setStatus(EProductStatus.ACTIVE);
             productRepo.save(product);
 
             return modelMapper.map(productRepo.save(product),ProductResponseDto.class) ;
@@ -38,7 +41,7 @@ public class ProductServiceImpl  implements IProductService {
             Product product =modelMapper.map(productDto, Product.class);
             product.setCreatedAt(LocalDateTime.now());
             product.setUpdatedAt(LocalDateTime.now());
-            product.setStatus(true);
+            product.setStatus(EProductStatus.ACTIVE);
             return modelMapper.map(productRepo.save(product),ProductResponseDto.class) ;
         }
     }
@@ -55,7 +58,7 @@ public class ProductServiceImpl  implements IProductService {
             productRepo.findById(id).ifPresent(product -> {
                 modelMapper.map(productDto,product);
                 product.setUpdatedAt(LocalDateTime.now());
-                product.setStatus(true);
+                product.setStatus(EProductStatus.ACTIVE);
                 modelMapper.map(product,productResponseDto);
                 productRepo.save(product);
             });
@@ -86,12 +89,19 @@ public class ProductServiceImpl  implements IProductService {
                 .collect(Collectors.toList());
     }
     @Override
-    public int updateProductStatus(Boolean status,Long id) {
-        return productRepo.updateProductStatusById(status,id);
+    public DeleteResponseDto updateProductStatus(EProductStatus status, Long id) {
+        if(productRepo.existsById(id)){
+            Product product = productRepo.getById(id);
+            product.setStatus(status);
+            productRepo.save(product);
+            return new DeleteResponseDto("delete success",HttpStatus.OK.value(), HttpStatus.OK);
+        }else {
+            return new DeleteResponseDto("delete fail",HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
+        }
     }
     @Override
-    public Boolean checkProductStatus(String producName) {
-        if(productRepo.findProductByProductNameAndStatus(producName,true) == null) return false;
+    public Boolean checkProductStatus(String productName) {
+        if(productRepo.findProductByProductNameAndStatus(productName,EProductStatus.ACTIVE) == null) return false;
         else return true;
     }
 

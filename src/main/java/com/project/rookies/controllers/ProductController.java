@@ -3,6 +3,7 @@ package com.project.rookies.controllers;
 import com.project.rookies.dto.request.ProductDto;
 import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.dto.response.ProductResponseDto;
+import com.project.rookies.entities.enums.EProductStatus;
 import com.project.rookies.exceptions.ApiException;
 import com.project.rookies.exceptions.ApiRequestException;
 import com.project.rookies.services.inf.IProductService;
@@ -48,6 +49,6 @@ public class ProductController {
     @ResponseBody
     DeleteResponseDto deleteProduct(@PathVariable Long id)
     {
-        return productService.updateProductStatus(false,id) ;
+        return productService.updateProductStatus(EProductStatus.DELETED,id) ;
     }
 }
