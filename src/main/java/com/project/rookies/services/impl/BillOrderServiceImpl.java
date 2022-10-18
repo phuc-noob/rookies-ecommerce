@@ -4,7 +4,7 @@ import com.project.rookies.dto.request.BillOrderDto;
 import com.project.rookies.dto.response.BillOrderResponseDto;
 import com.project.rookies.entities.BillOrder;
 import com.project.rookies.entities.Customer;
-import com.project.rookies.exceptions.ApiRequestException;
+import com.project.rookies.exceptions.DuplicateValueInResourceException;
 import com.project.rookies.repositories.BillOrderRepo;
 import com.project.rookies.repositories.CustomerRepo;
 import com.project.rookies.services.inf.IBillOrderService;
@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +23,7 @@ public class BillOrderServiceImpl implements IBillOrderService {
     @Override
     public BillOrderResponseDto saveBillOrder(BillOrderDto billOrderDto, Long customerId) {
         if(isExistBillOrder(customerId))
-            throw new ApiRequestException("order was exist", HttpStatus.NOT_MODIFIED);
+            throw new DuplicateValueInResourceException("order was exist", HttpStatus.NOT_MODIFIED);
 
         BillOrder billOrder = modelMapper.map(billOrderDto,BillOrder.class);
         Customer customer = customerRepo.findById(customerId).get();

@@ -3,7 +3,8 @@ package com.project.rookies.services.impl;
 import com.project.rookies.dto.request.CartDto;
 import com.project.rookies.dto.response.CartResponseDto;
 import com.project.rookies.entities.Cart;
-import com.project.rookies.exceptions.ApiRequestException;
+import com.project.rookies.exceptions.DuplicateValueInResourceException;
+import com.project.rookies.exceptions.ResourceNotFoundException;
 import com.project.rookies.repositories.CartDetailRepo;
 import com.project.rookies.repositories.CartRepo;
 import com.project.rookies.repositories.CustomerRepo;
@@ -27,7 +28,7 @@ public class CartServiceImpl implements ICartService {
     public CartResponseDto saveCart(CartDto cartDto, Long cusId) {
         // case : user not exist in db
         if(!customerRepo.existsById(cusId))
-            throw new ApiRequestException("customer not found", HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("customer not found", HttpStatus.NOT_FOUND);
         // case : have not existed customer in cart bd
         try{
             Cart cart = modelMapper.map(cartDto,Cart.class);
@@ -37,7 +38,7 @@ public class CartServiceImpl implements ICartService {
             return modelMapper.map(cartRepo.save(cart),CartResponseDto.class) ;
         }catch (Exception exception)
         {
-            throw new ApiRequestException("cart was existed",HttpStatus.BAD_REQUEST);
+            throw new DuplicateValueInResourceException("cart was existed",HttpStatus.BAD_REQUEST);
         }
     }
 

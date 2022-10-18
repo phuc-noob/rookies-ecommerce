@@ -7,7 +7,10 @@ import com.project.rookies.entities.Customer;
 import com.project.rookies.entities.Role;
 import com.project.rookies.entities.enums.ECustomerStatus;
 import com.project.rookies.entities.enums.ERoleType;
-import com.project.rookies.exceptions.ApiRequestException;
+import com.project.rookies.exceptions.DuplicateValueInResourceException;
+import com.project.rookies.exceptions.ResourceFoundException;
+import com.project.rookies.exceptions.ResourceNotFoundException;
+import com.project.rookies.exceptions.ValidationException;
 import com.project.rookies.repositories.CustomerRepo;
 import com.project.rookies.repositories.RoleRepo;
 import com.project.rookies.services.inf.ICustomerService;
@@ -18,7 +21,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +39,7 @@ public class CustomerServiceImpl implements ICustomerService {
         if(EmailUtils.isValidEmail(email))
         {
             if(isExistCustomer(customerDto)){
-                throw new ApiRequestException("email was existed ",HttpStatus.BAD_REQUEST);
+                throw new DuplicateValueInResourceException("email was existed ",HttpStatus.BAD_REQUEST);
             }else{
                 Customer customer = modelMapper.map(customerDto, Customer.class);
                 customer.setPassword(passwordEncoder.encode(customerDto.getPassword()));
@@ -48,7 +50,7 @@ public class CustomerServiceImpl implements ICustomerService {
                 return modelMapper.map(customerRepo.save(customer),CustomerResponseDto.class);
             }
         }else{
-            throw new ApiRequestException("email not valid", HttpStatus.BAD_REQUEST);
+            throw new ValidationException("email not valid", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -105,7 +107,7 @@ public class CustomerServiceImpl implements ICustomerService {
             return modelMapper.map(customerDto,CustomerResponseDto.class);
         }catch (Exception ex)
         {
-            throw new ApiRequestException("update fail",HttpStatus.NOT_MODIFIED);
+            throw new ResourceFoundException("update fail",HttpStatus.NOT_MODIFIED);
         }
     }
 
@@ -115,7 +117,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
         if(customers.isEmpty())
         {
-            throw new ApiRequestException("customer not found",HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("customer not found",HttpStatus.NOT_FOUND);
         }else{
             return customers.stream().map(customer -> modelMapper.map(customer,CustomerResponseDto.class)).collect(Collectors.toList());
         }
@@ -130,7 +132,7 @@ public class CustomerServiceImpl implements ICustomerService {
                     .collect(Collectors.toList());
         }catch (Exception ex)
         {
-            throw new ApiRequestException(ex.getMessage(),HttpStatus.BAD_REQUEST);
+            throw new ResourceFoundException(ex.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -3,10 +3,11 @@ package com.project.rookies.services.impl;
 import com.project.rookies.dto.request.ProductDto;
 import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.dto.response.ProductResponseDto;
-import com.project.rookies.entities.Customer;
 import com.project.rookies.entities.Product;
 import com.project.rookies.entities.enums.EProductStatus;
-import com.project.rookies.exceptions.ApiRequestException;
+import com.project.rookies.exceptions.DuplicateValueInResourceException;
+import com.project.rookies.exceptions.ResourceFoundException;
+import com.project.rookies.exceptions.ResourceNotFoundException;
 import com.project.rookies.repositories.ProductRepo;
 import com.project.rookies.services.inf.IProductService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class ProductServiceImpl  implements IProductService {
     public ProductResponseDto saveProduct(ProductDto productDto) {
         // case : product is existed and status is true -> not update
         if(isExistProduct(productDto) && checkProductStatus(productDto.getProductName()))
-            throw new ApiRequestException("Product is exist", HttpStatus.BAD_REQUEST);
+            throw new DuplicateValueInResourceException("Product is exist", HttpStatus.BAD_REQUEST);
         // case : product is existed and status is false -> update status is true
         if(isExistProduct(productDto)){
             Product product = productRepo.findProductByProductName(productDto.getProductName());
@@ -52,7 +53,7 @@ public class ProductServiceImpl  implements IProductService {
     }
     @Override
     public ProductResponseDto updateProduct(ProductDto productDto, Long id) {
-        if(!productRepo.existsById(id)) throw new ApiRequestException("product not exist",HttpStatus.NOT_FOUND);
+        if(!productRepo.existsById(id)) throw new DuplicateValueInResourceException("product not exist",HttpStatus.NOT_FOUND);
         try {
             ProductResponseDto productResponseDto = new ProductResponseDto();
             productRepo.findById(id).ifPresent(product -> {
@@ -64,17 +65,17 @@ public class ProductServiceImpl  implements IProductService {
             });
             return productResponseDto;
         }catch (Exception exception){
-            throw new ApiRequestException(exception.getMessage(),HttpStatus.BAD_REQUEST);
+            throw new ResourceFoundException(exception.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
     @Override
     public ProductResponseDto getProductById(Long id) {
-        if(!productRepo.existsById(id)) throw new ApiRequestException("product not found",HttpStatus.NOT_FOUND);
+        if(!productRepo.existsById(id)) throw new ResourceNotFoundException("product not found",HttpStatus.NOT_FOUND);
         return modelMapper.map(productRepo.getById(id),ProductResponseDto.class) ;
     }
     @Override
     public List<ProductResponseDto> getListProduct(int page, int size) {
-        if(page<0) throw new ApiRequestException("page not found",HttpStatus.NOT_FOUND);
+        if(page<0) throw new ResourceNotFoundException("page not found",HttpStatus.NOT_FOUND);
         return productRepo.getListproduct(page,size)
                 .stream()
                 .map(product -> modelMapper.map(product,ProductResponseDto.class))
@@ -82,7 +83,7 @@ public class ProductServiceImpl  implements IProductService {
     }
     @Override
     public List<ProductResponseDto> getListProductBestSeller(int page, int size) {
-        if(page<0) throw new ApiRequestException("page not found",HttpStatus.NOT_FOUND);
+        if(page<0) throw new ResourceNotFoundException("page not found",HttpStatus.NOT_FOUND);
         return productRepo.getListProductBestSeller(page, size)
                 .stream()
                 .map(product -> modelMapper.map(product,ProductResponseDto.class))

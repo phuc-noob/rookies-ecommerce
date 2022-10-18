@@ -6,7 +6,9 @@ import com.project.rookies.dto.response.CategoryResponseDto;
 import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.entities.Category;
 import com.project.rookies.entities.Product;
-import com.project.rookies.exceptions.ApiRequestException;
+import com.project.rookies.exceptions.DuplicateValueInResourceException;
+import com.project.rookies.exceptions.ResourceFoundException;
+import com.project.rookies.exceptions.ResourceNotFoundException;
 import com.project.rookies.repositories.CategoryRepo;
 import com.project.rookies.repositories.ProductRepo;
 import com.project.rookies.services.inf.ICategoryService;
@@ -29,7 +31,7 @@ public class CategoryServiceImpl implements ICategoryService {
     private final ModelMapper modelMapper;
     @Override
     public CategoryResponseDto saveCategory(CategoryDto categoryDto) {
-        if(isExistCategory(categoryDto)) throw new ApiRequestException("category was existed", HttpStatus.BAD_REQUEST);
+        if(isExistCategory(categoryDto)) throw new DuplicateValueInResourceException("category was existed", HttpStatus.BAD_REQUEST);
         Category category = modelMapper.map(categoryDto, Category.class);
         category.setCreatedAt(LocalDateTime.now());
         return modelMapper.map(categoryRepo.save(category),CategoryResponseDto.class) ;
@@ -43,7 +45,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public CategoryResponseDto updateCategoryById(CategoryDto categoryDto,Long id) {
-        if(!categoryRepo.existsById(id)) throw new ApiRequestException("category not exist",HttpStatus.NOT_FOUND);
+        if(!categoryRepo.existsById(id)) throw new ResourceNotFoundException("category not exist",HttpStatus.NOT_FOUND);
         try {
             CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
             categoryRepo.findById(id).ifPresent(category -> {
@@ -55,7 +57,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
             return categoryResponseDto;
         }catch (Exception exception){
-            throw new ApiRequestException(exception.getMessage(),HttpStatus.BAD_REQUEST);
+            throw new ResourceFoundException(exception.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
     @Override
@@ -68,7 +70,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public CategoryResponseDto getCategroybyId(Long id) {
-        if(!categoryRepo.existsById(id)) throw new ApiRequestException("category not exist",HttpStatus.NOT_FOUND);
+        if(!categoryRepo.existsById(id)) throw new DuplicateValueInResourceException("category not exist",HttpStatus.NOT_FOUND);
         return modelMapper.map(categoryRepo.getById(id),CategoryResponseDto.class) ;
     }
     @Override
