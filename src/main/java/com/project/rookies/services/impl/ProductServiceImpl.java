@@ -70,12 +70,12 @@ public class ProductServiceImpl  implements IProductService {
     }
     @Override
     public ProductResponseDto getProductById(Long id) {
-        if(!productRepo.existsById(id)) throw new ResourceNotFoundException("product not found",HttpStatus.NOT_FOUND);
+        if(!productRepo.existsById(id)) throw new ResourceNotFoundException("product not found");
         return modelMapper.map(productRepo.getById(id),ProductResponseDto.class) ;
     }
     @Override
     public List<ProductResponseDto> getListProduct(int page, int size) {
-        if(page<0) throw new ResourceNotFoundException("page not found",HttpStatus.NOT_FOUND);
+        if(page<0) throw new ResourceNotFoundException("page not found");
         return productRepo.getListproduct(page,size)
                 .stream()
                 .map(product -> modelMapper.map(product,ProductResponseDto.class))
@@ -83,7 +83,7 @@ public class ProductServiceImpl  implements IProductService {
     }
     @Override
     public List<ProductResponseDto> getListProductBestSeller(int page, int size) {
-        if(page<0) throw new ResourceNotFoundException("page not found",HttpStatus.NOT_FOUND);
+        if(page<0) throw new ResourceNotFoundException("page not found");
         return productRepo.getListProductBestSeller(page, size)
                 .stream()
                 .map(product -> modelMapper.map(product,ProductResponseDto.class))

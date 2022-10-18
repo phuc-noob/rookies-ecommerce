@@ -33,7 +33,4 @@ public class Product {
     private EProductStatus status;
     @OneToMany(mappedBy = "product")
     List<Rate> rates;
-    @OneToMany(mappedBy = "product")
-    private List<CartDetail> cartProducts = new ArrayList<>();
-
 }

@@ -1,8 +1,7 @@
 package com.project.rookies.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.project.rookies.entities.CartDetail;
+import com.project.rookies.entities.Cart;
 import com.project.rookies.entities.Rate;
 import com.project.rookies.entities.enums.EProductStatus;
 import lombok.Getter;
@@ -24,5 +23,5 @@ public class ProductResponseDto {
     private EProductStatus status;
     List<Rate> rates;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private List<CartDetail> cartProducts = new ArrayList<>();
+    private List<Cart> cartProducts = new ArrayList<>();
 }

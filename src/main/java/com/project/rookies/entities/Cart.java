@@ -21,6 +21,10 @@ public class Cart {
     @OneToOne(cascade =CascadeType.REMOVE)
     @JoinColumn(name = "customer_id",referencedColumnName = "id",unique = true)
     private Customer customer;
-    @OneToMany(mappedBy = "cart")
-    private List<CartDetail> productList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id",referencedColumnName = "id")
+    private Product product;
+    private int amount;
+    @Column(name = "cart_price")
+    private float cartPrice;
 }

@@ -40,8 +40,8 @@ public class AppConfig {
     @Bean
     CommandLineRunner run( ){
         return args -> {
-            roleService.saveRole(new Role(1L, ERoleType.ROLE_ADMIN));
-            roleService.saveRole(new Role(2L, ERoleType.ROLE_USER));
+//            roleService.saveRole(new Role(1L, ERoleType.ROLE_ADMIN));
+//            roleService.saveRole(new Role(2L, ERoleType.ROLE_USER));
 //            roleService.saveRole(new Role(3L, ERoleType.ROLE_USER));
 //            Customer customer = new Customer(null,"a","a","b","c",null,null,"a",null,null,null,null );
 //            customerService.saveCustomer(customer);

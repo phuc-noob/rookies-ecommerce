@@ -117,7 +117,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
         if(customers.isEmpty())
         {
-            throw new ResourceNotFoundException("customer not found",HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("customer not found");
         }else{
             return customers.stream().map(customer -> modelMapper.map(customer,CustomerResponseDto.class)).collect(Collectors.toList());
         }

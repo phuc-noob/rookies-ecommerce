@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public CategoryResponseDto updateCategoryById(CategoryDto categoryDto,Long id) {
-        if(!categoryRepo.existsById(id)) throw new ResourceNotFoundException("category not exist",HttpStatus.NOT_FOUND);
+        if(!categoryRepo.existsById(id)) throw new ResourceNotFoundException("category not exist");
         try {
             CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
             categoryRepo.findById(id).ifPresent(category -> {
