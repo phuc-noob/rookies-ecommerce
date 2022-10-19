@@ -19,6 +19,8 @@ public class Rate {
     private String content;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
     private float point;
     private boolean status;
     @ManyToOne(fetch = FetchType.LAZY)

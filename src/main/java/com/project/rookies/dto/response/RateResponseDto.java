@@ -11,6 +11,7 @@ public class RateResponseDto {
     private Long rateId;
     private String content;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private float point;
     private boolean status;
     private CustomerResponseDto customer;
