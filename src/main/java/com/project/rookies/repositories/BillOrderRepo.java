@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @EnableJpaRepositories
-public interface BillOrderRepo extends JpaRepository<BillOrder,Long> {
+public interface BillOrderRepo extends JpaRepository<BillOrder, Long> {
     @Query("select case when count(c) > 0 then true else false end from BillOrder c where customer_id = :customerId and status is true")
     boolean existBillOrderByCustomerQuery(@Param("customerId") Long customerId);
 }

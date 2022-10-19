@@ -12,11 +12,17 @@ import java.util.List;
 public interface ICustomerService {
 
     CustomerResponseDto saveCustomer(CustomerDto customer);
-    CustomerResponseDto updateCustomerById(CustomerDto customerDto,Long id);
+
+    CustomerResponseDto updateCustomerById(CustomerDto customerDto, Long id);
+
     List<CustomerResponseDto> findCustomerById(Long id);
-    List<CustomerResponseDto> findListCustomer(int page,int size);
+
+    List<CustomerResponseDto> findListCustomer(int page, int size);
+
     boolean isExistCustomer(CustomerDto customerDto);
+
     DeleteResponseDto deleteCustomer(Long id);
+
     DeleteResponseDto updateStatusCustomer(Long id, ECustomerStatus customerStatus);
 
 }

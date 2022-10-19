@@ -14,42 +14,42 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class CaterogyController {
+public class CategoryController {
     private final ICategoryService categoryService;
     private final IProductService productService;
+
     @PostMapping("/category")
-    CategoryResponseDto saveCategory(@RequestBody CategoryDto categoryDto)
-    {
+    CategoryResponseDto saveCategory(@RequestBody CategoryDto categoryDto) {
         return categoryService.saveCategory(categoryDto);
     }
+
     @PutMapping("/category/{id}")
-    CategoryResponseDto updateCategory(@RequestBody CategoryDto categoryDto,@PathVariable Long id)
-    {
-        return categoryService.updateCategoryById(categoryDto,id);
+    CategoryResponseDto updateCategory(@RequestBody CategoryDto categoryDto, @PathVariable Long id) {
+        return categoryService.updateCategoryById(categoryDto, id);
     }
+
     @GetMapping("/categories")
-    List<CategoryResponseDto> getListCategory()
-    {
+    List<CategoryResponseDto> getListCategory() {
         return categoryService.getALlCategory();
     }
+
     @GetMapping("/category/{id}")
-    CategoryResponseDto getCategory(@PathVariable Long id)
-    {
+    CategoryResponseDto getCategory(@PathVariable Long id) {
         return categoryService.getCategroybyId(id);
     }
+
     @GetMapping("/category/{id}/products")
-    List<ProductResponseDto> getProductsByCategory(@PathVariable Long id, @RequestParam("page") int page,@RequestParam("size") int size)
-    {
+    List<ProductResponseDto> getProductsByCategory(@PathVariable Long id, @RequestParam("page") int page, @RequestParam("size") int size) {
         return productService.getProductsByCategoryBy(id, page, size);
     }
+
     @DeleteMapping("category/{id}")
-    void deleteCategory(@RequestParam(value = "id") Long id, HttpServletResponse response)
-    {
-        categoryService.deleteCategoryById(id,response);
+    void deleteCategory(@RequestParam(value = "id") Long id, HttpServletResponse response) {
+        categoryService.deleteCategoryById(id, response);
     }
+
     @PatchMapping("/category/{cateId}/product/{productId}")
-    CategoryResponseDto addProductToCategory(@PathVariable("cateId") Long cateId,@PathVariable("productId") Long productId)
-    {
-        return categoryService.addProductToCategory(cateId,productId);
+    CategoryResponseDto addProductToCategory(@PathVariable("cateId") Long cateId, @PathVariable("productId") Long productId) {
+        return categoryService.addProductToCategory(cateId, productId);
     }
 }

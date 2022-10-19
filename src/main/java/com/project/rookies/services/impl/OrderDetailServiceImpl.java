@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderDetailServiceImpl implements IOrderDetailService {
     private final OrderDetailRepo orderDetailRepo;
+
     @Override
     public OrderDetail saveOrderDetail(OrderDetail orderDetail) {
         return orderDetailRepo.save(orderDetail);

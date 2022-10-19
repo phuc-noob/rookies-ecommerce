@@ -11,15 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long productId;
-    @Column(name = "product_name",columnDefinition = "TEXT",unique = true)
+    @Column(name = "product_name", columnDefinition = "TEXT", unique = true)
     private String productName;
-    @Column(name = "description",columnDefinition = "TEXT")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -31,6 +32,4 @@ public class Product {
     private int amount;
     @Enumerated(EnumType.STRING)
     private EProductStatus status;
-    @OneToMany(mappedBy = "product")
-    List<Rate> rates;
 }

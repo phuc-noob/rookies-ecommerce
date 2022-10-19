@@ -11,7 +11,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter@Setter
+@Getter
+@Setter
 public class CartResponseDto {
     private Long Id;
     private LocalDateTime createdAt;

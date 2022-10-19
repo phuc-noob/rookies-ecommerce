@@ -13,11 +13,13 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface CustomerRepo extends JpaRepository<Customer,Long> {
+public interface CustomerRepo extends JpaRepository<Customer, Long> {
     Customer findByEmail(String email);
-    @Query(value = "select * from customer c  offset :page limit :size ",nativeQuery = true)
+
+    @Query(value = "select * from customer c  offset :page limit :size ", nativeQuery = true)
     List<Customer> findListCustomer(int page, int size);
+
     @Modifying
-    @Query(value = "update customer set status = :status where id = :id",nativeQuery = true)
+    @Query(value = "update customer set status = :status where id = :id", nativeQuery = true)
     int updateCustomerStatus(@Param("status") ECustomerStatus status, @Param("id") Long id);
 }

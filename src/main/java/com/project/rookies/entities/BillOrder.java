@@ -21,15 +21,15 @@ public class BillOrder {
     private Long id;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-    private boolean status ;
+    private boolean status;
     private float totalPrice;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     @Column(name = "payment_date")
     private LocalDateTime paymentDay;
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "customer_id",referencedColumnName = "id")
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
-    @OneToMany(mappedBy = "billOrder",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "billOrder", cascade = CascadeType.ALL)
     private List<OrderDetail> oderDetails;
 }

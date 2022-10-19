@@ -11,10 +11,10 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "admin_id", nullable = false)
     private Long adminId;
-    @Column(name = "admin_name",length = 100,unique = true)
+    @Column(name = "admin_name", length = 100, unique = true)
     private String adminName;
     private String password;
-    @OneToOne(cascade = CascadeType.ALL,fetch =FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 }

@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CategoryRepo extends JpaRepository<Category,Long> {
+public interface CategoryRepo extends JpaRepository<Category, Long> {
     Category findByCateName(String cateName);
 }

@@ -6,5 +6,6 @@ import com.project.rookies.entities.BillOrder;
 
 public interface IBillOrderService {
     BillOrderResponseDto saveBillOrder(BillOrderDto billOrder, Long customerId);
+
     Boolean isExistBillOrder(Long customerId);
 }

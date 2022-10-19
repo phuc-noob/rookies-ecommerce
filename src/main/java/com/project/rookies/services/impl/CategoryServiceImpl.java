@@ -22,6 +22,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -29,50 +30,56 @@ public class CategoryServiceImpl implements ICategoryService {
     private final CategoryRepo categoryRepo;
     private final ProductRepo productRepo;
     private final ModelMapper modelMapper;
+
     @Override
     public CategoryResponseDto saveCategory(CategoryDto categoryDto) {
-        if(isExistCategory(categoryDto)) throw new DuplicateValueInResourceException("category was existed", HttpStatus.BAD_REQUEST);
+        if (isExistCategory(categoryDto))
+            throw new DuplicateValueInResourceException("category was existed", HttpStatus.BAD_REQUEST);
         Category category = modelMapper.map(categoryDto, Category.class);
         category.setCreatedAt(LocalDateTime.now());
-        return modelMapper.map(categoryRepo.save(category),CategoryResponseDto.class) ;
+        return modelMapper.map(categoryRepo.save(category), CategoryResponseDto.class);
     }
+
     @Override
     public boolean isExistCategory(CategoryDto categoryDto) {
         String cateName = categoryDto.getCateName();
-        if(categoryRepo.findByCateName(cateName)!=null) return true;
+        if (categoryRepo.findByCateName(cateName) != null) return true;
         else return false;
     }
 
     @Override
-    public CategoryResponseDto updateCategoryById(CategoryDto categoryDto,Long id) {
-        if(!categoryRepo.existsById(id)) throw new ResourceNotFoundException("category not exist");
+    public CategoryResponseDto updateCategoryById(CategoryDto categoryDto, Long id) {
+        if (!categoryRepo.existsById(id)) throw new ResourceNotFoundException("category not exist");
         try {
             CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
             categoryRepo.findById(id).ifPresent(category -> {
-                modelMapper.map(categoryDto,category);
+                modelMapper.map(categoryDto, category);
                 category.setUpdatedAt(LocalDateTime.now());
-                modelMapper.map(category,categoryResponseDto);
+                modelMapper.map(category, categoryResponseDto);
                 categoryRepo.save(category);
             });
 
             return categoryResponseDto;
-        }catch (Exception exception){
-            throw new ResourceFoundException(exception.getMessage(),HttpStatus.BAD_REQUEST);
+        } catch (Exception exception) {
+            throw new ResourceFoundException(exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
     @Override
     public List<CategoryResponseDto> getALlCategory() {
         return categoryRepo.findAll()
                 .stream()
-                .map(category -> modelMapper.map(category,CategoryResponseDto.class))
+                .map(category -> modelMapper.map(category, CategoryResponseDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public CategoryResponseDto getCategroybyId(Long id) {
-        if(!categoryRepo.existsById(id)) throw new DuplicateValueInResourceException("category not exist",HttpStatus.NOT_FOUND);
-        return modelMapper.map(categoryRepo.getById(id),CategoryResponseDto.class) ;
+        if (!categoryRepo.existsById(id))
+            throw new DuplicateValueInResourceException("category not exist", HttpStatus.NOT_FOUND);
+        return modelMapper.map(categoryRepo.getById(id), CategoryResponseDto.class);
     }
+
     @Override
     @JsonIgnore
     public CategoryResponseDto addProductToCategory(Long cateId, Long productId) {
@@ -80,18 +87,18 @@ public class CategoryServiceImpl implements ICategoryService {
         Product product = productRepo.getById(productId);
         category.getProduct().add(product);
         CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
-        modelMapper.map(category.getProduct(),categoryResponseDto.getProduct());
-        modelMapper.map(category,categoryResponseDto);
+        modelMapper.map(category.getProduct(), categoryResponseDto.getProduct());
+        modelMapper.map(category, categoryResponseDto);
         return categoryResponseDto;
     }
 
     @Override
     public DeleteResponseDto deleteCategoryById(Long id, HttpServletResponse response) {
-        try{
+        try {
             categoryRepo.deleteById(id);
-            return new DeleteResponseDto("delete success",HttpStatus.OK.value(),HttpStatus.OK);
-        }catch (Exception exception){
-            return new DeleteResponseDto("delete fail",HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST);
+            return new DeleteResponseDto("delete success", HttpStatus.OK.value(), HttpStatus.OK);
+        } catch (Exception exception) {
+            return new DeleteResponseDto("delete fail", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST);
         }
     }
 }

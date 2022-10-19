@@ -9,12 +9,20 @@ import java.util.List;
 
 public interface IProductService {
     ProductResponseDto saveProduct(ProductDto productDto);
+
     Boolean isExistProduct(ProductDto productDto);
+
     ProductResponseDto updateProduct(ProductDto productDto, Long id);
+
     ProductResponseDto getProductById(Long id);
-    List<ProductResponseDto> getListProduct(int page,int size);
-    List<ProductResponseDto> getListProductBestSeller(int page,int size);
+
+    List<ProductResponseDto> getListProduct(int page, int size);
+
+    List<ProductResponseDto> getListProductBestSeller(int page, int size);
+
     DeleteResponseDto updateProductStatus(EProductStatus status, Long id);
+
     Boolean checkProductStatus(String productName);
-    List<ProductResponseDto> getProductsByCategoryBy(Long id,int page, int size);
+
+    List<ProductResponseDto> getProductsByCategoryBy(Long id, int page, int size);
 }

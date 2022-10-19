@@ -9,10 +9,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter@Setter
+@Getter
+@Setter
 public class BillOrderResponseDto {
     private Long id;
-    private boolean status ;
+    private boolean status;
     private float totalPrice;
     private LocalDateTime updatedAt;
     private LocalDateTime paymentDay;

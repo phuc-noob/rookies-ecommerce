@@ -17,20 +17,22 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class BillOrderServiceImpl implements IBillOrderService {
-    private final BillOrderRepo billOrderRepo ;
+    private final BillOrderRepo billOrderRepo;
     private final CustomerRepo customerRepo;
     private final ModelMapper modelMapper;
+
     @Override
     public BillOrderResponseDto saveBillOrder(BillOrderDto billOrderDto, Long customerId) {
-        if(isExistBillOrder(customerId))
+        if (isExistBillOrder(customerId))
             throw new DuplicateValueInResourceException("order was exist", HttpStatus.NOT_MODIFIED);
 
-        BillOrder billOrder = modelMapper.map(billOrderDto,BillOrder.class);
+        BillOrder billOrder = modelMapper.map(billOrderDto, BillOrder.class);
         Customer customer = customerRepo.findById(customerId).get();
         billOrder.setCustomer(customer);
         billOrder.setStatus(true);
-        return modelMapper.map(billOrderRepo.save(billOrder),BillOrderResponseDto.class) ;
+        return modelMapper.map(billOrderRepo.save(billOrder), BillOrderResponseDto.class);
     }
+
     @Override
     public Boolean isExistBillOrder(Long customerId) {
         return billOrderRepo.existBillOrderByCustomerQuery(customerId);

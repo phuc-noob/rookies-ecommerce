@@ -10,7 +10,9 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-@Getter@Setter
+
+@Getter
+@Setter
 public class ProductResponseDto {
     private Long productId;
     private String productName;

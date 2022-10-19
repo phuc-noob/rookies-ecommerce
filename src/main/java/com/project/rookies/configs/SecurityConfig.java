@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.HttpMethod.POST;
 
-@Configuration @EnableWebSecurity @RestController
+@Configuration
+@EnableWebSecurity
+@RestController
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.cors().and();
-        http.authorizeRequests().antMatchers(POST,"/api").permitAll();
+        http.authorizeRequests().antMatchers(POST, "/api").permitAll();
     }
 }

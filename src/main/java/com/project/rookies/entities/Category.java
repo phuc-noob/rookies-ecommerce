@@ -16,17 +16,17 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long cateId;
-    @Column(name = "cate_name",length = 100,unique = true)
+    @Column(name = "cate_name", length = 100, unique = true)
     private String cateName;
-    @Column(name = "description",columnDefinition = "TEXT")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
-    @Column(name = "image",columnDefinition = "TEXT")
+    @Column(name = "image", columnDefinition = "TEXT")
     private String image;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     private int amount;
-    @ManyToMany(fetch =FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Product> product = new ArrayList<>();
 }

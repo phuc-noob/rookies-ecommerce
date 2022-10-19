@@ -23,22 +23,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootConfiguration
 @RequiredArgsConstructor
 public class AppConfig {
-//    private final ICustomerService customerService;
+    //    private final ICustomerService customerService;
 //    private final IBillOrderService billOrderService;
 //    private final IOrderDetailService orderDetailService;
     private final IRoleService roleService;
+
     @Bean
-    public PasswordEncoder passwordEncoder()
-    {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    public ModelMapper modelMapper()
-    {
+    public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+
     @Bean
-    CommandLineRunner run( ){
+    CommandLineRunner run() {
         return args -> {
 //            roleService.saveRole(new Role(1L, ERoleType.ROLE_ADMIN));
 //            roleService.saveRole(new Role(2L, ERoleType.ROLE_USER));
@@ -54,6 +55,7 @@ public class AppConfig {
 //            orderDetailService.saveOrderDetail(orderDetail);
         };
     }
+
     @Bean
     public TomcatServletWebServerFactory containerFactory() {
         return new TomcatServletWebServerFactory() {

@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.project.rookies.entities.enums.EProductStatus;
 import lombok.Getter;
 import lombok.Setter;
-@Getter@Setter
+
+@Getter
+@Setter
 public class ProductDto {
     private String productName;
     private String description;

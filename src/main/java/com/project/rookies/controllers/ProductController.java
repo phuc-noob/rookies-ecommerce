@@ -15,35 +15,35 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final IProductService productService;
+
     @PostMapping("/product")
-    ProductResponseDto saveProduct(@RequestBody ProductDto productDto)
-    {
+    ProductResponseDto saveProduct(@RequestBody ProductDto productDto) {
         return productService.saveProduct(productDto);
     }
+
     @PutMapping("/product/{id}")
-    ProductResponseDto updateProduct(@RequestBody ProductDto productDto,@PathVariable Long id)
-    {
-        return productService.updateProduct(productDto,id);
+    ProductResponseDto updateProduct(@RequestBody ProductDto productDto, @PathVariable Long id) {
+        return productService.updateProduct(productDto, id);
     }
+
     @GetMapping("/product/{id}")
-    ProductResponseDto getProduct(@PathVariable Long id)
-    {
+    ProductResponseDto getProduct(@PathVariable Long id) {
         return productService.getProductById(id);
     }
+
     @GetMapping("/products")
-    List<ProductResponseDto> getListProduct(@RequestParam(name = "page") int page,@RequestParam(name = "size") int size)
-    {
-        return productService.getListProduct(page,size);
+    List<ProductResponseDto> getListProduct(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+        return productService.getListProduct(page, size);
     }
+
     @GetMapping("/products/best-seller")
-    List<ProductResponseDto> getListProductBessSeller(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size)
-    {
-        return productService.getListProductBestSeller(page,size);
+    List<ProductResponseDto> getListProductBessSeller(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+        return productService.getListProductBestSeller(page, size);
     }
+
     @DeleteMapping("/product/{id}")
     @ResponseBody
-    DeleteResponseDto deleteProduct(@PathVariable Long id)
-    {
-        return productService.updateProductStatus(EProductStatus.DELETED,id) ;
+    DeleteResponseDto deleteProduct(@PathVariable Long id) {
+        return productService.updateProductStatus(EProductStatus.DELETED, id);
     }
 }

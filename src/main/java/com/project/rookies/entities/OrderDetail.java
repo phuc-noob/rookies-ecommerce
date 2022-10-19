@@ -6,7 +6,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter@Setter
+@Getter
+@Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class OrderDetail {
@@ -19,10 +20,10 @@ public class OrderDetail {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     @ManyToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "id")
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
     @ManyToOne
-    @JoinColumn(name = "bill_order_id",referencedColumnName = "id")
+    @JoinColumn(name = "bill_order_id", referencedColumnName = "id")
     private BillOrder billOrder;
     @Column(name = "unit_price")
     private float unitPrice;

@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 
-@Getter@Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class CustomerResponseDto {
     private Long id;

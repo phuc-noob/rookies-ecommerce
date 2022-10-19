@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class BillOrderController {
     private final IBillOrderService billOrderService;
+
     @PostMapping("/customer/{customerId}/order")
-    BillOrderResponseDto saveBillOrder(@RequestBody BillOrderDto billOrderDto, @PathVariable Long customerId)
-    {
-        return billOrderService.saveBillOrder(billOrderDto,customerId);
+    BillOrderResponseDto saveBillOrder(@RequestBody BillOrderDto billOrderDto, @PathVariable Long customerId) {
+        return billOrderService.saveBillOrder(billOrderDto, customerId);
     }
 }

@@ -21,29 +21,27 @@ public class CustomerController {
     private final ICustomerService customerService;
 
     @GetMapping("/customer/{id}")
-    CustomerResponseDto getCustomer(@PathVariable Long id)
-    {
+    CustomerResponseDto getCustomer(@PathVariable Long id) {
         return customerService.findCustomerById(id).get(0);
     }
+
     @GetMapping("/customers")
-    List<CustomerResponseDto> getListCustomer(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size)
-    {
-        return customerService.findListCustomer(page,size);
+    List<CustomerResponseDto> getListCustomer(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+        return customerService.findListCustomer(page, size);
     }
 
     @PostMapping("/customer")
-    CustomerResponseDto saveCustomer(@RequestBody CustomerDto customerDto)
-    {
+    CustomerResponseDto saveCustomer(@RequestBody CustomerDto customerDto) {
         return customerService.saveCustomer(customerDto);
     }
+
     @PutMapping("/customer/{id}")
-    CustomerResponseDto updateCustomer(@RequestBody CustomerDto customerDto,@PathVariable Long id)
-    {
-        return customerService.updateCustomerById(customerDto,id);
+    CustomerResponseDto updateCustomer(@RequestBody CustomerDto customerDto, @PathVariable Long id) {
+        return customerService.updateCustomerById(customerDto, id);
     }
 
     @DeleteMapping("/customer/{id}")
-    DeleteResponseDto deleteCustomer(@PathVariable Long id){
+    DeleteResponseDto deleteCustomer(@PathVariable Long id) {
         return customerService.updateStatusCustomer(id, ECustomerStatus.DELETED);
     }
 }

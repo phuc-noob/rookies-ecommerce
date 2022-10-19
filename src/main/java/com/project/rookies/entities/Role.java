@@ -9,7 +9,8 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class Role {
@@ -17,7 +18,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "role_id", nullable = false)
     private Long roleId;
-    @Column(name = "role_name",unique = true)
+    @Column(name = "role_name", unique = true)
     @Enumerated(EnumType.STRING)
     private ERoleType roleName;
 

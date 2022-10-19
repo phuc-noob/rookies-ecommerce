@@ -8,20 +8,22 @@ import lombok.Setter;
 
 import java.time.ZonedDateTime;
 import java.util.Map;
-@Getter@Setter
+
+@Getter
+@Setter
 @RequiredArgsConstructor
 public class ErrorResponseDto {
-	int statusCode;
-	String message;
-	String description;
-	ZonedDateTime timestamp;
-	@JsonInclude(Include.NON_NULL)
-	Map<String, String> validationErrors;
+    int statusCode;
+    String message;
+    String description;
+    ZonedDateTime timestamp;
+    @JsonInclude(Include.NON_NULL)
+    Map<String, String> validationErrors;
 
-	public ErrorResponseDto(int statusCode, String message, String description, ZonedDateTime timestamp) {
-		this.statusCode = statusCode;
-		this.message = message;
-		this.description = description;
-		this.timestamp = timestamp;
-	}
+    public ErrorResponseDto(int statusCode, String message, String description, ZonedDateTime timestamp) {
+        this.statusCode = statusCode;
+        this.message = message;
+        this.description = description;
+        this.timestamp = timestamp;
+    }
 }

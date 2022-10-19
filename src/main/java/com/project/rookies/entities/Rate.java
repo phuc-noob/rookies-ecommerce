@@ -15,16 +15,16 @@ public class Rate {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "rate_id", nullable = false)
     private Long rateId;
-    @Column(name = "content",columnDefinition = "TEXT")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     private float point;
     private boolean status;
-    @ManyToOne
-    @MapsId("customerId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
-    @ManyToOne
-    @MapsId("productId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = true)
     private Product product;
 }

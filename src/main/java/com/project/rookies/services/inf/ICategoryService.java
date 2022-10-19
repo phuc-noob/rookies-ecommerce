@@ -10,10 +10,16 @@ import java.util.List;
 
 public interface ICategoryService {
     CategoryResponseDto saveCategory(CategoryDto categoryDto);
+
     boolean isExistCategory(CategoryDto categoryDto);
-    CategoryResponseDto updateCategoryById(CategoryDto categoryDto,Long id);
+
+    CategoryResponseDto updateCategoryById(CategoryDto categoryDto, Long id);
+
     List<CategoryResponseDto> getALlCategory();
+
     CategoryResponseDto getCategroybyId(Long id);
-    CategoryResponseDto addProductToCategory(Long cateId,Long productId);
+
+    CategoryResponseDto addProductToCategory(Long cateId, Long productId);
+
     DeleteResponseDto deleteCategoryById(Long id, HttpServletResponse response);
 }

@@ -8,7 +8,9 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-@Getter@Setter
+
+@Getter
+@Setter
 public class CategoryResponseDto {
     private Long cateId;
     private String cateName;
