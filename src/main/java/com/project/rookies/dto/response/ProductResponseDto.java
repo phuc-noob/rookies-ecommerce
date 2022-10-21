@@ -1,14 +1,18 @@
 package com.project.rookies.dto.response;
 
 
-import com.project.rookies.entities.Rate;
+import com.project.rookies.dto.request.ImageDto;
 import com.project.rookies.entities.enums.EProductStatus;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductResponseDto {
     private Long productId;
     private String productName;
@@ -17,4 +21,5 @@ public class ProductResponseDto {
     private int amount;
     private int totalSold;
     private EProductStatus status;
+    private List<ImageDto> images = new ArrayList<>();
 }

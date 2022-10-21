@@ -10,10 +10,16 @@ import java.util.List;
 
 public interface IBillOrderService {
     BillOrderResponseDto saveBillOrder(BillOrderDto billOrder);
+
     Boolean isValidCustomerForOrder(Customer customer);
+
     String isValidQuantityProductInOrder(BillOrderDto billOrderDto);
+
     BillOrderResponseDto getOrderById(Long orderId);
+
     List<BillOrderResponseDto> getListOrder(int page, int size);
+
     DeleteResponseDto deleteOrderById(Long orderId);
-    BillOrderResponseDto updateOrderStatus(Long orderId,BillOrderDto billOrderDto);
+
+    BillOrderResponseDto updateOrderStatus(Long orderId, BillOrderDto billOrderDto);
 }

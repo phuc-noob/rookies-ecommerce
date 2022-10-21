@@ -16,14 +16,9 @@ import java.util.List;
 public class RateController {
     private final IRateService rateService;
 
-    @PostMapping("/customer/{customerId}/rate")
-    RateResponseDto saveRate(@RequestBody RateDto rateDto, @PathVariable Long customerId) {
-        return rateService.saveRate(customerId, rateDto);
-    }
-
-    @PutMapping("product/{productId}/rate/{rateId}")
-    RateResponseDto addRateToProduct(@PathVariable Long productId, @PathVariable Long rateId) {
-        return rateService.addRateToProduct(productId, rateId);
+    @PostMapping("/rate")
+    RateResponseDto saveRate(@RequestBody RateDto rateDto) {
+        return rateService.saveRate(rateDto);
     }
 
     @PutMapping("rate/{rateId}")
@@ -42,8 +37,7 @@ public class RateController {
     }
 
     @GetMapping("/rate/{rateId}")
-    RateResponseDto getRate(@PathVariable Long rateId)
-    {
+    RateResponseDto getRate(@PathVariable Long rateId) {
         return rateService.getRateById(rateId);
     }
 }

@@ -3,7 +3,6 @@ package com.project.rookies.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter

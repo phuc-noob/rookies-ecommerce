@@ -1,12 +1,14 @@
 package com.project.rookies.dto.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RateResponseDto {
     private Long rateId;
     private String content;
@@ -14,6 +16,6 @@ public class RateResponseDto {
     private LocalDateTime updatedAt;
     private float point;
     private boolean status;
-    private CustomerResponseDto customer;
-    private ProductResponseDto product;
+    private Long customerId;
+    private Long productId;
 }

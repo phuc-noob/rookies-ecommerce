@@ -1,13 +1,18 @@
 package com.project.rookies.services.impl;
 
+import com.project.rookies.dto.request.ImageDto;
 import com.project.rookies.dto.request.ProductDto;
 import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.dto.response.ProductResponseDto;
+import com.project.rookies.entities.Image;
 import com.project.rookies.entities.Product;
 import com.project.rookies.entities.enums.EProductStatus;
 import com.project.rookies.exceptions.DuplicateValueInResourceException;
 import com.project.rookies.exceptions.ResourceFoundException;
 import com.project.rookies.exceptions.ResourceNotFoundException;
+import com.project.rookies.mappers.ProductMapper;
+import com.project.rookies.repositories.CategoryRepo;
+import com.project.rookies.repositories.ImageRepo;
 import com.project.rookies.repositories.ProductRepo;
 import com.project.rookies.services.inf.IProductService;
 import lombok.RequiredArgsConstructor;
@@ -22,30 +27,37 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements IProductService {
+    private final CategoryRepo categoryRepo;
     private final ProductRepo productRepo;
     private final ModelMapper modelMapper;
-
+    private final ImageRepo imageRepo;
+    private final ProductMapper productMapper;
     @Override
     public ProductResponseDto saveProduct(ProductDto productDto) {
         // case : product is existed and status is true -> not update
         if (isExistProduct(productDto) && checkProductStatus(productDto.getProductName()))
             throw new DuplicateValueInResourceException("Product is exist");
+        if(!categoryRepo.existsById(productDto.getCategoryId()))
+            throw new ResourceNotFoundException("category not found");
         // case : product is existed and status is false -> update status is true
-        if (isExistProduct(productDto)) {
-            Product product = productRepo.findProductByProductName(productDto.getProductName());
-            modelMapper.map(productDto, product);
-            product.setStatus(EProductStatus.ACTIVE);
-            productRepo.save(product);
 
-            return modelMapper.map(productRepo.save(product), ProductResponseDto.class);
-        } else // case : product is not existed -> create new product
+        Product product = modelMapper.map(productDto, Product.class);
+        product.setCreatedAt(LocalDateTime.now());
+        product.setUpdatedAt(LocalDateTime.now());
+        product.setStatus(EProductStatus.ACTIVE);
+        product = productRepo.save(product);
+
+        // add product to category
+        categoryRepo.getById(productDto.getCategoryId()).getProduct().add(product);
+
+        for(ImageDto imageDto : productDto.getImageDtos())
         {
-            Product product = modelMapper.map(productDto, Product.class);
-            product.setCreatedAt(LocalDateTime.now());
-            product.setUpdatedAt(LocalDateTime.now());
-            product.setStatus(EProductStatus.ACTIVE);
-            return modelMapper.map(productRepo.save(product), ProductResponseDto.class);
+            Image image = modelMapper.map(imageDto, Image.class);
+            image.setProduct(product);
+            product.getImages().add(imageRepo.save(image)) ;
         }
+        return productMapper.mapEntityToDto(product);
+
     }
 
     @Override
@@ -93,7 +105,7 @@ public class ProductServiceImpl implements IProductService {
         if (page < 0) throw new ResourceNotFoundException("page not found");
         return productRepo.getListProductBestSeller(page, size)
                 .stream()
-                .map(product -> modelMapper.map(product, ProductResponseDto.class))
+                .map(product -> productMapper.mapEntityToDto(product))
                 .collect(Collectors.toList());
     }
 

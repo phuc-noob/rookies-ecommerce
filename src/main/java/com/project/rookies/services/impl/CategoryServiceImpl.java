@@ -9,6 +9,7 @@ import com.project.rookies.entities.Product;
 import com.project.rookies.exceptions.DuplicateValueInResourceException;
 import com.project.rookies.exceptions.ResourceFoundException;
 import com.project.rookies.exceptions.ResourceNotFoundException;
+import com.project.rookies.mappers.CategoryMapper;
 import com.project.rookies.repositories.CategoryRepo;
 import com.project.rookies.repositories.ProductRepo;
 import com.project.rookies.services.inf.ICategoryService;
@@ -30,6 +31,7 @@ public class CategoryServiceImpl implements ICategoryService {
     private final CategoryRepo categoryRepo;
     private final ProductRepo productRepo;
     private final ModelMapper modelMapper;
+    private final CategoryMapper categoryMapper;
 
     @Override
     public CategoryResponseDto saveCategory(CategoryDto categoryDto) {
@@ -77,7 +79,7 @@ public class CategoryServiceImpl implements ICategoryService {
     public CategoryResponseDto getCategoryById(Long id) {
         if (!categoryRepo.existsById(id))
             throw new DuplicateValueInResourceException("category not exist");
-        return modelMapper.map(categoryRepo.getById(id), CategoryResponseDto.class);
+        return categoryMapper.mapEntityToDto(categoryRepo.getById(id));
     }
 
     @Override

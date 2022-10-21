@@ -8,9 +8,8 @@ import nonapi.io.github.classgraph.utils.LogNode;
 import java.util.List;
 
 public interface IRateService {
-    RateResponseDto saveRate(Long cusId, RateDto rateDto);
+    RateResponseDto saveRate(RateDto rateDto);
 
-    RateResponseDto addRateToProduct(Long productId, Long rateId);
 
     RateResponseDto updateRate(RateDto rateDto, Long rateId);
 

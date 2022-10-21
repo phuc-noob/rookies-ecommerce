@@ -8,4 +8,6 @@ import lombok.Setter;
 public class RateDto {
     private String content;
     private float point;
+    private Long customerDtoId;
+    private Long productDtoId;
 }

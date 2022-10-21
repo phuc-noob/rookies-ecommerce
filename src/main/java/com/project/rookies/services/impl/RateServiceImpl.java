@@ -3,9 +3,11 @@ package com.project.rookies.services.impl;
 import com.project.rookies.dto.request.RateDto;
 import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.dto.response.RateResponseDto;
-import com.project.rookies.entities.Product;
 import com.project.rookies.entities.Rate;
+import com.project.rookies.exceptions.DuplicateValueInResourceException;
 import com.project.rookies.exceptions.ResourceNotFoundException;
+import com.project.rookies.exceptions.ValidationException;
+import com.project.rookies.mappers.RateMapper;
 import com.project.rookies.repositories.CustomerRepo;
 import com.project.rookies.repositories.ProductRepo;
 import com.project.rookies.repositories.RateRepo;
@@ -25,34 +27,33 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RateServiceImpl implements IRateService {
     private final ModelMapper modelMapper;
+    private final RateMapper rateMapper;
     private final CustomerRepo customerRepo;
     private final RateRepo rateRepo;
     private final ProductRepo productRepo;
 
     @Override
-    public RateResponseDto saveRate(Long customerId, RateDto rateDto) {
-        if (!customerRepo.existsById(customerId))
+    public RateResponseDto saveRate(RateDto rateDto) {
+        // case : customer not found
+        if (!customerRepo.existsById(rateDto.getCustomerDtoId()))
             throw new ResourceNotFoundException("customer not found");
-        Rate rate = modelMapper.map(rateDto, Rate.class);
-        rate.setCustomer(customerRepo.getById(customerId));
+        // case : customer must buy product before
+        if (!rateRepo.isValidRate(rateDto.getCustomerDtoId(), rateDto.getProductDtoId()))
+            throw new ValidationException("must buy product before rate");
+        // case : is existed rate by customer for product
+        if (rateRepo.isExistRate(rateDto.getCustomerDtoId(), rateDto.getProductDtoId()))
+            throw new DuplicateValueInResourceException("just one rating or each customer");
+
+        // case : create new rating for product by customer
+        Rate rate = rateMapper.mapDtoToEntity(rateDto);
         rate.setCreatedAt(LocalDateTime.now());
         rate.setUpdatedAt(LocalDateTime.now());
         rate = rateRepo.save(rate);
+
+        //update product rating when rated
+        productRepo.updateProductRatingPoint(rateDto.getProductDtoId());
         return modelMapper.map(
                 rateRepo.save(rate), RateResponseDto.class);
-    }
-
-    @Override
-    public RateResponseDto addRateToProduct(Long productId, Long rateId) {
-        if (!rateRepo.existsById(rateId))
-            throw new ResourceNotFoundException("rate not found");
-        if (!productRepo.existsById(productId))
-            throw new ResourceNotFoundException("product not found");
-        Rate rate = rateRepo.getById(rateId);
-        rate.setProduct(productRepo.getById(productId));
-        return modelMapper.map(
-                rateRepo.save(rate),
-                RateResponseDto.class);
     }
 
     @Override
@@ -61,8 +62,10 @@ public class RateServiceImpl implements IRateService {
             throw new ResourceNotFoundException("rate not found");
         Rate rate = rateRepo.getById(rateId);
         rate.setUpdatedAt(LocalDateTime.now());
-        modelMapper.map(rateDto, rate);
-        return modelMapper.map(rateRepo.save(rate), RateResponseDto.class);
+        rate.setContent(rate.getContent());
+        rate.setPoint(rateDto.getPoint());
+        //modelMapper.map(rateDto, rate);
+        return rateMapper.mapEntityToDto(rateRepo.save(rate));
     }
 
     @Override

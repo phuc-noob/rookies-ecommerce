@@ -47,6 +47,6 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Rate> rates;
     @OneToMany(cascade = {CascadeType.DETACH})
-    @JoinColumn(name = "customer")
+    @JoinColumn(name = "customer_id")
     private List<BillOrder> billOrders;
 }

@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Component
 public class OrderMapper {
-    private final BillOrderRepo billOrderRepo;
     private final ModelMapper modelMapper;
 
     public BillOrderResponseDto mapEntityToDto(BillOrder billOrder) {

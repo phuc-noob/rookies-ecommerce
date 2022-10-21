@@ -38,9 +38,9 @@ public class BillOrderController {
     DeleteResponseDto deleteOrderById(@PathVariable(name = "orderId") Long orderId) {
         return billOrderService.deleteOrderById(orderId);
     }
+
     @PatchMapping("/order/{orderId}")
-    BillOrderResponseDto updateStatusOrder(@RequestBody BillOrderDto billOrderDto,@PathVariable("orderId") Long orderId)
-    {
-        return billOrderService.updateOrderStatus(orderId,billOrderDto);
+    BillOrderResponseDto updateStatusOrder(@RequestBody BillOrderDto billOrderDto, @PathVariable("orderId") Long orderId) {
+        return billOrderService.updateOrderStatus(orderId, billOrderDto);
     }
 }
