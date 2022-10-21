@@ -70,7 +70,7 @@ public class RateServiceImpl implements IRateService {
         if (!rateRepo.existsById(rateId))
             throw new ResourceNotFoundException("rate not found");
         rateRepo.deleteById(rateId);
-        return new DeleteResponseDto("delete success", HttpStatus.OK.value(), HttpStatus.OK);
+        return new DeleteResponseDto("delete success", HttpStatus.OK);
     }
 
     @Override

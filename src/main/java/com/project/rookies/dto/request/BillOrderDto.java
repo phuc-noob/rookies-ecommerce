@@ -1,18 +1,18 @@
 package com.project.rookies.dto.request;
 
-import com.project.rookies.entities.Customer;
-import com.project.rookies.entities.OrderDetail;
+import com.project.rookies.entities.enums.EOrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.List;
 
 @Getter
 @Setter
 public class BillOrderDto {
-    private float totalPrice;
-    private LocalDateTime paymentDay;
-    private Customer customer;
-    private List<OrderDetail> oderDetails;
+    private Long customerId;
+    private List<OrderDetailDto> orderDetails;
+    @Enumerated(EnumType.STRING)
+    private EOrderStatus orderStatus;
 }

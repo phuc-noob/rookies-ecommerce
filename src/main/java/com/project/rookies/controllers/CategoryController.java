@@ -35,7 +35,7 @@ public class CategoryController {
 
     @GetMapping("/category/{id}")
     CategoryResponseDto getCategory(@PathVariable Long id) {
-        return categoryService.getCategroybyId(id);
+        return categoryService.getCategoryById(id);
     }
 
     @GetMapping("/category/{id}/products")

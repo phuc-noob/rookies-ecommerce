@@ -17,7 +17,7 @@ public interface ICategoryService {
 
     List<CategoryResponseDto> getALlCategory();
 
-    CategoryResponseDto getCategroybyId(Long id);
+    CategoryResponseDto getCategoryById(Long id);
 
     CategoryResponseDto addProductToCategory(Long cateId, Long productId);
 

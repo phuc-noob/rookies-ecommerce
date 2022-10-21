@@ -15,19 +15,15 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
     @ManyToOne
-    @JoinColumn(name = "bill_order_id", referencedColumnName = "id")
+    @JoinColumn(name = "order_id")
     private BillOrder billOrder;
     @Column(name = "unit_price")
     private float unitPrice;
-    private int mount;
+    private int amount;
     @Column(name = "order_item_price")
     private float orderItemPrice;
 }

@@ -29,7 +29,7 @@ public class ProductServiceImpl implements IProductService {
     public ProductResponseDto saveProduct(ProductDto productDto) {
         // case : product is existed and status is true -> not update
         if (isExistProduct(productDto) && checkProductStatus(productDto.getProductName()))
-            throw new DuplicateValueInResourceException("Product is exist", HttpStatus.BAD_REQUEST);
+            throw new DuplicateValueInResourceException("Product is exist");
         // case : product is existed and status is false -> update status is true
         if (isExistProduct(productDto)) {
             Product product = productRepo.findProductByProductName(productDto.getProductName());
@@ -57,7 +57,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public ProductResponseDto updateProduct(ProductDto productDto, Long id) {
         if (!productRepo.existsById(id))
-            throw new DuplicateValueInResourceException("product not exist", HttpStatus.NOT_FOUND);
+            throw new DuplicateValueInResourceException("product not exist");
         try {
             ProductResponseDto productResponseDto = new ProductResponseDto();
             productRepo.findById(id).ifPresent(product -> {
@@ -69,7 +69,7 @@ public class ProductServiceImpl implements IProductService {
             });
             return productResponseDto;
         } catch (Exception exception) {
-            throw new ResourceFoundException(exception.getMessage(), HttpStatus.BAD_REQUEST);
+            throw new ResourceFoundException(exception.getMessage());
         }
     }
 
@@ -103,9 +103,9 @@ public class ProductServiceImpl implements IProductService {
             Product product = productRepo.getById(id);
             product.setStatus(status);
             productRepo.save(product);
-            return new DeleteResponseDto("delete success", HttpStatus.OK.value(), HttpStatus.OK);
+            return new DeleteResponseDto("delete success", HttpStatus.OK);
         } else
-            return new DeleteResponseDto("delete fail", HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND);
+            return new DeleteResponseDto("delete fail", HttpStatus.NOT_FOUND);
     }
 
     @Override

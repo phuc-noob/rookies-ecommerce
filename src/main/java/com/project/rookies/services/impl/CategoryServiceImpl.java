@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public CategoryResponseDto saveCategory(CategoryDto categoryDto) {
         if (isExistCategory(categoryDto))
-            throw new DuplicateValueInResourceException("category was existed", HttpStatus.BAD_REQUEST);
+            throw new DuplicateValueInResourceException("category was existed");
         Category category = modelMapper.map(categoryDto, Category.class);
         category.setCreatedAt(LocalDateTime.now());
         return modelMapper.map(categoryRepo.save(category), CategoryResponseDto.class);
@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
             return categoryResponseDto;
         } catch (Exception exception) {
-            throw new ResourceFoundException(exception.getMessage(), HttpStatus.BAD_REQUEST);
+            throw new ResourceFoundException(exception.getMessage());
         }
     }
 
@@ -74,9 +74,9 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public CategoryResponseDto getCategroybyId(Long id) {
+    public CategoryResponseDto getCategoryById(Long id) {
         if (!categoryRepo.existsById(id))
-            throw new DuplicateValueInResourceException("category not exist", HttpStatus.NOT_FOUND);
+            throw new DuplicateValueInResourceException("category not exist");
         return modelMapper.map(categoryRepo.getById(id), CategoryResponseDto.class);
     }
 
@@ -96,9 +96,9 @@ public class CategoryServiceImpl implements ICategoryService {
     public DeleteResponseDto deleteCategoryById(Long id, HttpServletResponse response) {
         try {
             categoryRepo.deleteById(id);
-            return new DeleteResponseDto("delete success", HttpStatus.OK.value(), HttpStatus.OK);
+            return new DeleteResponseDto("delete success", HttpStatus.OK);
         } catch (Exception exception) {
-            return new DeleteResponseDto("delete fail", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST);
+            return new DeleteResponseDto("delete fail", HttpStatus.BAD_REQUEST);
         }
     }
 }

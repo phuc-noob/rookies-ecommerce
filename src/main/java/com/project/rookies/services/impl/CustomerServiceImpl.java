@@ -39,7 +39,7 @@ public class CustomerServiceImpl implements ICustomerService {
         String email = customerDto.getEmail();
         if (EmailUtils.isValidEmail(email)) {
             if (isExistCustomer(customerDto))
-                throw new DuplicateValueInResourceException("email was existed ", HttpStatus.BAD_REQUEST);
+                throw new DuplicateValueInResourceException("email was existed ");
             else {
                 Customer customer = modelMapper.map(customerDto, Customer.class);
                 customer.setPassword(passwordEncoder.encode(customerDto.getPassword()));
@@ -50,7 +50,7 @@ public class CustomerServiceImpl implements ICustomerService {
                 return modelMapper.map(customerRepo.save(customer), CustomerResponseDto.class);
             }
         } else
-            throw new ValidationException("email not valid", HttpStatus.BAD_REQUEST);
+            throw new ValidationException("email not valid");
     }
 
     @Override
@@ -65,9 +65,9 @@ public class CustomerServiceImpl implements ICustomerService {
     public DeleteResponseDto deleteCustomer(Long id) {
         try {
             customerRepo.deleteById(id);
-            return new DeleteResponseDto("delete success", HttpStatus.OK.value(), HttpStatus.OK);
+            return new DeleteResponseDto("delete success", HttpStatus.OK);
         } catch (Exception exception) {
-            return new DeleteResponseDto("delete fail", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST);
+            return new DeleteResponseDto("delete fail", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -77,9 +77,9 @@ public class CustomerServiceImpl implements ICustomerService {
             Customer customer = customerRepo.getById(id);
             customer.setStatus(customerStatus);
             customerRepo.save(customer);
-            return new DeleteResponseDto("delete success", HttpStatus.OK.value(), HttpStatus.OK);
+            return new DeleteResponseDto("delete success", HttpStatus.OK);
         } else
-            return new DeleteResponseDto("delete fail", HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND);
+            return new DeleteResponseDto("delete fail", HttpStatus.NOT_FOUND);
     }
 
 
@@ -92,7 +92,7 @@ public class CustomerServiceImpl implements ICustomerService {
             });
             return modelMapper.map(customerDto, CustomerResponseDto.class);
         } catch (Exception ex) {
-            throw new ResourceFoundException("update fail", HttpStatus.NOT_MODIFIED);
+            throw new ResourceFoundException("update fail");
         }
     }
 
@@ -116,7 +116,7 @@ public class CustomerServiceImpl implements ICustomerService {
                     .map(customer -> modelMapper.map(customer, CustomerResponseDto.class))
                     .collect(Collectors.toList());
         } catch (Exception ex) {
-            throw new ResourceFoundException(ex.getMessage(), HttpStatus.BAD_REQUEST);
+            throw new ResourceFoundException(ex.getMessage());
         }
     }
 }

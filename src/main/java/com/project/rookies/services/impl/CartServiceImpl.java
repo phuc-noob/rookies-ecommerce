@@ -6,18 +6,19 @@ import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.entities.Cart;
 import com.project.rookies.entities.Product;
 import com.project.rookies.exceptions.DuplicateValueInResourceException;
-import com.project.rookies.exceptions.ResourceFoundException;
 import com.project.rookies.exceptions.ResourceNotFoundException;
+import com.project.rookies.exceptions.ValidationException;
+import com.project.rookies.mappers.CartMapper;
 import com.project.rookies.repositories.CartRepo;
 import com.project.rookies.repositories.CustomerRepo;
 import com.project.rookies.repositories.ProductRepo;
 import com.project.rookies.services.inf.ICartService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,48 +26,34 @@ public class CartServiceImpl implements ICartService {
     private final CartRepo cartRepo;
     private final CustomerRepo customerRepo;
     private final ProductRepo productRepo;
-    private final ModelMapper modelMapper;
+    private final CartMapper cartMapper;
 
     @Override
-    public CartResponseDto saveCart(Long cusId) {
-        // case : user not exist in db
-        if (!customerRepo.existsById(cusId))
+    public CartResponseDto saveCart(CartDto cartDto) {
+        // case : user,product not exist in db
+        if (!customerRepo.existsById(cartDto.getCustomerId()))
             throw new ResourceNotFoundException("customer not found");
+        if (!productRepo.existsById(cartDto.getProductId()))
+            throw new ResourceNotFoundException("product not found");
+        // case : cart was exist by customer and product
+        if (cartRepo.isExistCart(cartDto.getCustomerId(), cartDto.getProductId()))
+            throw new DuplicateValueInResourceException("cart was existed");
+        // case : product quantity is less than cart amount
+        if (!isValidProductQuantity(productRepo.getById(cartDto.getProductId()),
+                cartDto.getAmount()))
+            throw new ValidationException("invalid quantity");
         // case : have not existed customer in cart bd
-        try {
-            Cart cart = new Cart();
-            cart.setCustomer(customerRepo.getById(cusId));
-            cart.setCreatedAt(LocalDateTime.now());
-            cart.setUpdatedAt(LocalDateTime.now());
-            return modelMapper.map(cartRepo.save(cart), CartResponseDto.class);
-        } catch (Exception exception) {
-            throw new DuplicateValueInResourceException("cart was existed", HttpStatus.BAD_REQUEST);
-        }
+        Cart cart = cartMapper.mapDtoToEntity(cartDto);
+        return cartMapper.mapEntityToResponseDto(cartRepo.save(cart));
     }
 
     @Override
     public CartResponseDto getCartByCartId(Long id) {
         if (!cartRepo.existsById(id))
             throw new ResourceNotFoundException("cart not found");
-        return modelMapper.map(cartRepo.getById(id), CartResponseDto.class);
+        return cartMapper.mapEntityToResponseDto(cartRepo.getById(id));
     }
 
-    @Override
-    public CartResponseDto addProductToCart(Long cartId, Long productId, CartDto cartDto) {
-        if (!cartRepo.existsById(cartId))
-            throw new ResourceNotFoundException("cart not found");
-        if (!productRepo.existsById(productId))
-            throw new ResourceNotFoundException("product not found");
-        Cart cart = cartRepo.getById(cartId);
-
-        modelMapper.map(cartDto, cart);
-        cart.setProduct(productRepo.getById(productId));
-        cart.setCartPrice(calculateCartPrice(
-                productRepo.getById(productId).getPrice(),
-                cartDto.getAmount()));
-        CartResponseDto cartResponseDto = modelMapper.map(cartRepo.save(cart), CartResponseDto.class);
-        return cartResponseDto;
-    }
 
     @Override
     public float calculateCartPrice(float unitPrice, int amount) {
@@ -82,7 +69,7 @@ public class CartServiceImpl implements ICartService {
         cart.setCartPrice(calculateCartPrice(cart.getProduct().getPrice(),
                 cartDto.getAmount())
         );
-        return modelMapper.map(cartRepo.save(cart), CartResponseDto.class);
+        return cartMapper.mapEntityToResponseDto(cartRepo.save(cart));
     }
 
     @Override
@@ -90,7 +77,22 @@ public class CartServiceImpl implements ICartService {
         if (!cartRepo.existsById(id))
             throw new ResourceNotFoundException("cart not found");
         cartRepo.deleteById(id);
-        return new DeleteResponseDto("delete success", HttpStatus.OK.value(), HttpStatus.OK);
+        return new DeleteResponseDto("delete success", HttpStatus.OK);
+    }
+
+    @Override
+    public List<CartResponseDto> getAllCartByCustomer(Long customerId) {
+        return cartRepo.findAllByCustomer(customerRepo.getById(customerId))
+                .stream()
+                .map(cart -> cartMapper.mapEntityToResponseDto(cart))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Boolean isValidProductQuantity(Product product, int updateQuantity) {
+        if(product.getAmount() < updateQuantity)
+            return false;
+        else return true;
     }
 
 }

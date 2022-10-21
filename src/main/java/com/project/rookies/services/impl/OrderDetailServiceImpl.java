@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 public class OrderDetailServiceImpl implements IOrderDetailService {
     private final OrderDetailRepo orderDetailRepo;
 
+
     @Override
-    public OrderDetail saveOrderDetail(OrderDetail orderDetail) {
-        return orderDetailRepo.save(orderDetail);
+    public float getOrderDetailPrice(OrderDetail orderDetail) {
+        return orderDetail.getAmount()*orderDetail.getUnitPrice();
     }
 }

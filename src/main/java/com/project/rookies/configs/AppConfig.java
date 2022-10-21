@@ -1,14 +1,5 @@
 package com.project.rookies.configs;
 
-import com.project.rookies.entities.BillOrder;
-import com.project.rookies.entities.Customer;
-import com.project.rookies.entities.OrderDetail;
-import com.project.rookies.entities.Role;
-import com.project.rookies.entities.enums.ERoleType;
-import com.project.rookies.services.inf.IBillOrderService;
-import com.project.rookies.services.inf.ICustomerService;
-import com.project.rookies.services.inf.IOrderDetailService;
-
 import com.project.rookies.services.inf.IRoleService;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.connector.Connector;

@@ -42,7 +42,6 @@ public class ProductController {
     }
 
     @DeleteMapping("/product/{id}")
-    @ResponseBody
     DeleteResponseDto deleteProduct(@PathVariable Long id) {
         return productService.updateProductStatus(EProductStatus.DELETED, id);
     }

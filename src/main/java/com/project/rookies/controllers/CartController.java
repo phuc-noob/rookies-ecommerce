@@ -7,25 +7,28 @@ import com.project.rookies.services.inf.ICartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class CartController {
     private final ICartService cartService;
 
-    @PostMapping("/customer/{cusId}/cart")
-    CartResponseDto saveCartByCustomer(@PathVariable Long cusId) {
-        return cartService.saveCart(cusId);
+    @PostMapping("/cart")
+    CartResponseDto saveCartByCustomer(@RequestBody CartDto cartDto) {
+        return cartService.saveCart(cartDto);
+    }
+
+    @GetMapping("/customer/{customerId}/carts")
+    List<CartResponseDto> getAllCartByCustomer(@PathVariable Long customerId)
+    {
+        return cartService.getAllCartByCustomer(customerId);
     }
 
     @GetMapping("/cart/{id}")
     CartResponseDto getCart(@PathVariable Long id) {
         return cartService.getCartByCartId(id);
-    }
-
-    @PutMapping("/cart/{cartId}/product/{productId}")
-    CartResponseDto addProductToCart(@RequestBody CartDto cartDto, @PathVariable Long cartId, @PathVariable Long productId) {
-        return cartService.addProductToCart(cartId, productId, cartDto);
     }
 
     @PatchMapping("/cart/{cartId}")
