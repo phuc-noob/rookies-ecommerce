@@ -41,7 +41,7 @@ public class Customer {
     private EGender gender;
     @Column(name = "day_of_birth")
     private LocalDateTime dayOfBirth;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
     @OneToMany(mappedBy = "customer")

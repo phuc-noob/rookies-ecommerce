@@ -42,7 +42,7 @@ public class RateServiceImpl implements IRateService {
             throw new ValidationException("must buy product before rate");
         // case : is existed rate by customer for product
         if (rateRepo.isExistRate(rateDto.getCustomerDtoId(), rateDto.getProductDtoId()))
-            throw new DuplicateValueInResourceException("just one rating or each customer");
+            throw new DuplicateValueInResourceException("just one rating for each customer");
 
         // case : create new rating for product by customer
         Rate rate = rateMapper.mapDtoToEntity(rateDto);
@@ -50,7 +50,7 @@ public class RateServiceImpl implements IRateService {
         rate.setUpdatedAt(LocalDateTime.now());
         rate = rateRepo.save(rate);
 
-        //update product rating when rated
+        //update product rating point when rated
         productRepo.updateProductRatingPoint(rateDto.getProductDtoId());
         return modelMapper.map(
                 rateRepo.save(rate), RateResponseDto.class);
@@ -64,7 +64,6 @@ public class RateServiceImpl implements IRateService {
         rate.setUpdatedAt(LocalDateTime.now());
         rate.setContent(rate.getContent());
         rate.setPoint(rateDto.getPoint());
-        //modelMapper.map(rateDto, rate);
         return rateMapper.mapEntityToDto(rateRepo.save(rate));
     }
 

@@ -39,7 +39,6 @@ public class ProductServiceImpl implements IProductService {
             throw new DuplicateValueInResourceException("Product is exist");
         if(!categoryRepo.existsById(productDto.getCategoryId()))
             throw new ResourceNotFoundException("category not found");
-        // case : product is existed and status is false -> update status is true
 
         Product product = modelMapper.map(productDto, Product.class);
         product.setCreatedAt(LocalDateTime.now());
