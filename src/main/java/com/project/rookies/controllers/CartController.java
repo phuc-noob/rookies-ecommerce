@@ -7,6 +7,7 @@ import com.project.rookies.services.inf.ICartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -16,7 +17,7 @@ public class CartController {
     private final ICartService cartService;
 
     @PostMapping("/cart")
-    CartResponseDto saveCartByCustomer(@RequestBody CartDto cartDto) {
+    CartResponseDto saveCartByCustomer(@Valid @RequestBody CartDto cartDto) {
         return cartService.saveCart(cartDto);
     }
 

@@ -8,6 +8,7 @@ import com.project.rookies.services.inf.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,12 +18,12 @@ public class ProductController {
     private final IProductService productService;
 
     @PostMapping("/product")
-    ProductResponseDto saveProduct(@RequestBody ProductDto productDto) {
+    ProductResponseDto saveProduct(@Valid @RequestBody ProductDto productDto) {
         return productService.saveProduct(productDto);
     }
 
     @PutMapping("/product/{id}")
-    ProductResponseDto updateProduct(@RequestBody ProductDto productDto, @PathVariable Long id) {
+    ProductResponseDto updateProduct(@Valid @RequestBody ProductDto productDto, @PathVariable Long id) {
         return productService.updateProduct(productDto, id);
     }
 

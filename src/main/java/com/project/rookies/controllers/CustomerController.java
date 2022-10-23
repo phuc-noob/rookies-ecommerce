@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,12 +32,12 @@ public class CustomerController {
     }
 
     @PostMapping("/customer")
-    CustomerResponseDto saveCustomer(@RequestBody CustomerDto customerDto) {
+    CustomerResponseDto saveCustomer(@Valid @RequestBody CustomerDto customerDto) {
         return customerService.saveCustomer(customerDto);
     }
 
     @PutMapping("/customer/{id}")
-    CustomerResponseDto updateCustomer(@RequestBody CustomerDto customerDto, @PathVariable Long id) {
+    CustomerResponseDto updateCustomer(@Valid @RequestBody CustomerDto customerDto, @PathVariable Long id) {
         return customerService.updateCustomerById(customerDto, id);
     }
 

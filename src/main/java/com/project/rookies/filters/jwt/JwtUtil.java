@@ -12,17 +12,16 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 public class JwtUtil {
-    public static String generateJwtToken(Authentication authentication)
-        {
-            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
-            return JWT.create()
-                    .withSubject(authentication.getName())
-                    .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
-                    .withClaim("roles", authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))     // get roles for the token
-                    .sign(algorithm);
+    public static String generateJwtToken(Authentication authentication) {
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        return JWT.create()
+                .withSubject(authentication.getName())
+                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .withClaim("roles", authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))     // get roles for the token
+                .sign(algorithm);
     }
-    public static String getUsername(HttpServletRequest request)
-    {
+
+    public static String getUsername(HttpServletRequest request) {
         String username;
         String token = request.getHeader("AUTHORIZATION").substring("Bearer ".length());
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
@@ -31,8 +30,8 @@ public class JwtUtil {
         username = decodedJWT.getSubject();
         return username;
     }
-    public static String[] getRoles (HttpServletRequest request)
-    {
+
+    public static String[] getRoles(HttpServletRequest request) {
         String token = request.getHeader("AUTHORIZATION").substring("Bearer ".length());
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         JWTVerifier verifier = JWT.require(algorithm).build();

@@ -8,6 +8,7 @@ import com.project.rookies.services.inf.IRateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,12 +18,12 @@ public class RateController {
     private final IRateService rateService;
 
     @PostMapping("/rate")
-    RateResponseDto saveRate(@RequestBody RateDto rateDto) {
+    RateResponseDto saveRate(@Valid @RequestBody RateDto rateDto) {
         return rateService.saveRate(rateDto);
     }
 
     @PutMapping("rate/{rateId}")
-    RateResponseDto updateRate(@RequestBody RateDto rateDto, @PathVariable Long rateId) {
+    RateResponseDto updateRate(@Valid @RequestBody RateDto rateDto, @PathVariable Long rateId) {
         return rateService.updateRate(rateDto, rateId);
     }
 

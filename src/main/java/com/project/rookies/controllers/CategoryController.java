@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,12 +20,12 @@ public class CategoryController {
     private final IProductService productService;
 
     @PostMapping("/category")
-    CategoryResponseDto saveCategory(@RequestBody CategoryDto categoryDto) {
+    CategoryResponseDto saveCategory(@Valid @RequestBody CategoryDto categoryDto) {
         return categoryService.saveCategory(categoryDto);
     }
 
     @PutMapping("/category/{id}")
-    CategoryResponseDto updateCategory(@RequestBody CategoryDto categoryDto, @PathVariable Long id) {
+    CategoryResponseDto updateCategory(@Valid @RequestBody CategoryDto categoryDto, @PathVariable Long id) {
         return categoryService.updateCategoryById(categoryDto, id);
     }
 

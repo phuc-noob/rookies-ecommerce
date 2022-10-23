@@ -32,7 +32,7 @@ public class UserPrinciple implements UserDetails {
 
         return new UserPrinciple(
                 customer.getCustomerId(),
-                customer.getEmail(),authorities, customer.getPassword()
+                customer.getEmail(), authorities, customer.getPassword()
         );
     }
 
@@ -40,7 +40,7 @@ public class UserPrinciple implements UserDetails {
         List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(admin.getRole().getRoleName().name()));
         return new UserPrinciple(
                 admin.getAdminId(),
-                admin.getAdminName(),authorities,
+                admin.getAdminName(), authorities,
                 admin.getPassword()
         );
     }

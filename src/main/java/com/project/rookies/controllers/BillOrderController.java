@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class BillOrderController {
     private final IBillOrderService billOrderService;
 
     @PostMapping("/order")
-    BillOrderResponseDto saveBillOrder(@RequestBody BillOrderDto billOrderDto) {
+    BillOrderResponseDto saveBillOrder(@Valid @RequestBody BillOrderDto billOrderDto) {
         return billOrderService.saveBillOrder(billOrderDto);
     }
 
