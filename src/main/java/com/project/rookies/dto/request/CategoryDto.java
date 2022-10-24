@@ -16,5 +16,5 @@ public class CategoryDto {
     @NotBlank(message = "image is require")
     private String image;
     private int amount;
-    private List<ProductDto> product;
+    private List<Long> productIds;
 }

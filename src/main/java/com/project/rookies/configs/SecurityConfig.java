@@ -1,5 +1,6 @@
 package com.project.rookies.configs;
 
+import com.project.rookies.entities.enums.ERoleType;
 import com.project.rookies.filters.jwt.JwtAuthorizationFilter;
 import com.project.rookies.filters.jwt.JwtEntryPoint;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +25,19 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-@Configuration @EnableWebSecurity @RequiredArgsConstructor @RestController @CrossOrigin(value = "http://localhost:3000")
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+
+@Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
+@RestController
+@CrossOrigin(value = "http://localhost:3000")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final JwtEntryPoint jwtEntryPoint;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
@@ -38,19 +47,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and();
         http.csrf().disable().exceptionHandling().authenticationEntryPoint(jwtEntryPoint).and();
-        http.authorizeRequests().antMatchers("/api/login").permitAll();
-        http.authorizeRequests().antMatchers("/swagger-ui/*","/v3/api-docs/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/auth/login").permitAll();
+
+        http.authorizeRequests()
+                .antMatchers(POST,
+                        "/api/product",
+                        "/api/category",
+                        "/api/voucher")
+                .hasAnyAuthority(ERoleType.ROLE_ADMIN.toString());
+
+        http.authorizeRequests().antMatchers(GET,"/api/category/**","/api/products/**","/api/product/**").permitAll();
+        http.authorizeRequests().antMatchers("/swagger-ui/*", "/v3/api-docs/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+
     @Bean
-    CorsConfigurationSource corsConfigurationSource()
-    {
+    CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         configuration.addAllowedHeader("*");
         configuration.addAllowedOrigin("*");
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
@@ -58,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception{
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 

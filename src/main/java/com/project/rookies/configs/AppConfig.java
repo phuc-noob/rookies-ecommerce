@@ -40,17 +40,17 @@ public class AppConfig {
     @Bean
     CommandLineRunner run() {
         return args -> {
-            roleService.saveRole(new Role(1L, ERoleType.ROLE_ADMIN));
-            roleService.saveRole(new Role(2L, ERoleType.ROLE_USER));
-            Customer customer = new Customer(null,"a","a","b","a@gmail.com",null,null,null,"hello",null,null,null,null,null,null);
-            customer.setPassword(passwordEncoder().encode(customer.getPassword()));
-            customer.setRole(roleRepo.findByRoleName(ERoleType.ROLE_USER));
-            customerRepo.save(customer);
-
-            Admin admin = new Admin(null,"admin","00000000",null);
-            admin.setPassword(passwordEncoder().encode(admin.getPassword()));
-            admin.setRole(roleRepo.findByRoleName(ERoleType.ROLE_ADMIN));
-            adminRepo.save(admin);
+//            roleService.saveRole(new Role(1L, ERoleType.ROLE_ADMIN));
+//            roleService.saveRole(new Role(2L, ERoleType.ROLE_USER));
+//            Customer customer = new Customer(null,"a","a","b","a@gmail.com",null,null,null,"hello",null,null,null,null,null,null);
+//            customer.setPassword(passwordEncoder().encode(customer.getPassword()));
+//            customer.setRole(roleRepo.findByRoleName(ERoleType.ROLE_USER));
+//            customerRepo.save(customer);
+//
+//            Admin admin = new Admin(null,"admin","00000000",null);
+//            admin.setPassword(passwordEncoder().encode(admin.getPassword()));
+//            admin.setRole(roleRepo.findByRoleName(ERoleType.ROLE_ADMIN));
+//            adminRepo.save(admin);
 //            ///customerService.saveCustomer(new Customer(null,"a","a","a","b",null,null,"a",null,null,null,null ));
 //            BillOrder billOrder = new BillOrder(null,null,true,1,null,null, null ,null);
 //            billOrder.setCustomer(customer);
