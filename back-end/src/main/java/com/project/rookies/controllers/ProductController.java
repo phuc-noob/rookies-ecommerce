@@ -32,14 +32,10 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
-    @GetMapping
-    List<ProductResponseDto> getListProduct(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-        return productService.getListProduct(page, size);
-    }
 
-    @GetMapping("/best-seller")
-    List<ProductResponseDto> getListProductBessSeller(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-        return productService.getListProductBestSeller(page, size);
+    @GetMapping
+    List<ProductResponseDto> getListProductByTag(@RequestParam(name = "tag", required = false,defaultValue = "") String tag, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+        return productService.getListProductByTag(page, size, tag);
     }
 
     @DeleteMapping("/{id}")

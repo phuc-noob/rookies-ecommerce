@@ -18,7 +18,7 @@ public interface IProductService {
 
     List<ProductResponseDto> getListProduct(int page, int size);
 
-    List<ProductResponseDto> getListProductBestSeller(int page, int size);
+    List<ProductResponseDto> getListProductByTag(int page, int size,String tag);
 
     DeleteResponseDto updateProductStatus(EProductStatus status, Long id);
 

@@ -19,7 +19,7 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     Product findProductByProductNameAndStatus(String productName, EProductStatus productStatus);
 
     @Query(value = "select * from product p where status LIKE 'ACTIVE' order by total_sold desc,updated_at desc offset :page limit :size ", nativeQuery = true)
-    List<Product> getListproduct(@Param("page") int page, @Param("size") int size);
+    List<Product> getListProduct(@Param("page") int page, @Param("size") int size);
 
     @Query(value = "select * from product p where status LIKE 'ACTIVE' order by total_sold desc offset :page limit :size ", nativeQuery = true)
     List<Product> getListProductBestSeller(@Param("page") int page, @Param("size") int size);

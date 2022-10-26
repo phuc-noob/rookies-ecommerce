@@ -32,12 +32,13 @@ public class ProductServiceImpl implements IProductService {
     private final ModelMapper modelMapper;
     private final ImageRepo imageRepo;
     private final ProductMapper productMapper;
+
     @Override
     public ProductResponseDto saveProduct(ProductDto productDto) {
         // case : product is existed and status is true -> not update
         if (isExistProduct(productDto) && checkProductStatus(productDto.getProductName()))
             throw new DuplicateValueInResourceException("Product is exist");
-        if(!categoryRepo.existsById(productDto.getCategoryId()))
+        if (!categoryRepo.existsById(productDto.getCategoryId()))
             throw new ResourceNotFoundException("category not found");
 
         Product product = modelMapper.map(productDto, Product.class);
@@ -49,11 +50,10 @@ public class ProductServiceImpl implements IProductService {
         // add product to category
         categoryRepo.getById(productDto.getCategoryId()).getProduct().add(product);
 
-        for(ImageDto imageDto : productDto.getImageDtos())
-        {
+        for (ImageDto imageDto : productDto.getImageDtos()) {
             Image image = modelMapper.map(imageDto, Image.class);
             image.setProduct(product);
-            product.getImages().add(imageRepo.save(image)) ;
+            product.getImages().add(imageRepo.save(image));
         }
         return productMapper.mapEntityToDto(product);
 
@@ -90,22 +90,32 @@ public class ProductServiceImpl implements IProductService {
         return modelMapper.map(productRepo.getById(id), ProductResponseDto.class);
     }
 
+
     @Override
     public List<ProductResponseDto> getListProduct(int page, int size) {
         if (page < 0) throw new ResourceNotFoundException("page not found");
-        return productRepo.getListproduct(page, size)
+        return productRepo.getListProduct(page, size)
                 .stream()
                 .map(product -> modelMapper.map(product, ProductResponseDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ProductResponseDto> getListProductBestSeller(int page, int size) {
+    public List<ProductResponseDto> getListProductByTag(int page, int size, String tag) {
         if (page < 0) throw new ResourceNotFoundException("page not found");
-        return productRepo.getListProductBestSeller(page, size)
-                .stream()
-                .map(product -> productMapper.mapEntityToDto(product))
-                .collect(Collectors.toList());
+        if (tag.equals("best-seller")) {
+            return productRepo.getListProductBestSeller(page, size)
+                    .stream()
+                    .map(product -> productMapper.mapEntityToDto(product))
+                    .collect(Collectors.toList());
+        }
+        if(tag.isBlank()){
+            return productRepo.getListProduct(page, size)
+                    .stream()
+                    .map(product -> productMapper.mapEntityToDto(product))
+                    .collect(Collectors.toList());
+        }
+        else throw new ResourceNotFoundException("list bét seller not found");
     }
 
     @Override
