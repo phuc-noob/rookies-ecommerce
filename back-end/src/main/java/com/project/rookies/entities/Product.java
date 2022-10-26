@@ -38,4 +38,6 @@ public class Product {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private List<Image> images = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<VoucherProduct> vouchers;
 }

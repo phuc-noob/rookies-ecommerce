@@ -24,6 +24,6 @@ public class Voucher {
     private LocalDateTime startAt;
     @Column(name = "end_at")
     private LocalDateTime endAt;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Product> product;
+    @OneToMany(mappedBy = "voucher")
+    private List<VoucherProduct> products;
 }
