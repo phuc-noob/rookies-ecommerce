@@ -13,43 +13,43 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/categories")
 @RequiredArgsConstructor
 public class CategoryController {
     private final ICategoryService categoryService;
     private final IProductService productService;
 
-    @PostMapping("/category")
+    @PostMapping
     CategoryResponseDto saveCategory(@Valid @RequestBody CategoryDto categoryDto) {
         return categoryService.saveCategory(categoryDto);
     }
 
-    @PutMapping("/category/{id}")
+    @PutMapping("/{id}")
     CategoryResponseDto updateCategory(@Valid @RequestBody CategoryDto categoryDto, @PathVariable Long id) {
         return categoryService.updateCategoryById(categoryDto, id);
     }
 
-    @GetMapping("/categories")
+    @GetMapping
     List<CategoryResponseDto> getListCategory() {
         return categoryService.getALlCategory();
     }
 
-    @GetMapping("/category/{id}")
+    @GetMapping("/{id}")
     CategoryResponseDto getCategory(@PathVariable Long id) {
         return categoryService.getCategoryById(id);
     }
 
-    @GetMapping("/category/{id}/products")
+    @GetMapping("/{id}/products")
     List<ProductResponseDto> getProductsByCategory(@PathVariable Long id, @RequestParam("page") int page, @RequestParam("size") int size) {
         return productService.getProductsByCategoryBy(id, page, size);
     }
 
-    @DeleteMapping("category/{id}")
+    @DeleteMapping("/{id}")
     void deleteCategory(@RequestParam(value = "id") Long id, HttpServletResponse response) {
         categoryService.deleteCategoryById(id, response);
     }
 
-    @PatchMapping("/category/{cateId}/product/{productId}")
+    @PatchMapping("/{cateId}/products/{productId}")
     CategoryResponseDto addProductToCategory(@PathVariable("cateId") Long cateId, @PathVariable("productId") Long productId) {
         return categoryService.addProductToCategory(cateId, productId);
     }

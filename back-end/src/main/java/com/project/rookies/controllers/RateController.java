@@ -12,22 +12,22 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/rates")
 @RequiredArgsConstructor
 public class RateController {
     private final IRateService rateService;
 
-    @PostMapping("/rate")
+    @PostMapping
     RateResponseDto saveRate(@Valid @RequestBody RateDto rateDto) {
         return rateService.saveRate(rateDto);
     }
 
-    @PutMapping("rate/{rateId}")
+    @PutMapping("/{rateId}")
     RateResponseDto updateRate(@Valid @RequestBody RateDto rateDto, @PathVariable Long rateId) {
         return rateService.updateRate(rateDto, rateId);
     }
 
-    @DeleteMapping("/rate/{rateId}")
+    @DeleteMapping("/{rateId}")
     DeleteResponseDto deleteRate(@PathVariable Long rateId) {
         return rateService.deleteRate(rateId);
     }
@@ -37,7 +37,7 @@ public class RateController {
         return rateService.getListRateByProduct(productId, page, size);
     }
 
-    @GetMapping("/rate/{rateId}")
+    @GetMapping("/{rateId}")
     RateResponseDto getRate(@PathVariable Long rateId) {
         return rateService.getRateById(rateId);
     }

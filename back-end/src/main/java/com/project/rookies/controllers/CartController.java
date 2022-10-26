@@ -11,33 +11,33 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/carts")
 @RequiredArgsConstructor
 public class CartController {
     private final ICartService cartService;
 
-    @PostMapping("/cart")
+    @PostMapping
     CartResponseDto saveCartByCustomer(@Valid @RequestBody CartDto cartDto) {
         return cartService.saveCart(cartDto);
     }
 
-    @GetMapping("/customer/{customerId}/carts")
+    @GetMapping("/customers/{customerId}")
     List<CartResponseDto> getAllCartByCustomer(@PathVariable Long customerId)
     {
         return cartService.getAllCartByCustomer(customerId);
     }
 
-    @GetMapping("/cart/{id}")
+    @GetMapping("/{id}")
     CartResponseDto getCart(@PathVariable Long id) {
         return cartService.getCartByCartId(id);
     }
 
-    @PatchMapping("/cart/{cartId}")
+    @PatchMapping("/{cartId}")
     CartResponseDto updateAmountOfProductInCart(@RequestBody CartDto cartDto, @PathVariable Long cartId) {
         return cartService.updateAmountInCart(cartDto, cartId);
     }
 
-    @DeleteMapping("/cart/{cartId}")
+    @DeleteMapping("/{cartId}")
     DeleteResponseDto deleteCart(@PathVariable Long cartId) {
         return cartService.deleteCart(cartId);
     }

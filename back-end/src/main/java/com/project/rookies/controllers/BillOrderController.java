@@ -15,32 +15,32 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/orders")
 @RequiredArgsConstructor
 public class BillOrderController {
     private final IBillOrderService billOrderService;
 
-    @PostMapping("/order")
+    @PostMapping
     BillOrderResponseDto saveBillOrder(@Valid @RequestBody BillOrderDto billOrderDto) {
         return billOrderService.saveBillOrder(billOrderDto);
     }
 
-    @GetMapping("/order/{orderId}")
+    @GetMapping("/{orderId}")
     BillOrderResponseDto getBillOrder(@PathVariable Long orderId) {
         return billOrderService.getOrderById(orderId);
     }
 
-    @GetMapping("/orders")
+    @GetMapping
     List<BillOrderResponseDto> getListOrder(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
         return billOrderService.getListOrder(page, size);
     }
 
-    @DeleteMapping("/order/{orderId}")
+    @DeleteMapping("/{orderId}")
     DeleteResponseDto deleteOrderById(@PathVariable(name = "orderId") Long orderId) {
         return billOrderService.deleteOrderById(orderId);
     }
 
-    @PatchMapping("/order/{orderId}")
+    @PatchMapping("/{orderId}")
     BillOrderResponseDto updateStatusOrder(@RequestBody BillOrderDto billOrderDto, @PathVariable("orderId") Long orderId) {
         return billOrderService.updateOrderStatus(orderId, billOrderDto);
     }

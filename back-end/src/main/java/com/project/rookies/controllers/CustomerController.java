@@ -16,32 +16,32 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api")
+@RequestMapping("/api/customers")
 @RequiredArgsConstructor
 public class CustomerController {
     private final ICustomerService customerService;
 
-    @GetMapping("/customer/{id}")
+    @GetMapping("/{id}")
     CustomerResponseDto getCustomer(@PathVariable Long id) {
         return customerService.findCustomerById(id).get(0);
     }
 
-    @GetMapping("/customers")
+    @GetMapping
     List<CustomerResponseDto> getListCustomer(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
         return customerService.findListCustomer(page, size);
     }
 
-    @PostMapping("/customer")
+    @PostMapping
     CustomerResponseDto saveCustomer(@Valid @RequestBody CustomerDto customerDto) {
         return customerService.saveCustomer(customerDto);
     }
 
-    @PutMapping("/customer/{id}")
+    @PutMapping("/{id}")
     CustomerResponseDto updateCustomer(@Valid @RequestBody CustomerDto customerDto, @PathVariable Long id) {
         return customerService.updateCustomerById(customerDto, id);
     }
 
-    @DeleteMapping("/customer/{id}")
+    @DeleteMapping("/{id}")
     DeleteResponseDto deleteCustomer(@PathVariable Long id) {
         return customerService.updateStatusCustomer(id, ECustomerStatus.DELETED);
     }
