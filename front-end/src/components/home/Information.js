@@ -65,7 +65,7 @@ const dataQuestion = [
 function Information() {
 	return (
 		<>
-			<Container maxWidth={"xl"}>
+			<Container >
 				<Grid container direction={"column"} gap={3}>
 					<Grid item>
 						<TittleHome> Why GrabFood?</TittleHome>

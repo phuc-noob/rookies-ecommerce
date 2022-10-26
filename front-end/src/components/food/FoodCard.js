@@ -33,7 +33,7 @@ function FoodCard(pros) {
 					<CardMedia
 						component="img"
 						height="140"
-						image={pros.picture}
+						image={pros.images[0].imageURL}
 						alt="image food"
 						sx={{ p: 3 }}
 					/>
@@ -47,13 +47,11 @@ function FoodCard(pros) {
 									lineHeight={1.1}
 									whiteSpace={0.5}
 								>
-									{pros.name}
+									{pros.productName}
 								</Typography>
-								<Typography variant="body2" color="text.secondary">
-									{pros.category.join(" - ")}
-								</Typography>
+								
 							</Grid>
-							<Grid item>100$</Grid>
+							<Grid item>{pros.price}$</Grid>
 						</Grid>
 					</CardContent>
 				</CardActionArea>

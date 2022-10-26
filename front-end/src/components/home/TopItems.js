@@ -3,7 +3,7 @@ import FoodCard from "../food/FoodCard";
 
 function TopItems({ dataTopFood }) {
 	return (
-		<Container maxWidth={"xl"}>
+		<Container>
 			<Grid container direction={"column"} gap={3}>
 				<Grid item>
 					<h1
