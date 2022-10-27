@@ -16,7 +16,7 @@ import ButtonUser from "./ButtonUser";
 function NavBar() {
 	return (
 		<AppBar color={"transparent"} position="fixed" sx={{ zIndex: "10" }}>
-			<Container maxWidth={"xl"}>
+			<Container >
 				<Toolbar
 					sx={{ paddingLeft: "0 !important", paddingRight: "0 !important" }}
 				>

@@ -1,9 +1,11 @@
 import axios from "axios";
+import Cookies from 'universal-cookie';
 
 const LOCAL_STORAGE_TOKEN_NAME = process.env.REACT_APP_LOCAL_STORAGE_TOKEN_NAME;
 const API_VERIFY = process.env.REACT_APP_API_HOST + "/auth";
 const API_LOGIN = process.env.REACT_APP_API_HOST + "/auth/login";
 const API_REGISTER = process.env.REACT_APP_API_HOST + "/auth/register";
+const cookies = new Cookies();
 
 const setAuthToken = (token) => {
 	if (token) {
@@ -14,7 +16,7 @@ const setAuthToken = (token) => {
 };
 
 const logout = () => {
-	localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
+	cookies.remove(LOCAL_STORAGE_TOKEN_NAME)
 	setAuthToken();
 };
 
@@ -23,37 +25,44 @@ const login = async (userForm) => {
 
 	try {
 		const res = await axios.post(`${API_LOGIN}`, userForm);
-		if (res.data)
-			localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, res.data.data.accessToken);
+		if (res.data) {
+			
+			cookies.set(LOCAL_STORAGE_TOKEN_NAME, res.data.accessToken);
+		}
+		// localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, res.data.accessToken);
+		console.log("login")
 		return res.data;
 	} catch (err) {
 		console.log("err", err, err.response);
 		throw err.response.data
 			? err.response.data
 			: {
-					status: 500,
-					message: "Server error",
-			  };
+				status: 500,
+				message: "Server error",
+			};
 	}
 };
 const loadUser = async () => {
-	if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
-		setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
+	const cookies = new Cookies();
+	console.log("load user")
+	if (cookies.get(LOCAL_STORAGE_TOKEN_NAME)) {
+		setAuthToken(cookies.get(LOCAL_STORAGE_TOKEN_NAME));
+		console.log(cookies.get(LOCAL_STORAGE_TOKEN_NAME))
 	} else {
 		throw Error("Dont have token");
 	}
-
 	try {
 		const res = await axios.get(`${API_VERIFY}`);
+		console.log(res.data)
 		return res.data;
 	} catch (err) {
 		logout();
 		throw err.response.data
 			? err.response.data
 			: {
-					status: 500,
-					message: "Server error",
-			  };
+				status: 500,
+				message: "Server error",
+			};
 	}
 };
 const register = async (userForm) => {
@@ -67,9 +76,9 @@ const register = async (userForm) => {
 		throw err.response.data
 			? err.response.data
 			: {
-					status: 500,
-					message: "Server error",
-			  };
+				status: 500,
+				message: "Server error",
+			};
 	}
 };
 export const authService = {

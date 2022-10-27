@@ -22,13 +22,13 @@ function AuthPage({ authRoute }) {
 
 const Wrapper = styled.div`
 	background-color: hsl(218, 41%, 15%);
-	background-image: url("/image/bgAuth1.png");
+	background-image: url("/image/bg-01.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
-	opacity: 0.8;
+	opacity: 0.95;
 `;
 export default AuthPage;

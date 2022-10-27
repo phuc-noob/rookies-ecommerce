@@ -50,7 +50,7 @@ function AuthContextProvider({ children }) {
 			const res = await authService.loadUser();
 			dispatch(
 				authAction.setAuth({
-					user: res.data,
+					user: res,
 				})
 			);
 			return res;

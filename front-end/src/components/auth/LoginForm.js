@@ -33,8 +33,8 @@ const LoginForm = () => {
 	const onClickSubmit = async (e) => {
 		e.preventDefault();
 		const loginData = await loginUser(stateForm);
-		console.log("response", loginData);
-		if (loginData && loginData.status === 200) {
+		console.log(loginData);
+		if (loginData && loginData.statusCode === 200) {
 			navigate("/", { replace: true });
 		} else {
 			setAlertFail({ message: loginData.message || "Server off" });
