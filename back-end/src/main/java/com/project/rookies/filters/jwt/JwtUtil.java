@@ -30,6 +30,16 @@ public class JwtUtil {
         username = decodedJWT.getSubject();
         return username;
     }
+    public static String getUsernameByToken(String token)
+    {
+        token =token.substring("Bearer ".length());
+        String username;
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = verifier.verify(token);
+        username = decodedJWT.getSubject();
+        return username;
+    }
 
     public static String[] getRoles(HttpServletRequest request) {
         String token = request.getHeader("AUTHORIZATION").substring("Bearer ".length());

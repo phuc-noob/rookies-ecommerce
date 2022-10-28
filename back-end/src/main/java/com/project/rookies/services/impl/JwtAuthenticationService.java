@@ -1,6 +1,7 @@
 package com.project.rookies.services.impl;
 
 import com.project.rookies.dto.request.LoginRequestDto;
+import com.project.rookies.dto.response.AuthUserResponseDto;
 import com.project.rookies.dto.response.JwtResponseDto;
 import com.project.rookies.exceptions.ResourceNotFoundException;
 import com.project.rookies.filters.jwt.JwtUtil;
@@ -39,6 +40,12 @@ public class JwtAuthenticationService implements IJwtAuthenticationService {
                 .map(grantedAuthority -> grantedAuthority.getAuthority()).collect(Collectors.toList());
         return new JwtResponseDto(HttpStatus.OK.value(),"login success",jwt, userPrinciple.getUsername(), roles);
     }
+
+    @Override
+    public AuthUserResponseDto authRequestHeader(String token) {
+        return new AuthUserResponseDto( 200,JwtUtil.getUsernameByToken(token),"this is name");
+    }
+
     @EventListener
     public void onFailure(AbstractAuthenticationFailureEvent failures) {
         throw new ResourceNotFoundException("login fail");

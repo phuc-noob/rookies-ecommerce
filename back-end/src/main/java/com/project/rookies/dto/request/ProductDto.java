@@ -1,8 +1,7 @@
 package com.project.rookies.dto.request;
 
 import com.project.rookies.entities.enums.EProductStatus;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -11,6 +10,9 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductDto {
     @NotBlank(message = "product name is require")
     private String productName;

@@ -5,12 +5,10 @@ import com.project.rookies.dto.response.AuthUserResponseDto;
 import com.project.rookies.dto.response.JwtResponseDto;
 import com.project.rookies.services.impl.JwtAuthenticationService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -21,8 +19,8 @@ public class AuthController {
         return jwtAuthenticationService.authenticationAccount(loginRequestDto);
     }
     @GetMapping
-    AuthUserResponseDto authUserRequest(@RequestHeader String requestHeader)
+    AuthUserResponseDto authUserRequest(@RequestHeader(name = "Authorization") String requestHeader)
     {
-        return null;
+        return jwtAuthenticationService.authRequestHeader(requestHeader);
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder(toBuilder = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class Customer {

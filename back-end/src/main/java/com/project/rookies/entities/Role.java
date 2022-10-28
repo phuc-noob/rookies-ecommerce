@@ -1,16 +1,14 @@
 package com.project.rookies.entities;
 
 import com.project.rookies.entities.enums.ERoleType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class Role {
