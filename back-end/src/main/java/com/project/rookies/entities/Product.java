@@ -40,4 +40,10 @@ public class Product {
     private List<Image> images = new ArrayList<>();
     @OneToMany(mappedBy = "product")
     private List<VoucherProduct> vouchers;
+    @ManyToMany
+    @JoinTable(
+            name = "category_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    List<Category> categories;
 }

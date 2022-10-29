@@ -31,12 +31,12 @@ public class RateServiceImplTest {
     CustomerRepo customerRepo;
     RateRepo rateRepo;
     ProductRepo productRepo;
-    RateServiceImpl rateService ;
+    RateServiceImpl rateService;
     Rate rate;
     RateResponseDto expectRole;
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         expectRole = mock(RateResponseDto.class);
         modelMapper = mock(ModelMapper.class);
         rateMapper = mock(RateMapper.class);
@@ -48,8 +48,9 @@ public class RateServiceImplTest {
                 .point(10)
                 .build();
         productRepo = mock(ProductRepo.class);
-        rateService = new RateServiceImpl(modelMapper,rateMapper,customerRepo,rateRepo,productRepo);
+        rateService = new RateServiceImpl(modelMapper, rateMapper, customerRepo, rateRepo, productRepo);
     }
+
     @Test
     void saveRate_ShouldReturnRate_WhenDataValid() {
         RateDto rateDto = RateDto.builder().customerDtoId(10L)
@@ -63,6 +64,7 @@ public class RateServiceImplTest {
 
         assertTrue(thrown.getMessage().contains("customer not found"));
     }
+
     @Test
     void saveRate_ShouldThrown_WhenDataValid() {
         RateDto rateDto = RateDto.builder().customerDtoId(10L)
@@ -89,11 +91,11 @@ public class RateServiceImplTest {
         when(rateMapper.mapDtoToEntity(rateDto)).thenReturn(rate);
         when(rateRepo.save(rate)).thenReturn(rate);
         when(productRepo.updateProductRatingPoint(rateDto.getProductDtoId())).thenReturn(1);
-        when(modelMapper.map(rateRepo.save(rate),RateResponseDto.class)).thenReturn(expectRole);
+        when(modelMapper.map(rateRepo.save(rate), RateResponseDto.class)).thenReturn(expectRole);
         RateResponseDto result = rateService.saveRate(rateDto);
 
         LocalDateTime t = LocalDateTime.now();
-        assertThat(result,is(expectRole));
+        assertThat(result, is(expectRole));
     }
 
     @Test
@@ -103,7 +105,7 @@ public class RateServiceImplTest {
                 .content("content").build();
         ResourceNotFoundException thrown = assertThrows(
                 ResourceNotFoundException.class,
-                () -> rateService.updateRate(rateDto,1L),
+                () -> rateService.updateRate(rateDto, 1L),
                 "rate not found"
         );
         assertTrue(thrown.getMessage().contains("rate not found"));
@@ -120,27 +122,27 @@ public class RateServiceImplTest {
         when(rateRepo.getById(rateId)).thenReturn(rate);
         when(rateRepo.save(rate)).thenReturn(rate);
         when(rateMapper.mapEntityToDto(rateRepo.save(rate))).thenReturn(expectRole);
-        RateResponseDto result = rateService.updateRate(rateDto,rateId);
-        assertEquals(expectRole,result);
+        RateResponseDto result = rateService.updateRate(rateDto, rateId);
+        assertEquals(expectRole, result);
     }
+
     @Test
-    void getListRateByProduct_ShouldReturnListRateResponseDto_WhenDataValid()
-    {
+    void getListRateByProduct_ShouldReturnListRateResponseDto_WhenDataValid() {
         Long productId = 1L;
-        int page =0 ,size  =5;
-        List<RateResponseDto> result = rateService.getListRateByProduct(productId,page,size);
+        int page = 0, size = 5;
+        List<RateResponseDto> result = rateService.getListRateByProduct(productId, page, size);
     }
+
     @Test
-    void getRateById_ShouldReturnRateResponseDto_WhenDataValid()
-    {
-        Long rateId =1L;
+    void getRateById_ShouldReturnRateResponseDto_WhenDataValid() {
+        Long rateId = 1L;
         when(rateRepo.existsById(rateId)).thenReturn(Boolean.TRUE);
         RateResponseDto result = rateService.getRateById(rateId);
     }
+
     @Test
-    void getRateById_ShouldThrownResourceNotFoundException_WhenRateNotFound()
-    {
-        Long rateId =1L;
+    void getRateById_ShouldThrownResourceNotFoundException_WhenRateNotFound() {
+        Long rateId = 1L;
         ResourceNotFoundException thrown = assertThrows(
                 ResourceNotFoundException.class,
                 () -> rateService.getRateById(rateId),
@@ -148,10 +150,10 @@ public class RateServiceImplTest {
         );
         assertTrue(thrown.getMessage().contains("rate not found"));
     }
+
     @Test
-    void deleteRate_ShouldReturnDeleteResponseDto_WhenDataValid()
-    {
-        Long rateId =1L ;
+    void deleteRate_ShouldReturnDeleteResponseDto_WhenDataValid() {
+        Long rateId = 1L;
         ResourceNotFoundException thrown = assertThrows(
                 ResourceNotFoundException.class,
                 () -> rateService.deleteRate(rateId),
@@ -162,9 +164,8 @@ public class RateServiceImplTest {
     }
 
     @Test
-    void deleteRate_ShouldThrownResourceNotFoundException_WhenRateNotFound()
-    {
-        Long rateId =1L ;
+    void deleteRate_ShouldThrownResourceNotFoundException_WhenRateNotFound() {
+        Long rateId = 1L;
         when(rateRepo.existsById(rateId)).thenReturn(Boolean.TRUE);
         DeleteResponseDto result = rateService.deleteRate(rateId);
     }

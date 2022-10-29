@@ -87,7 +87,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public ProductResponseDto getProductById(Long id) {
         if (!productRepo.existsById(id)) throw new ResourceNotFoundException("product not found");
-        return modelMapper.map(productRepo.getById(id), ProductResponseDto.class);
+        return productMapper.mapEntityToDto(productRepo.getById(id));
     }
 
 

@@ -21,5 +21,6 @@ public class ProductResponseDto {
     private int amount;
     private int totalSold;
     private EProductStatus status;
+    private List<String> categoryName;
     private List<ImageDto> images = new ArrayList<>();
 }

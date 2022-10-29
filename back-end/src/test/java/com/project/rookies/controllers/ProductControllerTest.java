@@ -32,7 +32,6 @@ public class ProductControllerTest {
 
     @Test()
     void saveProduct_ShouldReturnProductResponseDto_WhenValid() {
-
         when(productService.saveProduct(productDto)).thenReturn(expectProduct);
         ProductResponseDto result = productController.saveProduct(productDto);
         assertEquals(expectProduct, result);

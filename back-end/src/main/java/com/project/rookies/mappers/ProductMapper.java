@@ -1,8 +1,8 @@
 package com.project.rookies.mappers;
 
 
-
 import com.project.rookies.dto.request.ImageDto;
+import com.project.rookies.dto.response.CategoryResponseDto;
 import com.project.rookies.dto.response.ProductResponseDto;
 import com.project.rookies.entities.Product;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +16,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductMapper {
     private final ModelMapper modelMapper;
-    public ProductResponseDto mapEntityToDto(Product product)
-    {
+
+    public ProductResponseDto mapEntityToDto(Product product) {
         return ProductResponseDto.builder()
+                .categoryName(product.getCategories().stream().map(category
+                        -> category.getCateName()).collect(Collectors.toList()))
                 .productId(product.getProductId())
                 .price(product.getPrice())
                 .productName(product.getProductName())
