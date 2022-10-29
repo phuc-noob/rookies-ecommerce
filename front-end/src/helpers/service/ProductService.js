@@ -8,7 +8,7 @@ const getProduct = async () => {
         const res = await axios.get(`${API_PRODUCT}`, {
             params: {
                 page: 0,
-                size: 4
+                size: 10
             }
         });
 

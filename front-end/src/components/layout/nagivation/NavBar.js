@@ -44,7 +44,7 @@ function NavBar() {
 								mx: 1,
 							}}
 						>
-							<Badge badgeContent={4} color="error">
+							<Badge badgeContent={0} color="error">
 								<CardGiftcard />
 							</Badge>
 						</IconButton>

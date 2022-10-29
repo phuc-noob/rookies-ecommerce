@@ -4,33 +4,7 @@ import TopItems from "../../components/home/TopItems";
 import Information from "../../components/home/Information";
 import { useEffect, useState } from "react";
 import { ProductService } from "../../helpers/service/ProductService";
-import { json } from "react-router-dom";
-// const dataTopFood = [
-// 	{
-// 		id: 1,
-// 		picture: "#",
-// 		name: "Bún Bò Huế 65 - Khâm Thiên",
-// 		category: ["Bún", "Phở Mì", " Hủ tiếu"],
-// 	},
-// 	{
-// 		id: 2,
-// 		picture: "#",
-// 		name: "Bún Bò Huế 32 - Khâm Thiên",
-// 		category: ["Bún", "Phở Mì", " Hủ tiếu"],
-// 	},
-// 	{
-// 		id: 3,
-// 		picture: "#",
-// 		name: "Bún Bò Huế 32- Khâm Thiên",
-// 		category: ["Bún", "Phở Mì", " Hủ tiếu"],
-// 	},
-// 	{
-// 		id: 3,
-// 		picture: "#",
-// 		name: "Bún Bò Huế 32- Khâm Thiên",
-// 		category: ["Bún", "Phở Mì", " Hủ tiếu"],
-// 	},
-// ];
+import ListCategory from "../../components/home/ListCategory";
 
 const dataTopFood = null;
 const getdata = async (dataTopFood) => {
@@ -56,6 +30,7 @@ function HomePage() {
 			<Banner />
 			<Divider sx={{ my: 8, borderBottom: 2 }} />
 			<TopItems dataTopFood={dataTopFood} />
+			<ListCategory/>
 			<Information />
 		</>
 	);

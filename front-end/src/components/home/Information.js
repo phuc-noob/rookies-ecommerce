@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 const dataWhy = [
 	{
 		key: "Quickest",
-		descript: "GrabFood provides the fastest food delivery in the market.",
+		descript: "GoodFood provides the fastest food delivery in the market.",
 	},
 	{
 		key: "Easiest",
@@ -31,8 +31,8 @@ const dataWhy = [
 
 const dataQuestion = [
 	{
-		question: "What is GrabFood?",
-		anwser: `GrabFood is the fastest Food Delivery service in Vietnam. We have curated all
+		question: "What is GoodFood?",
+		anwser: `GoodFood is the fastest Food Delivery service in Vietnam. We have curated all
         your favorite dishes, restaurants, and cuisines to help you grab your food in the easiest
         & quickest way possible. Find and order your favorite cuisines across Vietnam - order food
          online in just a few taps, from Lifted Coffee & Brunch - Hàng Gà for Breakfast, Maazi Indian
@@ -40,7 +40,7 @@ const dataQuestion = [
            your hunger with a wide selection of merchant partners in Vietnam.`,
 	},
 	{
-		question: "Does GrabFood provide food delivery 24x7?",
+		question: "Does GoodFood provide food delivery 24x7?",
 		anwser: `We understand only one language - food, so yes, we do..
         Please note, though we are here as your 24*7 food partners, few
         of our listed restaurants may have late-night food delivery
@@ -49,13 +49,13 @@ const dataQuestion = [
          Night Delivery Section.        `,
 	},
 	{
-		question: "Does GrabFood accept Cash?",
-		anwser: `Sure, we do! GrabFood accepts all
+		question: "Does GoodFood accept Cash?",
+		anwser: `Sure, we do! GoodFood accepts all
         forms of payments for food delivery services, including cash on delivery in Thailand.`,
 	},
 	{
-		question: "Can I pay online on GrabFood for my food orders?",
-		anwser: `GrabFood accepts multiple forms of payments for online food orders,
+		question: "Can I pay online on GoodFood for my food orders?",
+		anwser: `GoodFood accepts multiple forms of payments for online food orders,
          including online payments in Vietnam using a credit or debit card, PayPal or
           cash on delivery. We recommend using Moca so you can earn more rewards points,
            which you can use for discounts on your next order and on other Grab services.`,
@@ -68,7 +68,7 @@ function Information() {
 			<Container >
 				<Grid container direction={"column"} gap={3}>
 					<Grid item>
-						<TittleHome> Why GrabFood?</TittleHome>
+						<TittleHome> Why GoodFood?</TittleHome>
 					</Grid>
 					<Grid container justifyContent="flex-start">
 						<List>

@@ -1,0 +1,11 @@
+.OrderItem{
+    background-color: aqua;
+}
+
+.quantityItem{
+    display: flex;
+    max-height: 20px;
+    margin-top: 5%;
+    margin-right: 25px;
+    text-align: center;
+}

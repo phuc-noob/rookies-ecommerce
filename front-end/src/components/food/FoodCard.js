@@ -9,7 +9,7 @@ import {
 	Grid,
 } from "@mui/material";
 import styled from "@emotion/styled";
-
+import HoverRating from "./Rating"
 function FoodCard(pros) {
 	const option = pros.edit ? (
 		<>
@@ -35,11 +35,12 @@ function FoodCard(pros) {
 						height="140"
 						image={pros.images[0].imageURL}
 						alt="image food"
-						sx={{ p: 3 }}
+						// sx={{ p: 3 }}
 					/>
 					<CardContent>
 						<Grid container justifyContent={"space-between"}>
 							<Grid container lg={10}>
+								
 								<Typography
 									gutterBottom
 									variant="body1"
@@ -49,9 +50,12 @@ function FoodCard(pros) {
 								>
 									{pros.productName}
 								</Typography>
-								
+								<Typography variant="body2" color="text.secondary" width={200}>
+									{pros.categoryName.join(" - ")}
+								</Typography>
 							</Grid>
 							<Grid item>{pros.price}$</Grid>
+							<HoverRating rate={2.5} />
 						</Grid>
 					</CardContent>
 				</CardActionArea>
