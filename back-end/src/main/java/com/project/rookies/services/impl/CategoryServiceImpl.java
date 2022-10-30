@@ -95,7 +95,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public DeleteResponseDto deleteCategoryById(Long id, HttpServletResponse response) {
+    public DeleteResponseDto deleteCategoryById(Long id) {
         try {
             categoryRepo.deleteById(id);
             return new DeleteResponseDto("delete success", HttpStatus.OK);

@@ -46,17 +46,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and();
         http.csrf().disable().exceptionHandling().authenticationEntryPoint(jwtEntryPoint).and();
-        http.authorizeRequests().antMatchers("/api/auth/login","/api/auth").permitAll();
+        http.authorizeRequests().antMatchers("/api/auth/login", "/api/auth").permitAll();
 
         http.authorizeRequests()
-                .antMatchers(POST,
-                        "/api/products",
-                        "/api/categories",
-                        "/api/voucher")
-                .hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
-                .antMatchers(PUT,"/api/products").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString());
-
-        http.authorizeRequests().antMatchers(GET,"/api/categories/**","/api/products/**").permitAll();
+                //.antMatchers(GET,"/api/customers").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
+                .antMatchers(POST, "/api/products", "/api/categories", "/api/voucher").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
+                .antMatchers(PUT, "/api/products").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
+                .antMatchers(DELETE, "/api/categories/**","/api/products/**").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString());
+        http.authorizeRequests().antMatchers(GET, "/api/categories/**", "/api/products/**","/api/customers/**").permitAll();
         http.authorizeRequests().antMatchers("/swagger-ui/*", "/v3/api-docs/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

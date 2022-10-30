@@ -47,7 +47,6 @@ public class AppConfig {
 //                admin.setPassword(passwordEncoder().encode(admin.getPassword()));
 //                admin.setRole(roleRepo.findByRoleName(ERoleType.ROLE_ADMIN));
 //                adminRepo.save(admin);
-
         };
     }
 

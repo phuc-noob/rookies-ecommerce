@@ -16,7 +16,7 @@ public class JwtUtil {
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         return JWT.create()
                 .withSubject(authentication.getName())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 10000))
                 .withClaim("roles", authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))     // get roles for the token
                 .sign(algorithm);
     }

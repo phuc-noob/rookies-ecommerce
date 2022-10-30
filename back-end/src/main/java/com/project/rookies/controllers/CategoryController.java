@@ -2,6 +2,7 @@ package com.project.rookies.controllers;
 
 import com.project.rookies.dto.request.CategoryDto;
 import com.project.rookies.dto.response.CategoryResponseDto;
+import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.dto.response.ProductResponseDto;
 import com.project.rookies.services.inf.ICategoryService;
 import com.project.rookies.services.inf.IProductService;
@@ -45,8 +46,8 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    void deleteCategory(@RequestParam(value = "id") Long id, HttpServletResponse response) {
-        categoryService.deleteCategoryById(id, response);
+    DeleteResponseDto deleteCategory(@RequestParam(value = "id") Long id) {
+        return categoryService.deleteCategoryById(id);
     }
 
     @PatchMapping("/{cateId}/products/{productId}")

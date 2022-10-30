@@ -21,5 +21,5 @@ public interface ICategoryService {
 
     CategoryResponseDto addProductToCategory(Long cateId, Long productId);
 
-    DeleteResponseDto deleteCategoryById(Long id, HttpServletResponse response);
+    DeleteResponseDto deleteCategoryById(Long id);
 }
