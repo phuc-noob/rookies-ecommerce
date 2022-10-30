@@ -25,8 +25,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -52,11 +51,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(POST,
                         "/api/products",
-                        "/api/category",
+                        "/api/categories",
                         "/api/voucher")
-                .hasAnyAuthority(ERoleType.ROLE_ADMIN.toString());
+                .hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
+                .antMatchers(PUT,"/api/products").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString());
 
-        http.authorizeRequests().antMatchers(GET,"/api/category/**","/api/products/**").permitAll();
+        http.authorizeRequests().antMatchers(GET,"/api/categories/**","/api/products/**").permitAll();
         http.authorizeRequests().antMatchers("/swagger-ui/*", "/v3/api-docs/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

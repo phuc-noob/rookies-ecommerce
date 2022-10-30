@@ -139,7 +139,7 @@ public class ProductServiceImpl implements IProductService {
     public List<ProductResponseDto> getProductsByCategoryBy(Long id, int page, int size) {
         return productRepo.getProductByCategoryId(id, page, size)
                 .stream()
-                .map(product -> modelMapper.map(product, ProductResponseDto.class))
+                .map(product -> productMapper.mapEntityToDto(product))
                 .collect(Collectors.toList());
     }
 }

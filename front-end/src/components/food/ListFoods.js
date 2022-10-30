@@ -8,7 +8,7 @@ function ListFoods({ data }) {
 				{data.map((e) => {
 					return (
 						<Grid item md={3} xs={6}>
-							<FoodCard edit={true} {...e} />
+							<FoodCard edit={false} {...e} />
 						</Grid>
 					);
 				})}

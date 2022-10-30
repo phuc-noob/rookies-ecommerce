@@ -48,6 +48,6 @@ public class JwtAuthenticationService implements IJwtAuthenticationService {
 
     @EventListener
     public void onFailure(AbstractAuthenticationFailureEvent failures) {
-        throw new ResourceNotFoundException("login fail");
+        throw new ResourceNotFoundException("username or password not correct");
     }
 }

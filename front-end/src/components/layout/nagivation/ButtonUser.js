@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../helpers/context/AuthContext";
+import { AuthContext } from "../../../helpers/context/authContext";
 import {
 	Button,
 	Box,
@@ -20,7 +20,6 @@ function ButtonUser() {
 		authState: { isAuthenticated, user, authorization },
 		logout,
 	} = useContext(AuthContext);
-	console.log("isAuthenticated authorization", isAuthenticated, authorization);
 	let OptionMenu = null;
 
 	switch (authorization) {

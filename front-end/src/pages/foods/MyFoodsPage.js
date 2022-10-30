@@ -1,70 +1,21 @@
 import { Container, Grid, Pagination } from "@mui/material";
 import ListFoods from "../../components/food/ListFoods";
 import OptionViewFoods from "../../components/food/OptionViewFood";
-import { useState ,useEffect } from "react";
-import { ProductService } from "../../helpers/service/ProductService";
-
-// const dataFoods = [
-// 	{
-// 		id: 1,
-// 		picture: "#",
-// 		name: "Bún Bò Huế 65 - Khâm Thiên",
-// 		category: ["Bún", "Phở Mì", " Hủ tiếu"],
-// 	},
-// 	{
-// 		id: 2,
-// 		picture: "#",
-// 		name: "Bún Bò Huế 32 - Khâm Thiên",
-// 		category: ["Bún", "Phở Mì", " Hủ tiếu"],
-// 	},
-// 	{
-// 		id: 3,
-// 		picture: "#",
-// 		name: "Bún Bò Huế 32- Khâm Thiên",
-// 		category: ["Bún", "Phở Mì", " Hủ tiếu"],
-// 	},
-// 	{
-// 		id: 3,
-// 		picture: "#",
-// 		name: "Bún Bò Huế 32- Khâm Thiên",
-// 		category: ["Bún", "Phở Mì", " Hủ tiếu"],
-// 	},
-// 	{
-// 		id: 4,
-// 		picture: "#",
-// 		name: "Bún Bò Huế 65 - Khâm Thiên",
-// 		category: ["Bún", "Phở Mì", " Hủ tiếu"],
-// 	},
-// 	{
-// 		id: 5,
-// 		picture: "#",
-// 		name: "Bún Bò Huế 32 - Khâm Thiên",
-// 		category: ["Bún", "Phở Mì", " Hủ tiếu"],
-// 	},
-// 	{
-// 		id: 6,
-// 		picture: "#",
-// 		name: "Bún Bò Huế 32- Khâm Thiên",
-// 		category: ["Bún", "Phở Mì", " Hủ tiếu"],
-// 	},
-// 	{
-// 		id: 7,
-// 		picture: "#",
-// 		name: "Bún Bò Huế 32- Khâm Thiên",
-// 		category: ["Bún", "Phở Mì", " Hủ tiếu"],
-// 	},
-// ];
-
+import { useState, useContext ,useEffect } from "react";
+import { ProductService } from "../../helpers/service/productService";
+import { ProductContext } from "../../helpers/context/productContext";
 const MaxPage = 5;
 function MyFoodsPage() {
+	const products = useContext(ProductContext)
 	const [dataFoods,setData] = useState([])
-	useEffect(()=>{
-		const fetchApi = async ()=>{
-			const result = await ProductService.getProduct();
-			setData(result);
-		}
-		fetchApi()
-	},[])
+	// useEffect(()=>{
+	// 	const fetchApi = async ()=>{
+	// 		const result = ProductService.getProduct();
+	// 		setData(result);
+	// 	}
+	// 	fetchApi()
+	// },[]) 
+	console.log(products.ListProduct)
 	const [page, setPage] = useState(1);
 	return (
 		<>
@@ -80,7 +31,7 @@ function MyFoodsPage() {
 						gap={3}
 						sx={{ pl: 2 }}
 					>
-						<ListFoods data={dataFoods} />
+						<ListFoods data={products.ListProduct} />
 						<Grid container justifyContent={"end"}>
 							<Pagination
 								page={page}

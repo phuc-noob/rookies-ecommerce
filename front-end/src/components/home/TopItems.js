@@ -1,10 +1,21 @@
 import { Container, Grid, Button } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import FoodCard from "../food/FoodCard";
+import {ProductContext} from "../../helpers/context/productContext"
+import { useContext } from "react";
 
 function TopItems({ dataTopFood }) {
+	const navigate = useNavigate();
+	const {ListProduct,loadProducts} = useContext(ProductContext)
+	const onclickViewAll= ()=>{
+		navigate("/foods/my");
+		loadProducts()
+		console.log("click view all");
+	}
+
 	return (
 		<Container>
-			<Grid container direction={"column"} gap={3}>
+			<Grid container direction={"column"} gap={3} >
 				<Grid item>
 					<h1
 						style={{
@@ -27,8 +38,8 @@ function TopItems({ dataTopFood }) {
 						);
 					})}
 				</Grid>
-				<Grid container justifyContent="center">
-					<Button color="inherit" size={"large"} fullWidth>
+				<Grid container justifyContent="center" >
+					<Button color="inherit" size={"large"} fullWidth onClick={onclickViewAll}>
 						See more ...
 					</Button>
 				</Grid>

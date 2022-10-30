@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import ContextProvider from "./helpers/context";
+import {ProductProvider}  from "./helpers/context/productContext"
 
 console.log(process.env);
 
@@ -13,7 +14,9 @@ root.render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<ContextProvider>
-				<App />
+				<ProductProvider>
+					<App />
+				</ProductProvider>
 			</ContextProvider>
 		</BrowserRouter>
 	</React.StrictMode>

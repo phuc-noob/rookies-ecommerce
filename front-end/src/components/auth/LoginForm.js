@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../helpers/context/AuthContext";
+import { AuthContext } from "../../helpers/context/authContext";
 import AlertMsg from "../layout/AlertMessage";
 import {
 	Grid,
@@ -35,9 +35,9 @@ const LoginForm = () => {
 		const loginData = await loginUser(stateForm);
 		console.log(loginData);
 		if (loginData && loginData.statusCode === 200) {
-			navigate("/", { replace: true });
+			navigate("/", { replace: true })
 		} else {
-			setAlertFail({ message: loginData.message || "Server off" });
+			setAlertFail({ message: loginData.description || "Server off" });
 		}
 	};
 

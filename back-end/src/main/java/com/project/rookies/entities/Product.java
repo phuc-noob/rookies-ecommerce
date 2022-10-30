@@ -45,5 +45,5 @@ public class Product {
             name = "category_product",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    List<Category> categories;
+    List<Category> categories = new ArrayList<>();
 }

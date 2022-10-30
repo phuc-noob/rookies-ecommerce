@@ -1,4 +1,4 @@
-import AuthContextProvider from "./AuthContext";
+import AuthContextProvider from "./authContext";
 
 function ContextProvider({ children }) {
 	return <AuthContextProvider>{children}</AuthContextProvider>;

@@ -2,7 +2,7 @@ import LoginForm from "../../components/auth/LoginForm";
 import RegisterForm from "../../components/auth/RegisterForm";
 import { Navigate } from "react-router-dom";
 import React, { useContext } from "react";
-import { AuthContext } from "../../helpers/context/AuthContext";
+import { AuthContext } from "../../helpers/context/authContext";
 import styled from "@emotion/styled";
 import Loadding from "../../components/layout/Loadding";
 function AuthPage({ authRoute }) {
