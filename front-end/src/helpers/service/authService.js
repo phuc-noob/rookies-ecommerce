@@ -67,11 +67,11 @@ const loadUser = async () => {
 };
 const register = async (userForm) => {
 	if (userForm.password !== userForm.confirmPassword) {
-		throw Error("confirm password not matching!");
+		
 	}
 	try {
 		const res = await axios.post(`${API_REGISTER}`, userForm);
-		return res.data;
+		return res;
 	} catch (err) {
 		throw err.response.data
 			? err.response.data

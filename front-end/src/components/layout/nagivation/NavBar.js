@@ -12,8 +12,12 @@ import {
 } from "@mui/material";
 import { FastfoodRounded } from "@mui/icons-material";
 import ButtonUser from "./ButtonUser";
-
+import { useNavigate } from "react-router-dom";
 function NavBar() {
+	const navigation = useNavigate()
+	const foodIconClick =()=>{
+		navigation("/")
+	}
 	return (
 		<AppBar color={"transparent"} position="fixed" sx={{ zIndex: "10" }}>
 			<Container >
@@ -25,6 +29,7 @@ function NavBar() {
 						edge="start"
 						color="inherit"
 						aria-label="menu"
+						onClick={foodIconClick}
 					>
 						<FastfoodRounded />
 					</IconButton>

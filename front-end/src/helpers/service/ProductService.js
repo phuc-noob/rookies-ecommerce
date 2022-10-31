@@ -19,7 +19,7 @@ const getProduct = async () => {
             ? err.response.data
             : {
                 status: 500,
-                message: "Server error",
+                message: "Server    ",
             };
     }
 };
@@ -27,7 +27,6 @@ const getProduct = async () => {
 const getProductById = async (id) => {
     try {
         const res = await axios.get(`${API_PRODUCT}/${id}`);
-        
         return res.data;
     } catch (err) {
         console.log("err", err, err.response);

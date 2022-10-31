@@ -8,7 +8,7 @@ function DetailFood() {
 	const products = useContext(ProductContext)
 	return (
 		<>
-			<Container maxWidth="xl" sx={{ marginTop: "150px" }}>
+			<Container sx={{ marginTop: "150px" }}>
 				<InfoFood />
 				<br></br>
 				<Grid item>
