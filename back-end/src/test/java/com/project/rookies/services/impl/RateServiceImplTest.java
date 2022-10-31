@@ -52,7 +52,7 @@ public class RateServiceImplTest {
     }
 
     @Test
-    void saveRate_ShouldReturnRate_WhenDataValid() {
+    void saveRate_ShouldThrownResourceNotFoundException_WhenDataValid() {
         RateDto rateDto = RateDto.builder().customerDtoId(10L)
                 .point(5).productDtoId(5L)
                 .content("content").build();

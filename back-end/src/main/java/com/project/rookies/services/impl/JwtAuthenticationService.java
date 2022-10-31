@@ -43,7 +43,7 @@ public class JwtAuthenticationService implements IJwtAuthenticationService {
 
     @Override
     public AuthUserResponseDto authRequestHeader(String token) {
-        return new AuthUserResponseDto( 200,JwtUtil.getUsernameByToken(token),"this is name");
+        return new AuthUserResponseDto( 200,JwtUtil.getUsernameByToken(token),"this is name",JwtUtil.getRoleByToken(token));
     }
 
     @EventListener

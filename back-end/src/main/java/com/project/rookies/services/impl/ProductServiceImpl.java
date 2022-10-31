@@ -38,8 +38,6 @@ public class ProductServiceImpl implements IProductService {
         // case : product is existed and status is true -> not update
         if (isExistProduct(productDto) && checkProductStatus(productDto.getProductName()))
             throw new DuplicateValueInResourceException("Product is exist");
-        if (!categoryRepo.existsById(productDto.getCategoryId()))
-            throw new ResourceNotFoundException("category not found");
 
         Product product = modelMapper.map(productDto, Product.class);
         product.setCreatedAt(LocalDateTime.now());
@@ -48,7 +46,9 @@ public class ProductServiceImpl implements IProductService {
         product = productRepo.save(product);
 
         // add product to category
-        categoryRepo.getById(productDto.getCategoryId()).getProduct().add(product);
+        for(Long cateId : productDto.getCategoryIds()){
+            product.getCategories().add(categoryRepo.getById(cateId));
+        }
 
         for (ImageDto imageDto : productDto.getImageDtos()) {
             Image image = modelMapper.map(imageDto, Image.class);

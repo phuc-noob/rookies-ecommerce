@@ -18,8 +18,8 @@ public class ProductDto {
     private String productName;
     @NotBlank(message = "description is require")
     private String description;
-    @NotNull(message = "category is require")
-    private Long categoryId;
+    @NotEmpty(message = "category is require")
+    private List<Long> categoryIds;
     @NotNull(message = "price is require")
     private float price;
     @NotNull(message = "amount is require")
