@@ -10,7 +10,13 @@ import {
 } from "@mui/material";
 import styled from "@emotion/styled";
 import HoverRating from "./Rating"
+import { useContext } from "react";
+import { ProductContext } from "../../helpers/context/productContext";
+import { useNavigate } from "react-router-dom";
+import { Refresh } from "@mui/icons-material";
 function FoodCard(pros) {
+	const {ProductDetail,loadProductDetail} = useContext(ProductContext)
+	const navigate = useNavigate();
 	const option = pros.edit ? (
 		<>
 			<Button size="small" color="primary">
@@ -26,10 +32,18 @@ function FoodCard(pros) {
 		</Button>
 	);
 
+	const goProductDetailClick = async () =>{
+		localStorage.setItem("productId",pros.productId)
+		loadProductDetail(pros.productId)
+		navigate(`/foods/${ProductDetail.productId}`)
+		window.location.reload(false);
+		console.log(ProductDetail)
+	}
+
 	return (
 		<WrapperCard>
 			<Card sx={{ height: "auto" }}>
-				<CardActionArea>
+				<CardActionArea onClick={goProductDetailClick}>
 					<CardMedia
 						component="img"
 						height="140"
@@ -51,7 +65,7 @@ function FoodCard(pros) {
 									{pros.productName}
 								</Typography>
 								<Typography variant="body2" color="text.secondary" width={200}>
-									{pros.categoryName.join(" - ")}
+									{pros.categories.map(category => category.cateName).join('- ')}
 								</Typography>
 							</Grid>
 							<Grid item>{pros.price}$</Grid>

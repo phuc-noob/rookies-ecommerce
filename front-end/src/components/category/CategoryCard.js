@@ -16,7 +16,7 @@ function CategoryCard(category) {
         console.log(category.cateId)
         loadListProductByCate(category.cateId)
         console.log(ListProduct)
-        nagivation("/foods/my")
+        nagivation("/foods")
     }
 
     return (

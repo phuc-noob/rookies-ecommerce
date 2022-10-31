@@ -1,20 +1,14 @@
 import { Container, Grid, Pagination } from "@mui/material";
 import ListFoods from "../../components/food/ListFoods";
 import OptionViewFoods from "../../components/food/OptionViewFood";
-import { useState, useContext ,useEffect } from "react";
 import { ProductService } from "../../helpers/service/productService";
+import { useState, useContext ,useEffect } from "react";
 import { ProductContext } from "../../helpers/context/productContext";
 const MaxPage = 5;
 function MyFoodsPage() {
 	const products = useContext(ProductContext)
 	const [dataFoods,setData] = useState([])
-	// useEffect(()=>{
-	// 	const fetchApi = async ()=>{
-	// 		const result = ProductService.getProduct();
-	// 		setData(result);
-	// 	}
-	// 	fetchApi()
-	// },[]) 
+
 	console.log(products.ListProduct)
 	const [page, setPage] = useState(1);
 	return (

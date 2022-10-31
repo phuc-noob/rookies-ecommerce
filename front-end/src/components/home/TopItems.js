@@ -8,7 +8,7 @@ function TopItems({ dataTopFood }) {
 	const navigate = useNavigate();
 	const {ListProduct,loadProducts} = useContext(ProductContext)
 	const onclickViewAll= ()=>{
-		navigate("/foods/my");
+		navigate("/foods");
 		loadProducts()
 		console.log("click view all");
 	}

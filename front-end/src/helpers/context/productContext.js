@@ -6,12 +6,24 @@ const ProductContext = createContext();
 
 function ProductProvider({ children }) {
     const [ListProduct, setListProduct] = useState([]);
-
+    const [ProductDetail, setProductDetail] = useState({});
     useEffect(()=>{
         ProductService.getProduct().then(result=>{
             setListProduct(result);
         },)
     },[])
+    useEffect(()=>{
+        ProductService.getProductById(localStorage.getItem("productId")).then(res =>{
+            setProductDetail(res)
+        })
+    },[])
+    
+
+    const loadProductDetail = async (id) => {
+        ProductService.getProductById(id).then(result => {
+            setProductDetail(result)
+        })
+    }
 
     const loadListProductByCate = async (id) => {
         CategoryService.getListProductByCategory(id).then(result=>{
@@ -27,8 +39,10 @@ function ProductProvider({ children }) {
 
     const products = {
         ListProduct,
+        ProductDetail,
         loadProducts,
-        loadListProductByCate
+        loadListProductByCate,
+        loadProductDetail
     }
     return (
         <ProductContext.Provider value={products}>
