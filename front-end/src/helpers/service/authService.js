@@ -66,9 +66,6 @@ const loadUser = async () => {
 	}
 };
 const register = async (userForm) => {
-	if (userForm.password !== userForm.confirmPassword) {
-		
-	}
 	try {
 		const res = await axios.post(`${API_REGISTER}`, userForm);
 		return res;
@@ -80,6 +77,7 @@ const register = async (userForm) => {
 				message: "Server error",
 			};
 	}
+	
 };
 export const authService = {
 	setAuthToken,

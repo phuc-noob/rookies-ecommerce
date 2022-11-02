@@ -20,11 +20,10 @@ const getCategory = async () => {
 
 const getListProductByCategory = async (id)=>{
     try {
-
         const res = await axios.get(`${API_CATEGORY}/${id}/products`, {
             params: {
                 page: 0,
-                size: 10
+                size: 8
             }
         });
 

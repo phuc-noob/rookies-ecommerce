@@ -19,10 +19,30 @@ const getProduct = async () => {
             ? err.response.data
             : {
                 status: 500,
-                message: "Server    ",
+                message: "Server    ",  
             };
     }
 };
+
+const filterProduct = async (filter) =>{
+    try {
+        const queryString = require('query-string');
+		const str = queryString.stringify({page:filter.page,size:filter.size,category:filter.category,price:filter.price,priceOn:filter.priceOn,rating:filter.rating},{arrayFormat: 'comma'});
+        
+        const urlstr = `${API_PRODUCT}?${str}`
+        const res = await axios.get(urlstr);
+        console.log(urlstr)
+        return res.data;
+    } catch (err) {
+        console.log("err", err, err.response);
+        throw err.response.data
+            ? err.response.data
+            : {
+                status: 500,
+                message: "Server    ",  
+            };
+    }
+}
 
 const getProductById = async (id) => {
     try {
@@ -39,8 +59,8 @@ const getProductById = async (id) => {
     }
 }
 
-
 export const ProductService = {
+    filterProduct,
     getProduct,
     getProductById
 };

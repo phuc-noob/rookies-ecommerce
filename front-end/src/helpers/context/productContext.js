@@ -7,6 +7,7 @@ const ProductContext = createContext();
 function ProductProvider({ children }) {
     const [ListProduct, setListProduct] = useState([]);
     const [ProductDetail, setProductDetail] = useState({});
+    const [ProductFilter,setProductFilter] = useState({"page":0,"size":8,"category":[]})
     useEffect(()=>{
         ProductService.getProduct().then(result=>{
             setListProduct(result);
@@ -17,6 +18,14 @@ function ProductProvider({ children }) {
             setProductDetail(res)
         })
     },[])
+
+    
+    const loadProductFilter = async(filter)=>{
+        setProductFilter(filter)
+        ProductService.filterProduct(filter).then(res => {
+            setListProduct(res)
+        })
+    }
     
 
     const loadProductDetail = async (id) => {
@@ -40,6 +49,8 @@ function ProductProvider({ children }) {
     const products = {
         ListProduct,
         ProductDetail,
+        ProductFilter,
+        loadProductFilter,
         loadProducts,
         loadListProductByCate,
         loadProductDetail

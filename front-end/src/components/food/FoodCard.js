@@ -13,7 +13,7 @@ import HoverRating from "./Rating"
 import { useContext } from "react";
 import { ProductContext } from "../../helpers/context/productContext";
 import { useNavigate } from "react-router-dom";
-import { Refresh } from "@mui/icons-material";
+
 function FoodCard(pros) {
 	const {ProductDetail,loadProductDetail} = useContext(ProductContext)
 	const navigate = useNavigate();
@@ -32,17 +32,25 @@ function FoodCard(pros) {
 		</Button>
 	);
 
+	const addCartClick =()=>{
+		if(!pros.edit)
+			console.log("add cart")
+
+		console.log(pros.rating)
+	}
+
 	const goProductDetailClick = async () =>{
 		localStorage.setItem("productId",pros.productId)
 		loadProductDetail(pros.productId)
 		navigate(`/foods/${ProductDetail.productId}`)
 		window.location.reload(false);
-		console.log(ProductDetail)
+		console.log(ProductDetail.rating)
 	}
 
 	return (
 		<WrapperCard>
 			<Card sx={{ height: "auto" }}>
+			
 				<CardActionArea onClick={goProductDetailClick}>
 					<CardMedia
 						component="img"
@@ -69,12 +77,12 @@ function FoodCard(pros) {
 								</Typography>
 							</Grid>
 							<Grid item>{pros.price}$</Grid>
-							<HoverRating rate={2.5} />
+							<HoverRating rate={pros.rating} />
 						</Grid>
 					</CardContent>
 				</CardActionArea>
 				<CardActions>
-					<Grid container justifyContent={"flex-end"}>
+					<Grid onClick={addCartClick} container justifyContent={"flex-end"}>
 						{option}
 					</Grid>
 				</CardActions>

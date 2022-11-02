@@ -43,7 +43,7 @@ export default function RegisterForm() {
 			console.log(loginData)
 		}else{
 			console.log(registerData)
-			setAlertFail({ message: registerData.message || "Server off" });
+			setAlertFail({ message: registerData.description || "Server off" });
 		}
 
 	};

@@ -1,23 +1,38 @@
 import { Container, Grid, Pagination } from "@mui/material";
 import ListFoods from "../../components/food/ListFoods";
-import OptionViewFoods from "../../components/food/OptionViewFood";
-import { ProductService } from "../../helpers/service/productService";
-import { useState, useContext ,useEffect } from "react";
+import OptionViewFoods from "../../components/food/option/OptionViewFood";
+import { useState, useContext, useEffect  } from "react";
 import { ProductContext } from "../../helpers/context/productContext";
 const MaxPage = 5;
 function MyFoodsPage() {
-	const products = useContext(ProductContext)
-	const [dataFoods,setData] = useState([])
+	const { ProductFilter, ListProduct, loadProductFilter } = useContext(ProductContext)
 
-	console.log(products.ListProduct)
+	console.log(ListProduct)
 	const [page, setPage] = useState(1);
+
+	useEffect(()=>{
+		setPage(ProductFilter.page+1)
+	},[ProductFilter.page])
+
+	const paginProduct = (e, page) =>{
+		const filter = { 
+            ...ProductFilter, 
+            page:page-1
+        }
+        loadProductFilter(filter)
+		setPage(page)
+		console.log(page)
+	}
+	
 	return (
 		<>
-			<Container maxWidth="xl" sx={{ marginTop: "70px" }}>
+			<Container maxWidth="xl" sx={{ marginTop: "100px",marginLeft:"50px"}}>
+				<br/>
 				<Grid container>
-					<Grid container lg={3}>
+					<Grid container lg={2}>
 						<OptionViewFoods />
 					</Grid>
+					<br/>
 					<Grid
 						container
 						lg={9}
@@ -25,11 +40,11 @@ function MyFoodsPage() {
 						gap={3}
 						sx={{ pl: 2 }}
 					>
-						<ListFoods data={products.ListProduct} />
+						<ListFoods data={ListProduct} />
 						<Grid container justifyContent={"end"}>
 							<Pagination
 								page={page}
-								onChange={(e, page) => setPage(page)}
+								onChange={paginProduct}
 								count={MaxPage}
 							/>
 						</Grid>
