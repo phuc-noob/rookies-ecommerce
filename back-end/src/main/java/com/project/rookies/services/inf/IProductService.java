@@ -16,7 +16,7 @@ public interface IProductService {
 
     ProductResponseDto getProductById(Long id);
 
-    List<ProductResponseDto> getListProduct(int page, int size);
+    List<ProductResponseDto> getListProduct(List<Long> categoryId, float rate,float price,float priceOn,int page, int size);
 
     List<ProductResponseDto> getListProductByTag(int page, int size,String tag);
 

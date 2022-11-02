@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(POST, "/api/products", "/api/categories", "/api/voucher").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
                 .antMatchers(PUT, "/api/products").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
                 .antMatchers(DELETE, "/api/categories/**","/api/products/**").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString());
-        http.authorizeRequests().antMatchers(GET, "/api/categories/**", "/api/products/**","/api/customers/**").permitAll();
+        http.authorizeRequests().antMatchers(GET, "/api/categories/**", "/api/products/*","/api/products","/api/customers/**").permitAll();
         http.authorizeRequests().antMatchers("/swagger-ui/*", "/v3/api-docs/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -11,6 +11,7 @@ import com.project.rookies.entities.enums.ECustomerStatus;
 import com.project.rookies.entities.enums.ERoleType;
 import com.project.rookies.exceptions.DuplicateValueInResourceException;
 import com.project.rookies.exceptions.ResourceNotFoundException;
+import com.project.rookies.exceptions.ValidationException;
 import com.project.rookies.filters.jwt.JwtUtil;
 import com.project.rookies.filters.userprincal.UserPrinciple;
 import com.project.rookies.repositories.CustomerRepo;
@@ -66,6 +67,8 @@ public class JwtAuthenticationService implements IJwtAuthenticationService {
     public CustomerResponseDto registerAccount(RegisterRequestDto registerRequestDto) {
         if (customerRepo.findByEmail(registerRequestDto.getEmail())!=null)
             throw new DuplicateValueInResourceException("account was existed by email");
+        if (!registerRequestDto.getPassword().equals(registerRequestDto.getConfirmPassword()))
+            throw new ValidationException("confirm password not correct");
         Customer customer = modelMapper.map(registerRequestDto, Customer.class);
         customer.setPassword(passwordEncoder.encode(registerRequestDto.getPassword()));
         Role role = roleRepo.findByRoleName(ERoleType.ROLE_USER);

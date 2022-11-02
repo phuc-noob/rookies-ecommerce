@@ -4,6 +4,7 @@ import com.project.rookies.dto.request.ImageDto;
 import com.project.rookies.dto.request.ProductDto;
 import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.dto.response.ProductResponseDto;
+import com.project.rookies.entities.Category;
 import com.project.rookies.entities.Image;
 import com.project.rookies.entities.Product;
 import com.project.rookies.entities.enums.EProductStatus;
@@ -16,14 +17,19 @@ import com.project.rookies.repositories.ImageRepo;
 import com.project.rookies.repositories.ProductRepo;
 import com.project.rookies.services.inf.IProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements IProductService {
@@ -46,7 +52,7 @@ public class ProductServiceImpl implements IProductService {
         product = productRepo.save(product);
 
         // add product to category
-        for(Long cateId : productDto.getCategoryIds()){
+        for (Long cateId : productDto.getCategoryIds()) {
             product.getCategories().add(categoryRepo.getById(cateId));
         }
 
@@ -92,30 +98,43 @@ public class ProductServiceImpl implements IProductService {
 
 
     @Override
-    public List<ProductResponseDto> getListProduct(int page, int size) {
+    public List<ProductResponseDto> getListProduct(List<Long> categoryId, float rate, float price, float priceOn, int page, int size) {
         if (page < 0) throw new ResourceNotFoundException("page not found");
-        return productRepo.getListProduct(page, size)
-                .stream()
-                .map(product -> modelMapper.map(product, ProductResponseDto.class))
-                .collect(Collectors.toList());
+        List<Category> categories = new ArrayList<>();
+        Pageable pageable = PageRequest.of(page, size);
+        if(categoryId != null){
+            for (Long categoryItem : categoryId)
+                categories.add(categoryRepo.getById(categoryItem));
+            return productRepo.findAllByCategoriesInAndPriceBetweenAndRatePointGreaterThanAndStatusNot(categories, price, priceOn, rate,EProductStatus.DELETED, pageable)
+                    .stream()
+                    .map(product -> productMapper.mapEntityToDto(product))
+                    .collect(Collectors.toList());
+        }else{
+            return productRepo.findAllByPriceBetweenAndRatePointGreaterThanEqualAndStatusNot(price, priceOn, rate,EProductStatus.DELETED, pageable)
+                    .stream()
+                    .map(product -> productMapper.mapEntityToDto(product))
+                    .collect(Collectors.toList());
+        }
+
+
     }
 
     @Override
     public List<ProductResponseDto> getListProductByTag(int page, int size, String tag) {
         if (page < 0) throw new ResourceNotFoundException("page not found");
+
         if (tag.equals("best-seller")) {
             return productRepo.getListProductBestSeller(page, size)
                     .stream()
                     .map(product -> productMapper.mapEntityToDto(product))
                     .collect(Collectors.toList());
         }
-        if(tag.isBlank()){
+        if (tag.isBlank()) {
             return productRepo.getListProduct(page, size)
                     .stream()
                     .map(product -> productMapper.mapEntityToDto(product))
                     .collect(Collectors.toList());
-        }
-        else throw new ResourceNotFoundException("list bét seller not found");
+        } else throw new ResourceNotFoundException("list bét seller not found");
     }
 
     @Override

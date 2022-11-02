@@ -19,6 +19,7 @@ public class ProductResponseDto {
     private String description;
     private float price;
     private int amount;
+    private float rating;
     private int totalSold;
     private EProductStatus status;
     private List<CategoryProductResponseDto> categories ;

@@ -6,11 +6,14 @@ import com.project.rookies.dto.response.ProductResponseDto;
 import com.project.rookies.entities.enums.EProductStatus;
 import com.project.rookies.services.inf.IProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
@@ -31,15 +34,18 @@ public class ProductController {
     ProductResponseDto getProduct(@PathVariable Long id) {
         return productService.getProductById(id);
     }
-
-
-    @GetMapping
-    List<ProductResponseDto> getListProductByTag(@RequestParam(name = "tag", required = false,defaultValue = "") String tag, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-        return productService.getListProductByTag(page, size, tag);
-    }
-
     @DeleteMapping("/{id}")
     DeleteResponseDto deleteProduct(@PathVariable Long id) {
         return productService.updateProductStatus(EProductStatus.DELETED, id);
+    }
+
+    @GetMapping
+    List<ProductResponseDto> getListProduct(@RequestParam(name = "category",required = false ) List<Long> categories,
+                        @RequestParam(name = "price",required = false,defaultValue = "0") float price,
+                        @RequestParam(name = "page", required = true) int page,
+                        @RequestParam(name = "rating" ,required = false,defaultValue = "0")float rate,
+                        @RequestParam(name = "priceOn", required = false,defaultValue = "1000000") float priceOn,
+                        @RequestParam(name = "size",required = true) int size) {
+        return productService.getListProduct(categories,rate,price,priceOn,page,size);
     }
 }

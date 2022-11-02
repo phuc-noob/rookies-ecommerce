@@ -17,5 +17,7 @@ public class RegisterRequestDto {
     String email;
     @NotBlank(message = "password is require")
     String password;
+    @NotBlank(message = "password is require")
+    String confirmPassword;
 
 }
