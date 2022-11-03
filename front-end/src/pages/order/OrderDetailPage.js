@@ -2,10 +2,12 @@ import * as React from "react";
 import { Container, Grid } from "@mui/material";
 import { useState, useEffect, useContext } from "react";
 import {OrderContext} from "../../helpers/context/orderContext"
-import OrderItem from "../../components/order/OrderItem";
-import BillOrder from "../../components/order/BillOrder";
-function OrderPage() {
-    const {ListCart} = useContext(OrderContext)
+import BillOrderDetail from "../../components/order/BillOrderDetail";
+import OrderItemInfo from "../../components/order/OrderItemInfo";
+import CustomerInfo from "../../components/order/CustomerInfo";
+
+function OrderDetailPage() {
+    const {ListCart,ListCartOrderPending} = useContext(OrderContext)
     console.log(ListCart)
     return (
         <>
@@ -17,18 +19,23 @@ function OrderPage() {
                         <h5 > CART </h5>
                         <p></p>
                         {
-                            ListCart.map(item => {
+                            ListCartOrderPending.map(item => {
                                 return(
-                                    <OrderItem cart={item}/>
+                                    <OrderItemInfo cart={item}/>
                                 )
                             })
                         }
+                        <br />
+                        <h5 > CUSTOMER INFO </h5>
+                        <p></p>
+                        <CustomerInfo/>
                     </Grid>
                     <Grid item xs={4} >
                         <br />
                         <h5 > BILL-ORDER </h5>
                         <p></p>
-                        <BillOrder />
+                        <BillOrderDetail />
+                        
                     </Grid>
                 </Grid>
             </Container>
@@ -37,4 +44,4 @@ function OrderPage() {
     )
 }
 
-export default OrderPage;
+export default OrderDetailPage;

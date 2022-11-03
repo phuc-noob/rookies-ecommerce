@@ -10,13 +10,20 @@ import {
 } from "@mui/material";
 import styled from "@emotion/styled";
 import HoverRating from "./Rating"
+import { AuthContext } from "../../helpers/context/authContext";
 import { useContext } from "react";
 import { ProductContext } from "../../helpers/context/productContext";
 import { useNavigate } from "react-router-dom";
+import { OrderContext } from "../../helpers/context/orderContext";
 
 function FoodCard(pros) {
-	const {ProductDetail,loadProductDetail} = useContext(ProductContext)
+	const {
+		authState: { isAuthenticated, user, authorization }
+	} = useContext(AuthContext);
 	const navigate = useNavigate();
+	const { ProductDetail, loadProductDetail } = useContext(ProductContext)
+	const { CartQuantity, loadQuantity ,loadListCart} = useContext(OrderContext)
+
 	const option = pros.edit ? (
 		<>
 			<Button size="small" color="primary">
@@ -32,15 +39,29 @@ function FoodCard(pros) {
 		</Button>
 	);
 
-	const addCartClick =()=>{
-		if(!pros.edit)
-			console.log("add cart")
+	const addCartClick = async () => {
 
-		console.log(pros.rating)
+		if (!pros.edit)
+			console.log("add cart")
+		if (isAuthenticated) {
+			const cart = {
+				"customerId": user.customerId,
+				"productId": pros.productId,
+				"amount": 1
+			}
+			console.log(user.customerId)
+			loadListCart(cart)
+			loadQuantity(user.customerId)
+		}
+		else
+			console.log("add not ok")
+		console.log(pros.productId)
+		console.log(user.customerId)
+		console.log(CartQuantity)
 	}
 
-	const goProductDetailClick = async () =>{
-		localStorage.setItem("productId",pros.productId)
+	const goProductDetailClick = async () => {
+		localStorage.setItem("productId", pros.productId)
 		loadProductDetail(pros.productId)
 		navigate(`/foods/${ProductDetail.productId}`)
 		window.location.reload(false);
@@ -50,19 +71,19 @@ function FoodCard(pros) {
 	return (
 		<WrapperCard>
 			<Card sx={{ height: "auto" }}>
-			
+
 				<CardActionArea onClick={goProductDetailClick}>
 					<CardMedia
 						component="img"
 						height="140"
 						image={pros.images[0].imageURL}
 						alt="image food"
-						// sx={{ p: 3 }}
+					// sx={{ p: 3 }}
 					/>
 					<CardContent>
 						<Grid container justifyContent={"space-between"}>
 							<Grid container lg={10}>
-								
+
 								<Typography
 									gutterBottom
 									variant="body1"

@@ -5,7 +5,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import ContextProvider from "./helpers/context";
-import {ProductProvider}  from "./helpers/context/productContext"
+import { ProductProvider } from "./helpers/context/productContext"
+import { OrderProvider } from "./helpers/context/orderContext";
 
 console.log(process.env);
 
@@ -15,7 +16,9 @@ root.render(
 		<BrowserRouter>
 			<ContextProvider>
 				<ProductProvider>
-					<App />
+					<OrderProvider>
+						<App />
+					</OrderProvider>
 				</ProductProvider>
 			</ContextProvider>
 		</BrowserRouter>

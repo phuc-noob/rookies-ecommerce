@@ -6,7 +6,10 @@ import {
 	Button,
 } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
+import { AuthContext } from "../../helpers/context/authContext";
 import { ProductContext } from "../../helpers/context/productContext";
+import { useNavigate } from "react-router-dom";
+import { OrderContext } from "../../helpers/context/orderContext";
 import CarouselImage from "./CarouselImage";
 const min = 0;
 const max = 10;
@@ -14,8 +17,31 @@ const max = 10;
 function InfoFood() {
 	const products = useContext(ProductContext)
 	const [value, setValue] = useState(1);
+	const {
+		authState: { isAuthenticated, user, authorization }
+	} = useContext(AuthContext);
+	const navigate = useNavigate();
+	const { ProductDetail, loadProductDetail } = useContext(ProductContext)
+	const { CartQuantity, loadQuantity ,loadListCart} = useContext(OrderContext)
 
 	console.log(products.ProductDetail)
+	const addToCartClick = ()=>{
+		if (isAuthenticated) {
+			const cart = {
+				"customerId": user.customerId,
+				"productId": products.ProductDetail.productId,
+				"amount": value
+			}
+			console.log(user.customerId)
+
+			loadListCart(cart)
+			loadQuantity(user.customerId)
+		}
+		else
+			console.log("add not ok")
+		console.log(products.ProductDetail)
+		console.log(CartQuantity)
+	}
 	const data = [0, 1, 3, 4, 5]
 	return (
 		<>
@@ -66,6 +92,7 @@ function InfoFood() {
 								color:"#16802C",
 								borderColor:"#16802C"
 							}}
+							onClick={addToCartClick}
 							>
 								<strong>Add to cart</strong>
 
