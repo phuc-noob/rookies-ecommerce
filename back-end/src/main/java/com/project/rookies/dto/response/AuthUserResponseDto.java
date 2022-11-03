@@ -11,7 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AuthUserResponseDto {
     private int status;
+    private Long customerId;
     private String firstName;
     private String lastName;
     private String roleName;
+    private String phone;
+    private String email;
+    private String address;
 }

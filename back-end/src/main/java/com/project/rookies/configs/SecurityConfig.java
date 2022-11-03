@@ -46,15 +46,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and();
         http.csrf().disable().exceptionHandling().authenticationEntryPoint(jwtEntryPoint).and();
-        http.authorizeRequests().antMatchers("/api/auth/login", "/api/auth","/api/auth/register").permitAll();
+        http.authorizeRequests().antMatchers("/api/auth/login", "/api/auth", "/api/auth/register").permitAll();
 
+        // must have role Admin
         http.authorizeRequests()
                 //.antMatchers(GET,"/api/customers").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
                 .antMatchers(POST, "/api/products", "/api/categories", "/api/voucher").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
                 .antMatchers(PUT, "/api/products").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
-                .antMatchers(DELETE, "/api/categories/**","/api/products/**").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString());
-        http.authorizeRequests().antMatchers(GET, "/api/categories/**", "/api/products/*","/api/products","/api/customers/**").permitAll();
-        http.authorizeRequests().antMatchers("/swagger-ui/*", "/v3/api-docs/**").permitAll();
+                .antMatchers(DELETE, "/api/categories/**", "/api/products/**").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString());
+
+        // permitAll api
+        http.authorizeRequests()
+                .antMatchers(GET, "/api/categories/**", "/api/products/*", "/api/products", "/api/customers/**","/api/carts/**").permitAll();
+        http.authorizeRequests()
+                .antMatchers("/swagger-ui/*", "/v3/api-docs/**").permitAll()
+                .antMatchers(POST, "/api/carts/**","/api/orders/**").permitAll();
+
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

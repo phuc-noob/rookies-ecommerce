@@ -4,15 +4,20 @@ import com.project.rookies.dto.request.CustomerDto;
 import com.project.rookies.dto.response.CustomerResponseDto;
 import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.entities.enums.ECustomerStatus;
+import com.project.rookies.services.inf.ICartService;
 import com.project.rookies.services.inf.ICustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -20,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerController {
     private final ICustomerService customerService;
+    private final ICartService cartService;
 
     @GetMapping("/{id}")
     CustomerResponseDto getCustomer(@PathVariable Long id) {
@@ -29,6 +35,11 @@ public class CustomerController {
     @GetMapping
     List<CustomerResponseDto> getListCustomer(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
         return customerService.findListCustomer(page, size);
+    }
+
+    @GetMapping("/{id}/carts/quantity")
+    Object getQuantityCart(@PathVariable Long id) {
+        return Map.of("quantity", cartService.getCartQuantity(id));
     }
 
     @PostMapping

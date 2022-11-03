@@ -160,7 +160,6 @@ public class RateServiceImplTest {
                 "rate not found"
         );
         assertTrue(thrown.getMessage().contains("rate not found"));
-
     }
 
     @Test

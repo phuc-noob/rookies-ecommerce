@@ -5,6 +5,7 @@ import com.project.rookies.dto.request.RegisterRequestDto;
 import com.project.rookies.dto.response.AuthUserResponseDto;
 import com.project.rookies.dto.response.CustomerResponseDto;
 import com.project.rookies.dto.response.JwtResponseDto;
+import com.project.rookies.entities.Admin;
 import com.project.rookies.entities.Customer;
 import com.project.rookies.entities.Role;
 import com.project.rookies.entities.enums.ECustomerStatus;
@@ -14,6 +15,7 @@ import com.project.rookies.exceptions.ResourceNotFoundException;
 import com.project.rookies.exceptions.ValidationException;
 import com.project.rookies.filters.jwt.JwtUtil;
 import com.project.rookies.filters.userprincal.UserPrinciple;
+import com.project.rookies.repositories.AdminRepo;
 import com.project.rookies.repositories.CustomerRepo;
 import com.project.rookies.repositories.RoleRepo;
 import com.project.rookies.services.inf.IJwtAuthenticationService;
@@ -41,6 +43,7 @@ public class JwtAuthenticationService implements IJwtAuthenticationService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepo roleRepo;
+    private final AdminRepo adminRepo;
 
     @Override
     public JwtResponseDto authenticationAccount(LoginRequestDto loginRequestDto) {
@@ -60,7 +63,29 @@ public class JwtAuthenticationService implements IJwtAuthenticationService {
 
     @Override
     public AuthUserResponseDto authRequestHeader(String token) {
-        return new AuthUserResponseDto( 200,JwtUtil.getUsernameByToken(token),"this is name",JwtUtil.getRoleByToken(token));
+        if (JwtUtil.getRoleByToken(token).equals("ROLE_USER")){
+            Customer customer = customerRepo.findByEmail(JwtUtil.getUsernameByToken(token));
+            return new AuthUserResponseDto(
+                    200,
+                    customer.getCustomerId(),
+                    customer.getFirstName(),
+                    customer.getLastName(),
+                    JwtUtil.getRoleByToken(token),
+                    customer.getPhone(),
+                    customer.getEmail(),
+                    customer.getAddress());
+        }else{
+            Admin admin = adminRepo.findByAdminName(JwtUtil.getUsernameByToken(token));
+            return new AuthUserResponseDto(
+                    200,
+                    admin.getAdminId(),
+                    JwtUtil.getUsernameByToken(token),
+                    "",
+                    JwtUtil.getRoleByToken(token),
+                    "",
+                    "","");
+        }
+
     }
 
     @Override

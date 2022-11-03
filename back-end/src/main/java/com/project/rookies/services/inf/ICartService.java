@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface ICartService {
     CartResponseDto saveCart(CartDto cartDto);
+    Integer getCartQuantity(Long customerId);
 
     CartResponseDto getCartByCartId(Long id);
 

@@ -35,16 +35,29 @@ public class CartServiceImpl implements ICartService {
             throw new ResourceNotFoundException("customer not found");
         if (!productRepo.existsById(cartDto.getProductId()))
             throw new ResourceNotFoundException("product not found");
-        // case : cart was exist by customer and product
-        if (cartRepo.isExistCart(cartDto.getCustomerId(), cartDto.getProductId()))
-            throw new DuplicateValueInResourceException("cart was existed");
         // case : product quantity is less than cart amount
         if (!isValidProductQuantity(productRepo.getById(cartDto.getProductId()),
                 cartDto.getAmount()))
             throw new ValidationException("invalid quantity");
-        // case : have not existed customer in cart bd
-        Cart cart = cartMapper.mapDtoToEntity(cartDto);
-        return cartMapper.mapEntityToResponseDto(cartRepo.save(cart));
+        // case : cart was exist by customer and product
+        if (cartRepo.isExistCart(cartDto.getCustomerId(), cartDto.getProductId())){
+            Cart cart = cartRepo.findByProductAndCustomer(
+                    productRepo.getById(cartDto.getProductId()),
+                            customerRepo.getById(cartDto.getCustomerId()));
+            cart.setAmount(cart.getAmount()+cartDto.getAmount());
+            cart.setCartPrice(cart.getAmount()*productRepo.getById(cartDto.getProductId()).getPrice());
+            return cartMapper.mapEntityToResponseDto(cartRepo.save(cart));
+        }else{
+            // case : have not existed customer in cart bd
+            Cart cart = cartMapper.mapDtoToEntity(cartDto);
+            return cartMapper.mapEntityToResponseDto(cartRepo.save(cart));
+        }
+
+    }
+
+    @Override
+    public Integer getCartQuantity(Long customerId) {
+        return cartRepo.getQuantityCart(customerId);
     }
 
     @Override
