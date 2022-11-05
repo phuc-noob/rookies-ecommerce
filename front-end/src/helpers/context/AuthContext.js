@@ -73,8 +73,10 @@ function AuthContextProvider({ children }) {
 		}
 	};
 	const logout = () => {
-		authService.logout();
-		dispatch(authAction.logout());
+		authService.logout().then(()=>{
+			dispatch(authAction.logout());
+		});
+		
 	};
 	useEffect(() => {
 		loaddingUser();

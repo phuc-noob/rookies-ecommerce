@@ -11,7 +11,7 @@ function CreateFood({ value, onReset, onClose }) {
 					Clear
 				</Button>
 				<Button type={"submit"} variant="outlined" color="inherit">
-					Save and continue
+					Cancel
 				</Button>
 				<Button type={"submit"} variant="outlined" color="inherit">
 					Save

@@ -29,7 +29,6 @@ export default function BillOrder() {
   const {TotalBill,setTotalBill,ListCartOrderPending,orderProduct} = React.useContext(OrderContext)
 
   const goOrderClick = ()=>{
-    // orderProduct()
     navigate('/orders/my')
   }
 

@@ -8,6 +8,7 @@ import {
 	Button,
 	Grid,
 } from "@mui/material";
+import { AddShoppingCart } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import HoverRating from "./Rating"
 import { AuthContext } from "../../helpers/context/authContext";
@@ -22,7 +23,7 @@ function FoodCard(pros) {
 	} = useContext(AuthContext);
 	const navigate = useNavigate();
 	const { ProductDetail, loadProductDetail } = useContext(ProductContext)
-	const { CartQuantity, loadQuantity ,loadListCart} = useContext(OrderContext)
+	const { CartQuantity, loadQuantity, loadListCart } = useContext(OrderContext)
 
 	const option = pros.edit ? (
 		<>
@@ -104,8 +105,16 @@ function FoodCard(pros) {
 				</CardActionArea>
 				<CardActions>
 					<Grid onClick={addCartClick} container justifyContent={"flex-end"}>
-						{option}
+						<Button variant="outlined" sx={{
+								color:"#16802C",
+								borderColor:"#16802C"
+							}} fullWidth>
+							<AddShoppingCart fontSize="small" />
+						</Button>
 					</Grid>
+					{/* <Grid onClick={addCartClick} container justifyContent={"flex-end"}>
+						{option}
+					</Grid> */}
 				</CardActions>
 			</Card>
 		</WrapperCard>

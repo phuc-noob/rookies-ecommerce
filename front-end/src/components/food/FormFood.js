@@ -44,10 +44,10 @@ function FormFood({ edit }) {
 			<Grid
 				container
 				spacing={2}
-				sx={{ minHeight: "350px", border: 1, paddingY: 5 }}
+				sx={{ minHeight: "350px", border: 1, paddingY: 5 ,borderColor:"#979793",borderRadius:3}}
 				component={"form"}
 			>
-				<Grid item lg={5} md={5} sx={{ border: 1, borderRadius: "16px" }}>
+				<Grid item lg={5} md={5} sx={{ border: 0, borderRadius: "16px",borderColor:"#5F795C" }}>
 					<UploadImage value={imageURLs} setState={setImageURLs} />
 				</Grid>
 				<Grid item lg={7} md={7}>

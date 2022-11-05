@@ -15,8 +15,8 @@ const setAuthToken = (token) => {
 	}
 };
 
-const logout = () => {
-	cookies.remove(LOCAL_STORAGE_TOKEN_NAME)
+const logout = async () => {
+	await cookies.remove(LOCAL_STORAGE_TOKEN_NAME)
 	setAuthToken();
 };
 

@@ -8,6 +8,7 @@ const getCartQuantity = async (customerId) => {
         const res = await axios.get(`${API_CART}/customers/${customerId}/carts/quantity`);
         return res.data;
     } catch (err) {
+        return 0;
         console.log("err", err, err.response);
         throw err.response.data
             ? err.response.data

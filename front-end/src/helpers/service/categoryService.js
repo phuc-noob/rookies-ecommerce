@@ -18,6 +18,27 @@ const getCategory = async () => {
     }
 };
 
+const getListCategories = async () => {
+    try {
+        const res = await axios.get(`${API_CATEGORY}`, {
+            params: {
+                page: 0,
+                size: 8
+            }
+        });
+
+        return res.data;
+    } catch (err) {
+        console.log("err", err, err.response);
+        throw err.response.data
+            ? err.response.data
+            : {
+                status: 500,
+                message: "Server error",
+            };
+    }
+}
+
 const getListProductByCategory = async (id)=>{
     try {
         const res = await axios.get(`${API_CATEGORY}/${id}/products`, {
@@ -41,6 +62,7 @@ const getListProductByCategory = async (id)=>{
 
 
 export const CategoryService = {
+    getListCategories,
     getCategory,
     getListProductByCategory,
 };

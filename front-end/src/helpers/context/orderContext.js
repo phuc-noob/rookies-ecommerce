@@ -5,7 +5,7 @@ import { AuthContext } from "./authContext";
 const OrderContext = createContext()
 
 function OrderProvider({ children }) {
-    const [CartQuantity, setCartQuantity] = useState()
+    const [CartQuantity, setCartQuantity] = useState(0)
     const [ListCart, setListCart] = useState([])
     const [TotalBill,setTotalBill] = useState(0)
     const [ListCartOrderPending,setCartOrderPending] = useState([])
@@ -24,12 +24,13 @@ function OrderProvider({ children }) {
         isAuthenticated ? CartService.getListCart(user.customerId).then(res => {
             setListCart(res)
         }) : console.log("ok")
+        loadQuantity()
     }, [isAuthenticated])
 
     const orderProduct = async () => {
-        const order ={customerId:ListCartOrderPending[0].customerId,orderDetails:[]}
+        const order ={customerId:user.customerId,orderDetails:[]}
         ListCartOrderPending.map(e => {
-            CartService.deleteCartById(e.id)
+            CartService.deleteCartById(e.id).then(()=>{loadQuantity()})
             const orderItem ={productId:e.productId,amount:e.amount}
             order.orderDetails.push(orderItem)
         })
@@ -38,7 +39,8 @@ function OrderProvider({ children }) {
         })
         setCartOrderPending([])
         OrderService.saveOrder(order)
-        window.location.reload(false);
+        loadQuantity()
+
     }
 
     const loadQuantity = async (customerId) => {

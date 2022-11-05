@@ -28,9 +28,8 @@ export default function BillOrderDetail() {
     const [secondary, setSecondary] = React.useState(false);
     const { TotalBill, setTotalBill, ListCartOrderPending, orderProduct } = React.useContext(OrderContext)
 
-    const goOrderClick = () => {
+    const goOrderClick = async () => {
         orderProduct()
-        
     }
 
 

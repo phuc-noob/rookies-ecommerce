@@ -23,19 +23,18 @@ function ButtonUser() {
 	let OptionMenu = null;
 
 	switch (authorization) {
-		case "admin":
-			OptionMenu = <MenuItemsCustomer />;
-
+		case "ROLE_ADMIN":
+			OptionMenu = <MenuItemsAdmin />;
 			// OptionMenu = <MenuItemsCustomer />;
 			break;
-		case "seller":
+		case "ROLE_USER":
 			OptionMenu = <MenuItemsCustomer />;
 			break;
 		default:
 			OptionMenu = <MenuItemsCustomer />;
 			break;
 	}
-	OptionMenu = <MenuItemsCustomer />;
+	// OptionMenu = <MenuItemsCustomer />;
 
 	const navigate = useNavigate();
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -112,7 +111,7 @@ function ButtonUser() {
 						anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
 					>
 						<MenuItem>
-							<Avatar /> Welcome, {user.username}!
+							<Avatar /> Welcome, {user.roleName ==="ROLE_USER"?user.firstName + " " + user.lastName:user.firstName} !
 						</MenuItem>
 
 						<Divider />
