@@ -24,6 +24,8 @@ public class ProductMapper {
                         -> modelMapper.map(category, CategoryProductResponseDto.class)).collect(Collectors.toList()))
                 .productId(product.getProductId())
                 .price(product.getPrice())
+                .createdAt(product.getCreatedAt())
+                .updatedAt(product.getUpdatedAt())
                 .rating(product.getRatePoint())
                 .productName(product.getProductName())
                 .description(product.getDescription())

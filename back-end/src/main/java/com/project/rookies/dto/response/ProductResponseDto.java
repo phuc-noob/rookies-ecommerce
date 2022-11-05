@@ -5,6 +5,7 @@ import com.project.rookies.dto.request.ImageDto;
 import com.project.rookies.entities.enums.EProductStatus;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class ProductResponseDto {
     private Long productId;
     private String productName;
     private String description;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private float price;
     private int amount;
     private float rating;

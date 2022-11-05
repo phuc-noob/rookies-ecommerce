@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -42,7 +43,7 @@ public class Customer {
     @Enumerated(EnumType.STRING)
     private EGender gender;
     @Column(name = "day_of_birth")
-    private LocalDateTime dayOfBirth;
+    private Date dayOfBirth;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;

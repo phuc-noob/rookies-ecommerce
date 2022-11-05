@@ -1,11 +1,13 @@
 package com.project.rookies.dto.response;
 
+import com.project.rookies.entities.enums.ECustomerStatus;
 import com.project.rookies.entities.enums.EGender;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -18,5 +20,7 @@ public class CustomerResponseDto {
     private String email;
     private String address;
     private EGender gender;
-    private LocalDateTime dayOfBirth;
+    private LocalDateTime createdAt;
+    private ECustomerStatus status;
+    private Date dayOfBirth;
 }

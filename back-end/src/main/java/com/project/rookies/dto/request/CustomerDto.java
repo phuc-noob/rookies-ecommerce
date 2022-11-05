@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -25,5 +26,5 @@ public class CustomerDto {
     @NotBlank(message = "address is require")
     private String address;
     private EGender gender;
-    private LocalDateTime dayOfBirth;
+    private Date dayOfBirth;
 }
