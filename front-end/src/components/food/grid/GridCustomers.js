@@ -1,5 +1,5 @@
 import * as React from "react";
-import Paper from "@mui/material/Paper";
+import Popover from "@mui/material/Popover";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,17 +7,17 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Grid, Pagination, TableSortLabel } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Grid, TableSortLabel } from "@mui/material";
 import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import { CustomersService } from "../../../helpers/service/customerService";
 import moment from 'moment';
-import DeleteConfirm from "../dialog/DeleteConfirm";
+import { useContext } from "react";
+import { AuthContext } from "../../../helpers/context/authContext";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
 	{ id: "id", label: "ID" },
-	{ id: "firstName", label: "First\u00a0Name", minWidth: 70, sortable: true,align: "right" },
+	{ id: "firstName", label: "First\u00a0Name", minWidth: 70, sortable: true, align: "right" },
 	{
 		id: "lastName",
 		label: "Last Name",
@@ -25,12 +25,12 @@ const columns = [
 		format: (value) => (value ? "Available" : "Sold Out"),
 	},
 	{
-		id: "Phone",
+		id: "phone",
 		label: "Phone",
 		sortable: true,
 		align: "right",
 	},
-    {
+	{
 		id: "email",
 		label: "Email",
 		sortable: true,
@@ -45,12 +45,6 @@ const columns = [
 			moment(params?.value).format("DD/MM/YYYY"),
 	},
 	{
-		id: "address",
-		label: "Address",
-		align: "right",
-		sortable: true,
-	},
-    {
 		id: "gender",
 		label: "Gender",
 		align: "right",
@@ -61,28 +55,72 @@ const columns = [
 		label: "Status",
 		align: "right",
 		sortable: true,
+	},
+	{
+		id: "options",
+		label: "Options",
+		align: "center",
+		sortable: true,
 	}
 ];
 
 export default function GridsCustomers() {
-	const [ListCustomers,setListCustomer] = React.useState([]);
-    const [sort, setSort] = React.useState({
+	const [ListCustomers, setListCustomer] = React.useState([]);
+	const {customerId,setCustomerId} = useContext(AuthContext)
+	const nagivate = useNavigate()
+	
+	const [sort, setSort] = React.useState({
 		field: null,
 		order: null,
 	});
-	
-    React.useEffect(() => {
-        CustomersService.getListCustomers().then(res => {
-            setListCustomer(res)
-        })
-    },[])
 
-	const handleUpdate = (id) => {
-		return (e) => {
-			setOpen(true);
-		};
+	const [anchorEl, setAnchorEl] = React.useState(null);
+
+	const handleClick = (event) => {
+		setCustomerId(event.currentTarget.value)
+		setAnchorEl(event.currentTarget);
 	};
-	const [open, setOpen] = React.useState(false);
+
+	const editClick = async (event)=>{
+		const setId = async () =>{
+			setCustomerId(event.currentTarget.value)
+			const cusId = event.currentTarget.value;
+			nagivate(`/admin/customers/update/${cusId}`)
+		}
+		setId()
+	}
+	
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
+	const cacelClick = () => {
+		console.log("noooo")
+		setAnchorEl(null)
+	}
+	const deleteClick = async () =>{
+		CustomersService.deleteCustomerById(customerId).then(res =>{
+			CustomersService.getListCustomers().then(res => {
+				setListCustomer(res)
+			})
+		})
+		setAnchorEl(null)
+	}
+
+	const open = Boolean(anchorEl);
+	const id = open ? "simple-popover" : undefined;
+
+	React.useEffect(() => {
+		CustomersService.getListCustomers().then(res => {
+			setListCustomer(res)
+		})
+	}, [])
+
+
+	const handleUpdate = () => {
+		
+	};
 	return (
 		<>
 			<TableContainer sx={{ maxHeight: 700 }}>
@@ -118,37 +156,62 @@ export default function GridsCustomers() {
 					<TableBody>
 						{ListCustomers.map((row) => {
 							return (
-								<TableRow
-									hover
-									role="checkbox"
-									tabIndex={-1}
-									key={row.productId}
-									sx={{ cursor: "pointer" }}
-									onClick={handleUpdate(row.productId)}
-								>
-									{columns.map((column) => {
-										const value = row[column.id];
+								<>
+									<TableRow
+										hover
+										role="checkbox"
+										tabIndex={-1}
+										key={row.productId}
+										sx={{ cursor: "pointer" }}
+										onClick={handleUpdate}
+									>
+										{columns.map((column) => {
+											const value = row[column.id];
 
-										return (
-											<TableCell key={column.id} align={column.align}>
-												{column.format && typeof value === "number" || typeof value === "datetime"
-													? column.format(value)
-													: value
-												}
-												{
+											return (
 
-												}
-											</TableCell>
-										);
-									})}
-									<TableCell padding="checkbox">
-										<ButtonGroup variant="text" aria-label="text button group">
-											<DeleteConfirm />
-											<Button sx ={{color:"green"}}>EDIT</Button>
-										</ButtonGroup>
-									</TableCell>
-								</TableRow>
+												<TableCell key={column.id} align={column.align}>
+													{column.format && typeof value === "number" 
+														? column.format(value)
+														: value
+													}
+													{
+														column.id === "options" ? (
+															<Grid container direction="row" variant="text" aria-label="text button group">
+																<div>
+																	<Button value={row.id} size="small" sx={{ color: "red" }} onClick={handleClick}>
+																		DELETE
+																	</Button>
+																	<Popover
+																		id={id}
+																		open={open}
+																		anchorEl={anchorEl}
+																		onClose={handleClose}
+																		anchorOrigin={{
+																			vertical: "bottom",
+																			horizontal: "left"
+																		}}
+																	>
+																		<Grid >
 
+																			<Button onClick={deleteClick}>Yes</Button>
+																			<Button onClick={cacelClick}>No</Button>
+																		</Grid>
+																	</Popover>
+																</div>
+																<Button value={row.id} onClick={editClick} size="small" sx={{ color: "green" }}>EDIT</Button>
+															</Grid>
+														) : ""
+													}
+
+												</TableCell>
+
+
+											);
+										})}
+
+									</TableRow>
+								</>
 							);
 						})}
 					</TableBody>
@@ -161,6 +224,7 @@ export default function GridsCustomers() {
 				page={1}
 				rowsPerPageOptions={[]}
 			/>
+			
 		</>
 	);
 }

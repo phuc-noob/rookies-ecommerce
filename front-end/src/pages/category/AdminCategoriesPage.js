@@ -13,17 +13,17 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import { useContext, useEffect, useState } from "react";
 import DialogCreateFood from "../../components/food/dialog/DialogCreateFood";
-import GridsCustomers from "../../components/food/grid/GridCustomers";
+import Gridcategories from "../../components/food/grid/GridCategories";
 import { SearchRounded } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "../../helpers/context/productContext";
 
-function AdminCustomersPage() {
+function AdminCategoiesPage() {
 	const [open, setOpen] = useState(false);
 	const {ListProduct} = useContext(ProductContext)
 	const nagivate = useNavigate()
 	const handleClickOpen = () => {
-		nagivate("/admin/customers/new")
+		nagivate("/admin/categories/new")
 		setOpen(true);
 	};
 	const handleClose = () => {
@@ -35,7 +35,7 @@ function AdminCustomersPage() {
 				<Grid container direction={"column"}>
 					<Grid container>
 						<Typography variant="h6" color="black">
-							List Customers
+							List Categories
 						</Typography>
 					</Grid>
 					<Divider sx={{ my: 2, borderColor: "grey.500" }} />
@@ -61,7 +61,7 @@ function AdminCustomersPage() {
 							/>
 						</FormControl>
 					</Grid>
-					<GridsCustomers />
+					<Gridcategories />
 				</Grid>
 			</Paper>
 
@@ -75,4 +75,4 @@ function AdminCustomersPage() {
 	);
 }
 
-export default AdminCustomersPage;
+export default AdminCategoiesPage;

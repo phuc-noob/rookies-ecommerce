@@ -4,7 +4,9 @@ import { authService } from "../service/authService";
 export const AuthContext = createContext();
 
 function AuthContextProvider({ children }) {
+	const [customerId, setCustomerId] = useState()
 	const [authState, dispatch] = useReducer(authReducer, initAuthState);
+	
 	const [alertAuth, setAlertAuth] = useState({
 		show: false,
 		type: "error",
@@ -73,15 +75,16 @@ function AuthContextProvider({ children }) {
 		}
 	};
 	const logout = () => {
-		authService.logout().then(()=>{
+		authService.logout().then(() => {
 			dispatch(authAction.logout());
 		});
-		
+
 	};
 	useEffect(() => {
 		loaddingUser();
 	}, []);
 	const authContextData = {
+		customerId, setCustomerId,
 		authState,
 		dispatch,
 		loginUser,

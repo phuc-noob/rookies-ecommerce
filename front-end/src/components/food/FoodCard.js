@@ -77,7 +77,7 @@ function FoodCard(pros) {
 					<CardMedia
 						component="img"
 						height="140"
-						image={pros.images[0].imageURL}
+						image={pros.images.length!==0?pros.images[0].imageURL:""}
 						alt="image food"
 					// sx={{ p: 3 }}
 					/>

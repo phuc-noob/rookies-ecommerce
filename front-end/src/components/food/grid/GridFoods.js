@@ -1,5 +1,4 @@
 import * as React from "react";
-import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,12 +6,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Grid, Pagination, TableSortLabel } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import Checkbox from '@mui/material/Checkbox';
+import { Grid, TableSortLabel } from "@mui/material";
+import Popover from "@mui/material/Popover";
 import Button from '@mui/material/Button';
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { ProductService } from "../../../helpers/service/productService";
 import { ProductContext } from "../../../helpers/context/productContext";
 const columns = [
 	{ id: "productId", label: "ID", minWidth: 20, align: "right" },
@@ -61,14 +61,52 @@ export default function GridFoods() {
 		field: null,
 		order: null,
 	});
-	const { ListProduct } = React.useContext(ProductContext)
-	console.log(ListProduct)
+	const nagivate = useNavigate()
+	const [anchorEl, setAnchorEl] = React.useState(null);
+	
+	const [ ListProduct, setListProduct ] = React.useState([])
+	const {productId,setProductId} =React.useContext(ProductContext)
+	React.useEffect(() => {
+		ProductService.getProduct().then(res => {
+			setListProduct(res)
+		})
+	},[anchorEl])
 	const handleUpdate = (id) => {
 		return (e) => {
-			setOpen(true);
+			
 		};
 	};
-	const [open, setOpen] = React.useState(false);
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
+	const cacelClick = () => {
+		console.log("noooo")
+		setAnchorEl(null)
+	}
+	const deleteClick = async () =>{
+		ProductService.deleteProduct(productId).then(()=>{
+			
+			nagivate("/admin/foods")
+		})
+		setAnchorEl(null)
+	}
+
+	const editClick =(event)=>{
+		setProductId(event.currentTarget.value)
+		nagivate('/admin/foods/update/'+event.currentTarget.value)
+	}
+
+	const handleClick = (event) => {
+		console.log(event.currentTarget.value)
+		setProductId(event.currentTarget.value)
+		setAnchorEl(event.currentTarget);
+	};
+	const open = Boolean(anchorEl);
+	const id = open ? "simple-popover" : undefined;
+
+	
 	return (
 		<>
 			<TableContainer sx={{ maxHeight: 700 }}>
@@ -118,7 +156,7 @@ export default function GridFoods() {
 										return (
 											<>
 												<TableCell key={column.id} align={column.align}>
-													{column.format && typeof value === "number" || typeof value === "datetime"
+													{column.format && typeof value === "number" 
 														? column.format(value)
 														: value
 													}
@@ -128,8 +166,25 @@ export default function GridFoods() {
 									})}
 									<TableCell key="option" padding="checkbox" align="right">
 										<ButtonGroup variant="text" aria-label="text button group">
-											<Button sx={{ color: "red" }}>DELETE</Button>
-											<Button sx={{ color: "green" }}>EDIT</Button>
+											<Button value={row.productId} size="small" sx={{ color: "red" }} onClick={handleClick}>
+												DELETE
+											</Button>
+											<Popover
+												id={id}
+												open={open}
+												anchorEl={anchorEl}
+												onClose={handleClose}
+												anchorOrigin={{
+													vertical: "bottom",
+													horizontal: "left"
+												}}
+											><Grid >
+
+													<Button onClick={deleteClick}>Yes</Button>
+													<Button onClick={cacelClick}>No</Button>
+												</Grid>
+											</Popover>
+											<Button value={row.productId} onClick={editClick} sx={{ color: "green" }}>EDIT</Button>
 										</ButtonGroup>
 									</TableCell>
 								</TableRow>

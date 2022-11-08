@@ -7,17 +7,16 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from '@mui/icons-material/Menu';
 import GroupIcon from '@mui/icons-material/Group';
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import LunchDiningIcon from '@mui/icons-material/LunchDining';
 import { 
 	Grid,
 	Toolbar,
-	Typography, } from "@mui/material";
-import { Divider } from "@mui/material";
+	} from "@mui/material";
+
 import SellIcon from '@mui/icons-material/Sell';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
-import { FastfoodRounded } from "@mui/icons-material";
-import { color } from "@mui/system";
+
 
 const drawerWidth = 240;
 
@@ -29,10 +28,6 @@ export default function HomeAdminPage() {
 
 	const handleClickCustomers = () => {
 		nagivate("/admin/customers")
-	}
-
-	const foodIconClick =()=>{
-		nagivate("/")
 	}
 
 	const handleClickCategories = () => {
@@ -94,10 +89,13 @@ export default function HomeAdminPage() {
 						</ListItemButton>
 
 					</Grid>
+					
 				</Box>
+				
 			</Drawer>
 			<Box component="main" sx={{ flexGrow: 1, p: 3, marginTop: "75px" }}>
 				<Outlet />
+				
 			</Box>
 		</Box>
 	);

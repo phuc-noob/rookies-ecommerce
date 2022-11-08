@@ -8,11 +8,12 @@ import {
 } from "@mui/material";
 import * as React from "react";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { CustomersService } from "../../helpers/service/customerService";
+import { AuthContext } from "../../helpers/context/authContext";
 import { useNavigate } from "react-router-dom";
 
 const initCustomer = {
@@ -22,26 +23,30 @@ const initCustomer = {
     phone: "",
     password: "",
     address: "",
-    gender: "MALE",
+    gender: "",
     dayOfBirth: Date.now()
 };
 
 
-function FormCustomer({ edit }) {
+function FormCustomerUpdate({ edit }) {
     const [stateForm, setStateForm] = useState(initCustomer);
-    const nagivate = useNavigate()
+    const {customerId} = useContext(AuthContext)
     
+    const nagivate = useNavigate()
     const cancelClick = () => {
         nagivate("/admin/customers")
     }
-
     const onSaveClick = () => {
-        console.log(stateForm)
-        CustomersService.saveCustomer(stateForm).then(res =>{
+        console.log(customerId)
+        CustomersService.updateCustomerById(stateForm).then(res =>{
             nagivate("/admin/customers")
         })
     }
-
+    React.useEffect(() => {
+        CustomersService.getCustomerById(customerId).then(res => {
+            setStateForm(res)
+        })
+    },[customerId])
     const handleChangeText = (e) => {
         
         setStateForm((pre) => {
@@ -55,10 +60,10 @@ function FormCustomer({ edit }) {
     return (
         <>
             <Grid
-                maxWidth={700}
-                spacing={3}
-                sx={{ minHeight: "350px", border: 1,paddingY:5,  borderColor: "#979793", borderRadius: 3 }}
-                component={"form"}
+                 maxWidth={700}
+                 spacing={3}
+                 sx={{ minHeight: "350px", border: 1,paddingY:5,  borderColor: "#979793", borderRadius: 3 }}
+                 component={"form"}
             >
                 <Grid item lg={7} md={7} paddingX={7}>
                     <Grid container direction="column" >
@@ -205,7 +210,7 @@ function FormCustomer({ edit }) {
                         </Grid>
                         <br />
                         <Grid sx={{ direction: "row", gap: 2 }} fullWidth>
-                            <Button onClick={cancelClick} sx={{ mr: 5 ,mc:5}} type={"submit"} variant="outlined" color="inherit">
+                            <Button sx={{ mr: 3 ,mc:3}} onClick={cancelClick} variant="outlined" color="inherit" >
                                 Cancel
                             </Button>
                             <Button onClick={onSaveClick} variant="outlined" >
@@ -220,4 +225,4 @@ function FormCustomer({ edit }) {
     );
 }
 
-export default FormCustomer;
+export default FormCustomerUpdate;

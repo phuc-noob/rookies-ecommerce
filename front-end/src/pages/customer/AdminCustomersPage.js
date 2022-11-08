@@ -1,29 +1,25 @@
 import {
-	Container,
 	Divider,
 	FormControl,
 	Grid,
 	Input,
 	InputAdornment,
-	Pagination,
 	Paper,
 	Typography,
 } from "@mui/material";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import DialogCreateFood from "../../components/food/dialog/DialogCreateFood";
-import Gridcategories from "../../components/food/grid/GridCategories";
+import GridsCustomers from "../../components/food/grid/GridCustomers";
 import { SearchRounded } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { ProductContext } from "../../helpers/context/productContext";
 
-function AdminCategoiesPage() {
+function AdminCustomersPage() {
 	const [open, setOpen] = useState(false);
-	const {ListProduct} = useContext(ProductContext)
 	const nagivate = useNavigate()
 	const handleClickOpen = () => {
-		nagivate("/admin/foods/new")
+		nagivate("/admin/customers/new")
 		setOpen(true);
 	};
 	const handleClose = () => {
@@ -35,7 +31,7 @@ function AdminCategoiesPage() {
 				<Grid container direction={"column"}>
 					<Grid container>
 						<Typography variant="h6" color="black">
-							List Categories
+							List Customers
 						</Typography>
 					</Grid>
 					<Divider sx={{ my: 2, borderColor: "grey.500" }} />
@@ -61,7 +57,7 @@ function AdminCategoiesPage() {
 							/>
 						</FormControl>
 					</Grid>
-					<Gridcategories />
+					<GridsCustomers />
 				</Grid>
 			</Paper>
 
@@ -75,4 +71,4 @@ function AdminCategoiesPage() {
 	);
 }
 
-export default AdminCategoiesPage;
+export default AdminCustomersPage;

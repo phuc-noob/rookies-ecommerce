@@ -5,9 +5,19 @@ import { CategoryService } from "../service/categoryService";
 const ProductContext = createContext();
 
 function ProductProvider({ children }) {
+    const [categoryId,setCategoryId] =useState()
+    const [productId,setProductId] = useState()
     const [ListProduct, setListProduct] = useState([]);
     const [ProductDetail, setProductDetail] = useState({});
+    const [selectedFile, setSelectedFile] = useState();
     const [ProductFilter,setProductFilter] = useState({"page":0,"size":8,"category":[]})
+    const [ListImages,setListImages] = useState([])
+
+    useEffect(()=>{
+        
+        console.log(selectedFile)
+    },[])
+
     useEffect(()=>{
         ProductService.getProduct().then(result=>{
             setListProduct(result);
@@ -47,9 +57,17 @@ function ProductProvider({ children }) {
     }
 
     const products = {
+        productId,
         ListProduct,
+        selectedFile,
         ProductDetail,
         ProductFilter,
+        categoryId,
+        ListImages,
+        setProductId,
+        setListImages,
+        setCategoryId,
+        setSelectedFile,
         loadProductFilter,
         loadProducts,
         loadListProductByCate,

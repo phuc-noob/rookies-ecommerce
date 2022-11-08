@@ -1,5 +1,5 @@
 import * as React from "react";
-import Paper from "@mui/material/Paper";
+import Popover from "@mui/material/Popover";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,13 +7,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Grid, Pagination, TableSortLabel } from "@mui/material";
+import { Grid, TableSortLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import { ProductContext } from "../../../helpers/context/productContext";
 import { CategoryService } from "../../../helpers/service/categoryService";
+import { ProductContext } from "../../../helpers/context/productContext";
 import moment from 'moment';
+
 const columns = [
 	{ id: "cateId", label: "ID", minWidth: 20 },
 	{ id: "cateName", label: "Categories Name", minWidth: 150, sortable: true },
@@ -40,32 +40,78 @@ const columns = [
 		align: "right",
 		valueFormatter: params =>
 			moment(params?.value).format("DD/MM/YYYY"),
+	},
+	{
+		id: "options",
+		label: "Options",
+		align: "center",
+		sortable: true,
 	}
 ];
 
 export default function Gridcategories() {
+	const {categoryId,setCategoryId} = React.useContext(ProductContext)
     const [listCategories,setListCategories] = React.useState([])
+	const [anchorEl, setAnchorEl] = React.useState(null);
+	const nagivate = useNavigate()
 	const [sort, setSort] = React.useState({
 		field: null,
 		order: null,
 	});
+
 	const { ListProduct } = React.useContext(ProductContext)
 
     React.useEffect(() => {
         CategoryService.getListCategories().then(res => {
             setListCategories(res)
         })
-    },[])
+    },[anchorEl])
 
-    
+    const handleClick = (event) => {
+		console.log(event.currentTarget.value)
+		setCategoryId(event.currentTarget.value)
+		setAnchorEl(event.currentTarget);
+	};
+
+	const editClick = async (event)=>{
+		const setId = async () =>{
+			setCategoryId(event.currentTarget.value)
+			const cateId = event.currentTarget.value
+			nagivate(`/admin/categories/update/${cateId}`)
+		}
+		setId()
+	}
+	
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
+	const cacelClick = () => {
+		console.log("noooo")
+		setAnchorEl(null)
+	}
+	const deleteClick = async () =>{
+		console.log(categoryId)
+		CategoryService.deleteCategory(categoryId).then(()=>{
+			nagivate("/admin/categories")
+		})
+		setAnchorEl(null)
+	}
+
+	const open = Boolean(anchorEl);
+	const id = open ? "simple-popover" : undefined;
+
+	React.useEffect(() => {
+		
+	}, [])
+
 
    
 	const handleUpdate = (id) => {
-		return (e) => {
-			setOpen(true);
-		};
+		
 	};
-	const [open, setOpen] = React.useState(false);
+
 	return (
 		<>
 			<TableContainer sx={{ maxHeight: 700 }}>
@@ -119,17 +165,38 @@ export default function Gridcategories() {
 													: value
 												}
 												{
+														column.id === "options" ? (
+															<Grid container direction="row" variant="text" aria-label="text button group">
+																<div>
+																	<Button value={row.cateId} size="small" sx={{ color: "red" }} onClick={handleClick}>
+																		DELETE
+																	</Button>
+																	<Popover
+																		id={id}
+																		open={open}
+																		anchorEl={anchorEl}
+																		onClose={handleClose}
+																		anchorOrigin={{
+																			vertical: "bottom",
+																			horizontal: "left"
+																		}}
+																	>
+																		<Grid >
 
-												}
+																			<Button onClick={deleteClick}>Yes</Button>
+																			<Button onClick={cacelClick}>No</Button>
+																		</Grid>
+																	</Popover>
+																</div>
+																<Button value={row.cateId} onClick={editClick} size="small" sx={{ color: "green" }}>EDIT</Button>
+															</Grid>
+														) : ""
+													}
+
 											</TableCell>
 										);
 									})}
-									<TableCell padding="checkbox">
-										<ButtonGroup variant="text" aria-label="text button group">
-											<Button sx ={{color:"red"}}>DELETE</Button>
-											<Button sx ={{color:"green"}}>EDIT</Button>
-										</ButtonGroup>
-									</TableCell>
+									
 								</TableRow>
 
 							);

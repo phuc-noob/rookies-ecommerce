@@ -1,0 +1,9 @@
+.notAccess{
+    color: rgb(255, 255, 255);
+    background-color: rgb(16, 92, 93);
+    width: 100%;
+    height: 800px;
+    padding-top: 200px;
+    text-align: center;
+    z-index: 10;
+}

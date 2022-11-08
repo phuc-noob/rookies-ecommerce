@@ -7,15 +7,12 @@ function CreateFood({ value, onReset, onClose }) {
 	return (
 		<>
 			<FormControl sx={{ flexDirection: "row", gap: 2 }} fullWidth>
-				<Button variant="outlined" color="inherit">
-					Clear
-				</Button>
 				<Button type={"submit"} variant="outlined" color="inherit">
 					Cancel
 				</Button>
 				<Button type={"submit"} variant="outlined" color="inherit">
 					Save
-				</Button>
+				</Button> 
 			</FormControl>
 		</>
 	);

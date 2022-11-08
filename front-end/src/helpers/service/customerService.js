@@ -10,7 +10,52 @@ const setAuthToken = (token) => {
 		delete axios.defaults.headers.common["Authorization"];
 	}
 };
+
+const updateCustomerById = async (customer) => {
+    const cookies = new Cookies();
+    if (cookies.get(LOCAL_STORAGE_TOKEN_NAME)) {
+		setAuthToken(cookies.get(LOCAL_STORAGE_TOKEN_NAME));
+		console.log(cookies.get(LOCAL_STORAGE_TOKEN_NAME))
+	} else {
+		throw Error("Dont have token");
+	}
+    try {
+        const res = await axios.put(`${API_CUSTOMER}/${customer.id}`,customer);
+        return res.data;
+    } catch (err) {
+        console.log("err", err, err.response);
+        throw err.response.data
+            ? err.response.data
+            : {
+                status: 500,
+                message: "Server error",
+            };
+    }
+}
+
+const getCustomerById = async (id) => {
+    try {
+        const res = await axios.get(`${API_CUSTOMER}/${id}`);
+        return res.data;
+    } catch (err) {
+        console.log("err", err, err.response);
+        throw err.response.data
+            ? err.response.data
+            : {
+                status: 500,
+                message: "Server error",
+            };
+    }
+}
+
 const getListCustomers = async () => {
+    const cookies = new Cookies();
+    if (cookies.get(LOCAL_STORAGE_TOKEN_NAME)) {
+		setAuthToken(cookies.get(LOCAL_STORAGE_TOKEN_NAME));
+		console.log(cookies.get(LOCAL_STORAGE_TOKEN_NAME))
+	} else {
+		throw Error("Dont have token");
+	}
     try {
         const res = await axios.get(`${API_CUSTOMER}`, {
             params: {
@@ -53,7 +98,33 @@ const saveCustomer = async (customers) => {
     }
 }
 
+const deleteCustomerById = async (id) => {
+    const cookies = new Cookies();
+    if (cookies.get(LOCAL_STORAGE_TOKEN_NAME)) {
+		setAuthToken(cookies.get(LOCAL_STORAGE_TOKEN_NAME));
+		console.log(cookies.get(LOCAL_STORAGE_TOKEN_NAME))
+	} else {
+		throw Error("Dont have token");
+	}
+    try {
+        const res = await axios.delete(`${API_CUSTOMER}/${id}`);
+        return res.data;
+    } catch (err) {
+        console.log("err", err, err.response);
+        throw err.response.data
+            ? err.response.data
+            : {
+                status: 500,
+                message: "Server error",
+            };
+    }
+}
+
+
 export const CustomersService = {
     saveCustomer,
-    getListCustomers
+    deleteCustomerById,
+    getListCustomers,
+    getCustomerById,
+    updateCustomerById
 };
