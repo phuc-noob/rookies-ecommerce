@@ -46,7 +46,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    DeleteResponseDto deleteCategory(@RequestParam(value = "id") Long id) {
+    DeleteResponseDto deleteCategory(@PathVariable Long id) {
         return categoryService.deleteCategoryById(id);
     }
 

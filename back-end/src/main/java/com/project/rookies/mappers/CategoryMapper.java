@@ -16,6 +16,7 @@ public class CategoryMapper {
 
     public CategoryResponseDto mapEntityToDto(Category category) {
         return CategoryResponseDto.builder()
+                .cateId(category.getCateId())
                 .image(category.getImage())
                 .amount(category.getAmount())
                 .cateName(category.getCateName())

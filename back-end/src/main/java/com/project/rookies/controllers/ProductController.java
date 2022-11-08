@@ -22,6 +22,7 @@ public class ProductController {
 
     @PostMapping
     ProductResponseDto saveProduct(@Valid @RequestBody ProductDto productDto) {
+
         return productService.saveProduct(productDto);
     }
 
@@ -46,6 +47,7 @@ public class ProductController {
                         @RequestParam(name = "rating" ,required = false,defaultValue = "0")float rate,
                         @RequestParam(name = "priceOn", required = false,defaultValue = "1000000") float priceOn,
                         @RequestParam(name = "size",required = true) int size) {
+
         return productService.getListProduct(categories,rate,price,priceOn,page,size);
     }
 }
