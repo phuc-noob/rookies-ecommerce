@@ -29,7 +29,7 @@ function NavBar() {
 	}
 
 	return (
-		<AppBar color={"transparent"} position="fixed" sx={{ zIndex: "10" }}>
+		<AppBar  color={"transparent"} position="fixed" sx={{ zIndex: "10" ,background:"#FFFFFF"}}>
 			<Container >
 				<Toolbar
 					sx={{ paddingLeft: "0 !important", paddingRight: "0 !important" }}
@@ -44,7 +44,7 @@ function NavBar() {
 						<FastfoodRounded />
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{}}>
-						GoodFood
+						<strong>GoodFood</strong>
 					</Typography>
 					<Box sx={{ flexGrow: 1 }} />
 					<Box >

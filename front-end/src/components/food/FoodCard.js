@@ -22,7 +22,7 @@ function FoodCard(pros) {
 		authState: { isAuthenticated, user, authorization }
 	} = useContext(AuthContext);
 	const navigate = useNavigate();
-	const { ProductDetail, loadProductDetail } = useContext(ProductContext)
+	const { ProductDetail, loadProductDetail ,productId,setProductId} = useContext(ProductContext)
 	const { CartQuantity, loadQuantity, loadListCart } = useContext(OrderContext)
 
 	const option = pros.edit ? (
@@ -65,7 +65,9 @@ function FoodCard(pros) {
 		localStorage.setItem("productId", pros.productId)
 		loadProductDetail(pros.productId)
 		navigate(`/foods/${ProductDetail.productId}`)
+		console.log(pros.productId)
 		window.location.reload(false);
+		setProductId(pros.productId)
 		console.log(ProductDetail.rating)
 	}
 

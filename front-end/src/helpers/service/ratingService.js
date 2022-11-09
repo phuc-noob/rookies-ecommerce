@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const API_ORDER = process.env.REACT_APP_API_HOST
+const API_ORDER = process.env.REACT_APP_API_HOST+"/rates"
 
-const saveOrder = async (order) => {
+const saveRating = async (rate) => {
     
     try {
-        const res = await axios.post(`${API_ORDER}/orders`,order);
+        const res = await axios.post(`${API_ORDER}`,rate);
         console.log(res)
         return res.data;
     } catch (err) {
@@ -21,6 +21,6 @@ const saveOrder = async (order) => {
 
 
 
-export const OrderService = {
-    saveOrder
+export const RatingService = {
+    saveRating
 };

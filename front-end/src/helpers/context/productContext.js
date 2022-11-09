@@ -6,7 +6,7 @@ const ProductContext = createContext();
 
 function ProductProvider({ children }) {
     const [categoryId,setCategoryId] =useState()
-    const [productId,setProductId] = useState()
+    const [productId,setProductId] = useState(0)
     const [ListProduct, setListProduct] = useState([]);
     const [ProductDetail, setProductDetail] = useState({});
     const [selectedFile, setSelectedFile] = useState();

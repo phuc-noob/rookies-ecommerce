@@ -24,7 +24,7 @@ function InfoFood() {
 	const { ProductDetail, loadProductDetail } = useContext(ProductContext)
 	const { CartQuantity, loadQuantity ,loadListCart} = useContext(OrderContext)
 
-	console.log(products.ProductDetail)
+	console.log(products.ProductDetail.images)
 	const addToCartClick = ()=>{
 		if (isAuthenticated) {
 			const cart = {
@@ -42,7 +42,7 @@ function InfoFood() {
 		console.log(products.ProductDetail)
 		console.log(CartQuantity)
 	}
-	const data = [0, 1, 3, 4, 5]
+	const data = products.ProductDetail.images
 	return (
 		<>
 			<Grid

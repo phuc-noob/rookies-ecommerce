@@ -13,15 +13,13 @@ import {
 } from "@mui/material";
 import { Face } from "@mui/icons-material";
 import Copyright from "../layout/CopyRight";
-const LoginForm = () => {
-	const navigate = useNavigate();
-	const { loginUser, alertAuth, setAlertFail } = useContext(AuthContext);
-	const [stateForm, setStateForm] = useState({
+
+export default function ForgetPasswordForm() {
+    const [stateForm, setStateForm] = useState({
 		username: "",
 		password: "",
 	});
-
-	const onChangeForm = (e) => {
+    const onChangeForm = (e) => {
 		setStateForm((pre) => {
 			return {
 				...pre,
@@ -30,19 +28,11 @@ const LoginForm = () => {
 		});
 	};
 
-	const onClickSubmit = async (e) => {
-		e.preventDefault();
-		const loginData = await loginUser(stateForm);
-		console.log(loginData);
-		if (loginData && loginData.statusCode === 200) {
-			navigate("/", { replace: true })
-		} else {
-			setAlertFail({ message: loginData.description || "Server off" });
-		}
+    const onClickSubmit = async (e) => {
+		
 	};
-
-	return (
-		<Container
+  return (
+    <Container
 			sx={{
 				backgroundColor: "white",
 				p: 5,
@@ -58,20 +48,18 @@ const LoginForm = () => {
 					<Face />
 				</Avatar>
 				<Typography component="h1" variant="h5">
-					Sign in
+					Nhập Email để nhận mật khẩu mới
 				</Typography>
 				<Box component="form" onSubmit={onClickSubmit} sx={{ mt: 3 }}>
-					<Grid container alignItems={"center"} direction="column" gap={2}>
-						<Grid container>
-							<AlertMsg {...alertAuth} />
-						</Grid>
+					<Grid container alignItems={"center"} direction="column" gap={1}>
 						<Grid container spacing={2}>
 							<Grid item xs={12}>
 								<TextField
 									required
 									fullWidth
-									label="username"
-									name="username"
+                                    type="email"
+									label="Email"
+									name="email"
 									value={stateForm.username}
 									onChange={onChangeForm}
 								/>
@@ -80,7 +68,7 @@ const LoginForm = () => {
 								<TextField
 									required
 									fullWidth
-									type="password"
+									
 									label="password"
 									name="password"
 									value={stateForm.password}
@@ -111,7 +99,7 @@ const LoginForm = () => {
 								variant="contained"
 								sx={{ mt: 3, mb: 2 }}
 							>
-								Sign in
+								Nhận mật khẩu
 							</Button>
 						</Grid>
 					</Grid>
@@ -119,7 +107,5 @@ const LoginForm = () => {
 				<Copyright sx={{ mt: 5 }} />
 			</Grid>
 		</Container>
-	);
-};
-
-export default LoginForm;
+  );
+}

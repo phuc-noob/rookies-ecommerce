@@ -30,6 +30,7 @@ export default function BillOrderDetail() {
 
     const goOrderClick = async () => {
         orderProduct()
+        navigate('/orders/history')
     }
 
 

@@ -16,8 +16,12 @@ const setAuthToken = (token) => {
 };
 
 const logout = async () => {
-	await cookies.remove(LOCAL_STORAGE_TOKEN_NAME)
+	
+	await cookies.remove(LOCAL_STORAGE_TOKEN_NAME,{ path: '/' })
+	await cookies.remove(LOCAL_STORAGE_TOKEN_NAME, { path: '/carts' })
+	await cookies.remove(LOCAL_STORAGE_TOKEN_NAME, { path: '/foods' })
 	setAuthToken();
+	
 };
 
 const login = async (userForm) => {

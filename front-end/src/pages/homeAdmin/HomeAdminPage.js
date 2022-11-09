@@ -16,7 +16,8 @@ import {
 
 import SellIcon from '@mui/icons-material/Sell';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
-
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import HomeIcon from '@mui/icons-material/Home';
 
 const drawerWidth = 240;
 
@@ -25,6 +26,9 @@ export default function HomeAdminPage() {
 	const handleClickMenu = () => {
 		nagivate("/admin/foods");
 	};
+	const handleClickHome =()=>{
+		nagivate("/")
+	}
 
 	const handleClickCustomers = () => {
 		nagivate("/admin/customers")
@@ -86,6 +90,12 @@ export default function HomeAdminPage() {
 								<SellIcon />
 							</ListItemIcon>
 							<ListItemText primary={"Vouchers"} />
+						</ListItemButton>
+						<ListItemButton onClick={handleClickHome}>
+							<ListItemIcon>
+								<HomeIcon />
+							</ListItemIcon>
+							<ListItemText primary={"Go To Home Page"} />
 						</ListItemButton>
 
 					</Grid>

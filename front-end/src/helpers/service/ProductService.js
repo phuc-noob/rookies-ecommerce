@@ -135,7 +135,29 @@ const updateProduct = async (product) => {
     }
 }
 
+const getListRatingByProduct = async (productId) => {
+    
+    try {
+        const res = await axios.get(`${API_PRODUCT}/${productId}/rates`, {
+            params: {
+                page: 0,
+                size: 8
+            }
+        });
+        return res.data;
+    } catch (err) {
+        console.log("err", err, err.response);
+        throw err.response.data
+            ? err.response.data
+            : {
+                status: 500,
+                message: "Server error",
+            };
+    }
+}
+
 export const ProductService = {
+    getListRatingByProduct,
     deleteProduct,
     saveProduct,
     filterProduct,

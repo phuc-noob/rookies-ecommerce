@@ -1,12 +1,13 @@
 import authReducer, { initAuthState, authAction } from "../feature/authSlice";
 import { createContext, useReducer, useEffect, useState, useRef } from "react";
 import { authService } from "../service/authService";
+import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext();
 
 function AuthContextProvider({ children }) {
 	const [customerId, setCustomerId] = useState()
 	const [authState, dispatch] = useReducer(authReducer, initAuthState);
-	
+	const nagivate =useNavigate()
 	const [alertAuth, setAlertAuth] = useState({
 		show: false,
 		type: "error",
@@ -78,6 +79,7 @@ function AuthContextProvider({ children }) {
 		authService.logout().then(() => {
 			dispatch(authAction.logout());
 		});
+		nagivate("/")
 
 	};
 	useEffect(() => {

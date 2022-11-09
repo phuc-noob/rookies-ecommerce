@@ -4,7 +4,7 @@ import Carousel from "react-material-ui-carousel";
 
 function CarouselImage({ value }) {
 	const [activeChild, setActiveChild] = useState(0);
-
+	console.log(value)
 	const handleChange = (prev) => {
 		setActiveChild(prev);
 	};
@@ -25,6 +25,7 @@ function CarouselImage({ value }) {
 				navButtonsAlwaysInvisible={value.length === 1}
 				animation="slide"
 				style={{ borderRadius: "16px" }}
+				height={"300px"}
 			>
 				{value.map((e) => {
 					return (
@@ -33,7 +34,7 @@ function CarouselImage({ value }) {
 								width={"100%"}
 								height={"100%"}
 								style={{ borderRadius: "16px" }}
-								src={"https://res.cloudinary.com/dk2peasgq/image/upload/v1666201801/cld-sample-4.jpg"}
+								src={e.imageURL}
 								alt={"foods"}
 							/>
 						</Grid>

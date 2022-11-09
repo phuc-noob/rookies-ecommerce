@@ -120,8 +120,31 @@ const deleteCustomerById = async (id) => {
     }
 }
 
+const getOrderByCustomer = async (id) => {
+    
+    try {
+        const res = await axios.get(`${API_CUSTOMER}/${id}/orders`, {
+            params: {
+                page: 0,
+                size: 8
+            }
+        });
+        console.log(res)
+        return res.data;
+    } catch (err) {
+        console.log("err", err, err.response);
+        throw err.response.data
+            ? err.response.data
+            : {
+                status: 500,
+                message: "Server",
+            };
+    }
+};
+
 
 export const CustomersService = {
+    getOrderByCustomer,
     saveCustomer,
     deleteCustomerById,
     getListCustomers,
