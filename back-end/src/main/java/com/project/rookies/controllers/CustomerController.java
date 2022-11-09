@@ -1,9 +1,11 @@
 package com.project.rookies.controllers;
 
 import com.project.rookies.dto.request.CustomerDto;
+import com.project.rookies.dto.response.BillOrderResponseDto;
 import com.project.rookies.dto.response.CustomerResponseDto;
 import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.entities.enums.ECustomerStatus;
+import com.project.rookies.services.inf.IBillOrderService;
 import com.project.rookies.services.inf.ICartService;
 import com.project.rookies.services.inf.ICustomerService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ import java.util.Objects;
 public class CustomerController {
     private final ICustomerService customerService;
     private final ICartService cartService;
+    private final IBillOrderService billOrderService;
 
     @GetMapping("/{id}")
     CustomerResponseDto getCustomer(@PathVariable Long id) {
@@ -35,6 +38,11 @@ public class CustomerController {
     @GetMapping
     List<CustomerResponseDto> getListCustomer(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
         return customerService.findListCustomer(page, size);
+    }
+    @GetMapping("/{id}/orders")
+    List<BillOrderResponseDto> getListOrderByCustomer(@PathVariable Long id,@RequestParam("page") int page,@RequestParam("size") int size)
+    {
+        return billOrderService.getListOrderByCustomer(id,page,size);
     }
 
     @GetMapping("/{id}/carts/quantity")

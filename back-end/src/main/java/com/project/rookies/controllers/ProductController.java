@@ -3,8 +3,10 @@ package com.project.rookies.controllers;
 import com.project.rookies.dto.request.ProductDto;
 import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.dto.response.ProductResponseDto;
+import com.project.rookies.dto.response.RateResponseDto;
 import com.project.rookies.entities.enums.EProductStatus;
 import com.project.rookies.services.inf.IProductService;
+import com.project.rookies.services.inf.IRateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
 public class ProductController {
+    private final IRateService rateService;
     private final IProductService productService;
 
     @PostMapping
@@ -38,6 +41,11 @@ public class ProductController {
     @DeleteMapping("/{id}")
     DeleteResponseDto deleteProduct(@PathVariable Long id) {
         return productService.updateProductStatus(EProductStatus.DELETED, id);
+    }
+
+    @GetMapping("/{productId}/rates")
+    List<RateResponseDto> getListRate(@PathVariable Long productId, @RequestParam("page") int page, @RequestParam(name = "size") int size) {
+        return rateService.getListRateByProduct(productId, page, size);
     }
 
     @GetMapping

@@ -57,16 +57,20 @@ public class BillOrderServiceImpl implements IBillOrderService {
         billOrder.setUpdatedAt(LocalDateTime.now());
         billOrder.setStatus(EOrderStatus.ORDERED);
         billOrder = billOrderRepo.save(billOrder);
+        billOrder.setTotalPrice(0);
+        float total =0;
         for (OrderDetailDto orderDetailDto : billOrderDto.getOrderDetails()) {
             OrderDetail orderDetail = modelMapper.map(orderDetailDto, OrderDetail.class);
             orderDetail.setUnitPrice(productRepo.getById(orderDetailDto.getProductId()).getPrice());
             orderDetail.setOrderItemPrice(orderDetailService.getOrderDetailPrice(orderDetail));
             orderDetail.setBillOrder(billOrder);
-
+            total+=(orderDetail.getUnitPrice()*orderDetailDto.getAmount());
             billOrder.getOderDetails().add(orderDetailRepo.save(orderDetail));
-            billOrder.setTotalPrice(billOrder.getTotalPrice() + orderDetail.getOrderItemPrice());
         }
-        return orderMapper.mapEntityToDto(billOrder);
+
+        billOrder.setTotalPrice(total);
+
+        return orderMapper.mapEntityToDto(billOrderRepo.save(billOrder));
     }
 
     @Override
@@ -121,6 +125,16 @@ public class BillOrderServiceImpl implements IBillOrderService {
         BillOrder billOrder = billOrderRepo.getById(orderId);
         billOrder.setStatus(billOrderDto.getOrderStatus());
         return orderMapper.mapEntityToDto(billOrderRepo.save(billOrder));
+    }
+
+    @Override
+    public List<BillOrderResponseDto> getListOrderByCustomer(Long customerId, int page, int size) {
+        if(!customerRepo.existsById(customerId))
+            throw new ResourceNotFoundException("customer not found");
+        return billOrderRepo.getListOrderByCustomer(customerId,page,size)
+                .stream()
+                .map(item ->orderMapper.mapEntityToDto(item))
+                .collect(Collectors.toList());
     }
 
 }

@@ -4,7 +4,6 @@ import com.project.rookies.dto.request.RateDto;
 import com.project.rookies.dto.response.DeleteResponseDto;
 import com.project.rookies.dto.response.RateResponseDto;
 import com.project.rookies.entities.Rate;
-import com.project.rookies.exceptions.DuplicateValueInResourceException;
 import com.project.rookies.exceptions.ResourceNotFoundException;
 import com.project.rookies.exceptions.ValidationException;
 import com.project.rookies.mappers.RateMapper;

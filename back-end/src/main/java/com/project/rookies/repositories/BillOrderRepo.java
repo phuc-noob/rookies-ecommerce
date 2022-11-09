@@ -15,4 +15,6 @@ import java.util.List;
 public interface BillOrderRepo extends JpaRepository<BillOrder, Long> {
     @Query(value = "select * from bill_order bo order by created_at desc limit :size offset :page ",nativeQuery = true)
     List<BillOrder> getListOrder(@Param("page") int page,@Param("size") int size);
+    @Query(value = "select * from bill_order bo where customer_id = :customerId order by created_at desc limit :size offset :page",nativeQuery = true)
+    List<BillOrder> getListOrderByCustomer(@Param("customerId") Long customerId,@Param("page") int page, @Param("size") int size);
 }

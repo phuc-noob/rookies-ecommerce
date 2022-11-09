@@ -57,10 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // permitAll api
         http.authorizeRequests()
-                .antMatchers(GET, "/api/categories/**", "/api/products/*", "/api/products", "/api/customers/**","/api/carts/**").permitAll();
+                .antMatchers(GET, "/api/categories/**", "/api/products/**", "/api/customers/**","/api/carts/**").permitAll();
         http.authorizeRequests()
                 .antMatchers("/swagger-ui/*", "/v3/api-docs/**").permitAll()
-                .antMatchers(POST, "/api/carts/**","/api/orders/**").permitAll();
+                .antMatchers(POST, "/api/carts/**","/api/orders/**").permitAll()
+                .antMatchers(PATCH,"/api/auth/**").permitAll();
 
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

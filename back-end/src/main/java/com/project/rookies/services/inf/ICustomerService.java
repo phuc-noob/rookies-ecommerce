@@ -24,5 +24,5 @@ public interface ICustomerService {
     DeleteResponseDto deleteCustomer(Long id);
 
     DeleteResponseDto updateStatusCustomer(Long id, ECustomerStatus customerStatus);
-
+    boolean resetPassword(String email);
 }

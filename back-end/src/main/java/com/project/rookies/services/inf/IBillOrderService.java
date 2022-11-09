@@ -22,4 +22,5 @@ public interface IBillOrderService {
     DeleteResponseDto deleteOrderById(Long orderId);
 
     BillOrderResponseDto updateOrderStatus(Long orderId, BillOrderDto billOrderDto);
+    List<BillOrderResponseDto> getListOrderByCustomer(Long customerId,int page,int size);
 }

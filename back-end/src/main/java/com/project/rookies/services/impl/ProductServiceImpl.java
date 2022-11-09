@@ -105,7 +105,7 @@ public class ProductServiceImpl implements IProductService {
         if(categoryId != null){
             for (Long categoryItem : categoryId)
                 categories.add(categoryRepo.getById(categoryItem));
-            return productRepo.findAllByCategoriesInAndPriceBetweenAndRatePointGreaterThanAndStatusNot(categories, price, priceOn, rate,EProductStatus.DELETED, pageable)
+            return productRepo.findDistinctByCategoriesInAndPriceBetweenAndRatePointGreaterThanEqualAndStatusNot(categories, price, priceOn, rate,EProductStatus.DELETED, pageable)
                     .stream()
                     .map(product -> productMapper.mapEntityToDto(product))
                     .collect(Collectors.toList());

@@ -25,7 +25,7 @@ public interface ProductRepo extends JpaRepository<Product, Long>, JpaSpecificat
     @Query(value = "select * from product p where status LIKE 'ACTIVE' order by total_sold desc,updated_at desc offset :page limit :size ", nativeQuery = true)
     List<Product> getListProduct(@Param("page") int page, @Param("size") int size);
 
-    List<Product> findAllByCategoriesInAndPriceBetweenAndRatePointGreaterThanAndStatusNot(
+    List<Product> findDistinctByCategoriesInAndPriceBetweenAndRatePointGreaterThanEqualAndStatusNot(
             List<Category> categories,
             float bottom,
             float top,

@@ -1,5 +1,6 @@
 package com.project.rookies.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,4 +21,6 @@ public class RegisterRequestDto {
     @NotBlank(message = "password is require")
     String confirmPassword;
 
+    public RegisterRequestDto(String f, String l, String email, String password, String confirmPassword, String s) {
+    }
 }

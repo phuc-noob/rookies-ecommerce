@@ -14,7 +14,9 @@ import com.project.rookies.exceptions.ValidationException;
 import com.project.rookies.repositories.CustomerRepo;
 import com.project.rookies.repositories.RoleRepo;
 import com.project.rookies.services.inf.ICustomerService;
+import com.project.rookies.utils.EmailSenderUtils;
 import com.project.rookies.utils.EmailUtils;
+import com.project.rookies.utils.RandomPassword;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -33,7 +35,7 @@ public class CustomerServiceImpl implements ICustomerService {
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
     private final RoleRepo roleRepo;
-
+    private final EmailSenderUtils emailSenderUtils;
     @Override
     public CustomerResponseDto saveCustomer(CustomerDto customerDto) {
         String email = customerDto.getEmail();
@@ -82,6 +84,17 @@ public class CustomerServiceImpl implements ICustomerService {
             return new DeleteResponseDto("delete fail", HttpStatus.NOT_FOUND);
     }
 
+    @Override
+    public boolean resetPassword(String email) {
+        try{
+            Customer customer= customerRepo.findByEmail(email);
+            emailSenderUtils.sendEmail(email,"Reset New Password ", RandomPassword.randomAlphaNumeric(10));
+            return true;
+        }catch (Exception exception)
+        {
+            throw new ValidationException("email not valid");
+        }
+    }
 
     @Override
     public CustomerResponseDto updateCustomerById(CustomerDto customerDto, Long id) {
