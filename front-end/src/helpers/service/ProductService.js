@@ -12,12 +12,12 @@ const setAuthToken = (token) => {
 	}
 };
 
-const getProduct = async () => {
+const getProduct = async (page) => {
 
     try {
         const res = await axios.get(`${API_PRODUCT}`, {
             params: {
-                page: 0,
+                page: page,
                 size: 8
             }
         });

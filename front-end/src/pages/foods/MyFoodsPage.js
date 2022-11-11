@@ -6,13 +6,19 @@ import { ProductContext } from "../../helpers/context/productContext";
 const MaxPage = 5;
 function MyFoodsPage() {
 	const { ProductFilter, ListProduct, loadProductFilter } = useContext(ProductContext)
-
+	
 	console.log(ListProduct)
 	const [page, setPage] = useState(1);
 
-	useEffect(()=>{
-		setPage(ProductFilter.page+1)
-	},[ProductFilter.page])
+	// useEffect(()=>{
+	// 	const filter = { 
+    //         ...ProductFilter, 
+    //         page:page-1
+    //     }
+	// 	setPage(ProductFilter.page+1)
+		
+	// 	loadProductFilter(filter)
+	// },[])
 
 	const paginProduct = (e, page) =>{
 		const filter = { 

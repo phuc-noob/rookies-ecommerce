@@ -43,16 +43,16 @@ function FormFoodUpdate() {
     const nagivate = useNavigate()
 
     useEffect(() => {
-        CategoryService.getListCategories().then(res => {
+        CategoryService.getListCategories(0).then(res => {
             setDataCategories(res)
         })
 
         ProductService.getProductById(productId).then(res => {
-            const category =[]
-            res.categories.map(e =>{
+            const category = []
+            res.categories.map(e => {
                 category.push(e.id)
             })
-            const temp ={...res,categoryIds:category,imageDtos:res.images}
+            const temp = { ...res, categoryIds: category, imageDtos: res.images }
             setStateForm(temp)
             console.log(temp)
         })
@@ -61,9 +61,10 @@ function FormFoodUpdate() {
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
 
-    async function handleButtonClick() {
+    async function handleButtonClick(e) {
+        e.preventDefault()
         console.log(stateForm)
-        ProductService.updateProduct(stateForm).then(res=>{
+        ProductService.updateProduct(stateForm).then(res => {
             console.log(res)
             nagivate('/admin/foods')
         })
@@ -127,9 +128,9 @@ function FormFoodUpdate() {
                 container
                 spacing={2}
                 sx={{ minHeight: "350px", border: 1, paddingY: 5, borderColor: "#979793", borderRadius: 3 }}
-                component={"form"}
+                
             >
-                <Grid item lg={7} md={7}>
+                <Grid component={"form"} onSubmit={handleButtonClick} item lg={7} md={7}>
                     <Grid container direction="column" gap={2} sx={{ pr: 2 }}>
                         <FormControl
                             sx={{ flexDirection: "row", alignItems: "flex-start", pr: 2 }}
@@ -154,6 +155,7 @@ function FormFoodUpdate() {
                                 <strong>Description:</strong>
                             </Typography>
                             <TextField
+                                required
                                 size="small"
                                 name="description"
                                 multiline
@@ -173,6 +175,7 @@ function FormFoodUpdate() {
                                 name="categories"
                                 onChange={handleChange}
                                 multiple
+                                required
                                 options={dataCategories}
                                 disableCloseOnSelect
                                 limitTags={2}
@@ -271,6 +274,7 @@ function FormFoodUpdate() {
                                 Cancel
                             </Button>
                             <Button
+                                type={"submit"}
                                 variant="outlined"
                                 sx={buttonSx}
                                 disabled={loading}

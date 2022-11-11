@@ -27,10 +27,15 @@ const getCategoryById = async (id) => {
     }
 }
 
-const getCategory = async () => {
+const getCategory = async (page) => {
 
     try {
-        const res = await axios.get(`${API_CATEGORY}`);
+        const res = await axios.get(`${API_CATEGORY}`, {
+            params: {
+                page: page,
+                size: 8
+            }
+        });
         return res.data;
     } catch (err) {
         console.log("err", err, err.response);
@@ -109,11 +114,11 @@ const updateCategory = async (category) => {
     }
 };
 
-const getListCategories = async () => {
+const getListCategories = async (page) => {
     try {
         const res = await axios.get(`${API_CATEGORY}`, {
             params: {
-                page: 0,
+                page: page,
                 size: 8
             }
         });

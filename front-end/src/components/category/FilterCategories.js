@@ -19,7 +19,7 @@ export default function FilterCategories() {
 	const {ProductFilter,ListProduct,loadProductFilter} = React.useContext(ProductContext)
 
 	React.useEffect(() => {
-		CategoryService.getCategory().then(res => {
+		CategoryService.getCategory(0).then(res => {
 			setCategory(res)
 		})
 	}, [])

@@ -19,28 +19,27 @@ const initImageURLs = [];
 
 function FormCategoriesUpdate() {
     const [stateForm, setStateForm] = useState(initFood);
-    const {selectedFile,setSelectedFile} = useContext(ProductContext)
-    const {categoryId} = useContext(ProductContext)
+    const { selectedFile, setSelectedFile } = useContext(ProductContext)
+    const { categoryId } = useContext(ProductContext)
     const [imageURLs, setImageURLs] = useState(initImageURLs);
     const nagivate = useNavigate()
-    
-    useEffect(()=>{
-        CategoryService.getCategoryById(categoryId).then(res =>{
+
+    useEffect(() => {
+        CategoryService.getCategoryById(categoryId).then(res => {
             console.log(res)
             setStateForm(res)
             setSelectedFile(res.image)
         })
-    },[])
+    }, [])
 
-    const onCancelClick = ()=>{
+    const onCancelClick = () => {
         nagivate("/admin/categories")
     }
 
-    const SaveCategoriesClick =()=>{
+    const SaveCategoriesClick = () => {
         console.log(stateForm)
-        CategoryService.updateCategory({...stateForm,image:selectedFile}).then(() =>{
-            nagivate("/admin/categories")
-        })
+        CategoryService.updateCategory({ ...stateForm, image: selectedFile })
+        nagivate("/admin/categories")
     }
 
     const handleChangeText = (e) => {
@@ -86,9 +85,10 @@ function FormCategoriesUpdate() {
                                 <strong>Description:</strong>
                             </Typography>
                             <TextField
+                                required
                                 name="description"
                                 size="small"
-                                multiline ={true}
+                                multiline={true}
                                 maxRows={5}
                                 fullWidth
                                 onChange={handleChangeText}
@@ -104,7 +104,7 @@ function FormCategoriesUpdate() {
                             <Button onClick={onCancelClick} variant="outlined" color="inherit">
                                 Cancel
                             </Button>
-                            <Button onClick={SaveCategoriesClick} variant="outlined" >
+                            <Button type="submit" onClick={SaveCategoriesClick} variant="outlined" >
                                 Save
                             </Button>
                         </FormControl>

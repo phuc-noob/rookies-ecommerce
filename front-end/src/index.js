@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import ContextProvider from "./helpers/context";
 import { ProductProvider } from "./helpers/context/productContext"
 import { OrderProvider } from "./helpers/context/orderContext";
+import OrdersContextProvider from "../src/helpers/context/OrdersContext"
 
 console.log(process.env);
 
@@ -16,9 +17,11 @@ root.render(
 		<BrowserRouter>
 			<ContextProvider>
 				<ProductProvider>
-					<OrderProvider>
-						<App />
-					</OrderProvider>
+					<OrdersContextProvider>
+						<OrderProvider>
+							<App />
+						</OrderProvider>
+					</OrdersContextProvider>
 				</ProductProvider>
 			</ContextProvider>
 		</BrowserRouter>

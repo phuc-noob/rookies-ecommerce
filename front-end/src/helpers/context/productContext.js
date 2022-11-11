@@ -18,11 +18,11 @@ function ProductProvider({ children }) {
         console.log(selectedFile)
     },[])
 
-    useEffect(()=>{
-        ProductService.getProduct().then(result=>{
-            setListProduct(result);
-        },)
-    },[])
+    // useEffect(()=>{
+    //     ProductService.getProduct().then(result=>{
+    //         setListProduct(result);
+    //     },)
+    // },[])
     useEffect(()=>{
         ProductService.getProductById(localStorage.getItem("productId")).then(res =>{
             setProductDetail(res)
@@ -50,8 +50,8 @@ function ProductProvider({ children }) {
         })
     }
 
-    const loadProducts = async () => {
-        ProductService.getProduct().then(result=>{
+    const loadProducts = async (page) => {
+        ProductService.getProduct(page).then(result=>{
             setListProduct(result);
         })
     }

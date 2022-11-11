@@ -75,10 +75,9 @@ function AuthContextProvider({ children }) {
 			return err;
 		}
 	};
-	const logout = () => {
-		authService.logout().then(() => {
-			dispatch(authAction.logout());
-		});
+	const logout = async () => {
+		await authService.logout()
+		dispatch(authAction.logout())
 		nagivate("/")
 
 	};

@@ -14,6 +14,7 @@ import moment from 'moment';
 import { useContext } from "react";
 import { AuthContext } from "../../../helpers/context/authContext";
 import { useNavigate } from "react-router-dom";
+import { Pagination } from "@mui/material";
 
 const columns = [
 	{ id: "id", label: "ID" },
@@ -68,13 +69,20 @@ export default function GridsCustomers() {
 	const [ListCustomers, setListCustomer] = React.useState([]);
 	const {customerId,setCustomerId} = useContext(AuthContext)
 	const nagivate = useNavigate()
-	
+	const [page, setPage] = React.useState(0)
+	const MaxPage = 5;
 	const [sort, setSort] = React.useState({
 		field: null,
 		order: null,
 	});
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
+	const paginCustomer = (e, page) => {
+		CustomersService.getListCustomers(page-1).then(res=>{
+			setListCustomer(res)
+		})
+		console.log(page)
+	}
 
 	const handleClick = (event) => {
 		setCustomerId(event.currentTarget.value)
@@ -112,7 +120,7 @@ export default function GridsCustomers() {
 	const id = open ? "simple-popover" : undefined;
 
 	React.useEffect(() => {
-		CustomersService.getListCustomers().then(res => {
+		CustomersService.getListCustomers(page).then(res => {
 			setListCustomer(res)
 		})
 	}, [])
@@ -217,13 +225,13 @@ export default function GridsCustomers() {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<TablePagination
-				component="div"
-				count={ListCustomers.length + 1}
-				rowsPerPage={5}
-				page={1}
-				rowsPerPageOptions={[]}
-			/>
+			<Grid container justifyContent={"end"}>
+				<Pagination
+					page={page}
+					onChange={paginCustomer}
+					count={MaxPage}
+				/>
+			</Grid>
 			
 		</>
 	);

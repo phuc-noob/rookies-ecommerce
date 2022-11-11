@@ -33,6 +33,10 @@ export default function HomeAdminPage() {
 	const handleClickCustomers = () => {
 		nagivate("/admin/customers")
 	}
+	
+	const handleClickOrder =()=>{
+		nagivate("/admin/order")
+	}
 
 	const handleClickCategories = () => {
 		nagivate("/admin/categories")
@@ -79,7 +83,7 @@ export default function HomeAdminPage() {
 							<ListItemText primary={"Customers"} />
 						</ListItemButton>
 						
-						<ListItemButton onClick={handleClickMenu}>
+						<ListItemButton onClick={handleClickOrder}>
 							<ListItemIcon>
 								<LocalMallIcon />
 							</ListItemIcon>

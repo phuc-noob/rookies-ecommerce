@@ -52,7 +52,7 @@ export default function FilterItem(pros) {
 
     React.useEffect(() => {
         console.log(ProductFilter)
-        CategoryService.getCategory().then(res => {
+        CategoryService.getCategory(0).then(res => {
             setCategory(res)
         })
     }, [value])

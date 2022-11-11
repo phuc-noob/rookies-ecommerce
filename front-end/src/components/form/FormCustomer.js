@@ -35,7 +35,8 @@ function FormCustomer({ edit }) {
         nagivate("/admin/customers")
     }
 
-    const onSaveClick = () => {
+    const onSaveClick = (e) => {
+        e.preventDefault();
         console.log(stateForm)
         CustomersService.saveCustomer(stateForm).then(res =>{
             nagivate("/admin/customers")
@@ -58,9 +59,9 @@ function FormCustomer({ edit }) {
                 maxWidth={700}
                 spacing={3}
                 sx={{ minHeight: "350px", border: 1,paddingY:5,  borderColor: "#979793", borderRadius: 3 }}
-                component={"form"}
+                
             >
-                <Grid item lg={7} md={7} paddingX={7}>
+                <Grid component={"form"} onSubmit={onSaveClick} item lg={7} md={7} paddingX={7}>
                     <Grid container direction="column" >
                         <Grid container direction={"row"}
                         >
@@ -208,7 +209,7 @@ function FormCustomer({ edit }) {
                             <Button onClick={cancelClick} sx={{ mr: 5 ,mc:5}} type={"submit"} variant="outlined" color="inherit">
                                 Cancel
                             </Button>
-                            <Button onClick={onSaveClick} variant="outlined" >
+                            <Button type="submit" variant="outlined" >
                                 Save
                             </Button>
                         </Grid>

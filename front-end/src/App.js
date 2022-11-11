@@ -24,6 +24,7 @@ import UserRouteRole from './components/auth/UserRouteRole';
 import OrderHistoryPAge from './pages/order/OrderHistoryPage';
 import RatingPage from './pages/rating/RatingPage';
 import ForgetPasswordForm from './components/auth/ForgetPasswordForm';
+import AdminOrderPage from './pages/order/AdminOrderPage';
 
 function App() {
 	return (
@@ -31,9 +32,9 @@ function App() {
 
 			<Route path="/login" element={<AuthPage authRoute="login" />} />
 			<Route path="/register" element={<AuthPage authRoute="register" />} />
-			<Route path="/forget-password" element={<AuthPage authRoute="forget-password"/>} />
+			<Route path="/forget-password" element={<AuthPage authRoute="forget-password" />} />
 			<Route path="/" element={<DashboardLayout />}>
-				
+
 				<Route path="/" element={<HomePage />} />
 				<Route path="/foods" element={<MyFoodsPage />} />
 				<Route path='/carts/my' element={<UserRouteRole> <OrderPage /> </UserRouteRole>} />
@@ -43,7 +44,7 @@ function App() {
 				<Route path="/foods/:id" element={<DetailFoodPage />} />
 			</Route>
 			<Route path="/admin" element={<AdminRouteRole> <HomeAdminPage /> </AdminRouteRole>}>
-
+				<Route path="/admin/order" element={<AdminOrderPage />} />
 				<Route path="/admin/foods" element={<AdminFoodsPage />} />
 				<Route path="/admin/foods/new" element={<CreateFoodPage />} />
 				<Route path="/admin/foods/update/:id" element={<UpdateFoodsPage />} />

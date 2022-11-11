@@ -22,7 +22,14 @@ function FoodCard(pros) {
 		authState: { isAuthenticated, user, authorization }
 	} = useContext(AuthContext);
 	const navigate = useNavigate();
-	const { ProductDetail, loadProductDetail ,productId,setProductId} = useContext(ProductContext)
+	const {
+		ProductFilter,
+		loadProductFilter,
+		ListProduct,
+		loadListProductByCate, 
+		ProductDetail, 
+		loadProductDetail ,
+		setProductId} = useContext(ProductContext)
 	const { CartQuantity, loadQuantity, loadListCart } = useContext(OrderContext)
 
 	const option = pros.edit ? (
@@ -62,11 +69,19 @@ function FoodCard(pros) {
 	}
 
 	const goProductDetailClick = async () => {
+		const arr =[];
+		pros.categories.map(e=>{
+			arr.push(e.cateId)
+		})
+		console.log(arr)
+		const filter ={...ProductFilter,category:arr}
+		loadProductFilter(filter)
 		localStorage.setItem("productId", pros.productId)
-		loadProductDetail(pros.productId)
+		console.log(ListProduct)
 		navigate(`/foods/${ProductDetail.productId}`)
-		console.log(pros.productId)
-		window.location.reload(false);
+		console.log(pros.categories[0].cateId)
+		loadProductDetail(pros.productId)
+		//window.location.reload(false);
 		setProductId(pros.productId)
 		console.log(ProductDetail.rating)
 	}

@@ -4,7 +4,6 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Grid, TableSortLabel } from "@mui/material";
 import Popover from "@mui/material/Popover";
@@ -14,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { ProductService } from "../../../helpers/service/productService";
 import { ProductContext } from "../../../helpers/context/productContext";
+import { Pagination } from "@mui/material";
+
 const columns = [
 	{ id: "productId", label: "ID", minWidth: 20, align: "right" },
 	{ id: "productName", label: "Food\u00a0Name", minWidth: 170, sortable: true, align: "right" },
@@ -57,23 +58,33 @@ const columns = [
 ];
 
 export default function GridFoods() {
+	const { ProductFilter, loadProductFilter } = React.useContext(ProductContext)
+	const [page, setPage] = React.useState(0)
+	const MaxPage = 5;
 	const [sort, setSort] = React.useState({
 		field: null,
 		order: null,
 	});
-	const nagivate = useNavigate()
-	const [anchorEl, setAnchorEl] = React.useState(null);
-	
-	const [ ListProduct, setListProduct ] = React.useState([])
-	const {productId,setProductId} =React.useContext(ProductContext)
-	React.useEffect(() => {
-		ProductService.getProduct().then(res => {
+
+	const paginProduct = (e, page) => {
+		ProductService.getProduct(page-1).then(res=>{
 			setListProduct(res)
 		})
-	},[anchorEl])
+		console.log(page)
+	}
+	const nagivate = useNavigate()
+	const [anchorEl, setAnchorEl] = React.useState(null);
+
+	const [ListProduct, setListProduct] = React.useState([])
+	const { productId, setProductId } = React.useContext(ProductContext)
+	React.useEffect(() => {
+		ProductService.getProduct(page).then(res => {
+			setListProduct(res)
+		})
+	}, [anchorEl])
 	const handleUpdate = (id) => {
 		return (e) => {
-			
+
 		};
 	};
 
@@ -85,17 +96,17 @@ export default function GridFoods() {
 		console.log("noooo")
 		setAnchorEl(null)
 	}
-	const deleteClick = async () =>{
-		ProductService.deleteProduct(productId).then(()=>{
-			
+	const deleteClick = async () => {
+		ProductService.deleteProduct(productId).then(() => {
+
 			nagivate("/admin/foods")
 		})
 		setAnchorEl(null)
 	}
 
-	const editClick =(event)=>{
+	const editClick = (event) => {
 		setProductId(event.currentTarget.value)
-		nagivate('/admin/foods/update/'+event.currentTarget.value)
+		nagivate('/admin/foods/update/' + event.currentTarget.value)
 	}
 
 	const handleClick = (event) => {
@@ -106,7 +117,7 @@ export default function GridFoods() {
 	const open = Boolean(anchorEl);
 	const id = open ? "simple-popover" : undefined;
 
-	
+
 	return (
 		<>
 			<TableContainer sx={{ maxHeight: 700 }}>
@@ -156,7 +167,7 @@ export default function GridFoods() {
 										return (
 											<>
 												<TableCell key={column.id} align={column.align}>
-													{column.format && typeof value === "number" 
+													{column.format && typeof value === "number"
 														? column.format(value)
 														: value
 													}
@@ -194,13 +205,14 @@ export default function GridFoods() {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<TablePagination
-				component="div"
-				count={ListProduct.length + 1}
-				rowsPerPage={5}
-				page={1}
-				rowsPerPageOptions={[]}
-			/>
+			<Grid container justifyContent={"end"}>
+				<Pagination
+					page={page}
+					onChange={paginProduct}
+					count={MaxPage}
+				/>
+			</Grid>
+
 		</>
 	);
 }

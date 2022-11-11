@@ -13,9 +13,9 @@ function HomePage() {
 	const [dataCategory,setCate] = useState([])
 	useEffect(()=>{
 		const fetchApi = async ()=>{
-			const food = await ProductService.getProduct();
+			const food = await ProductService.getProduct(0);
 			setData(food);
-			const cate = await CategoryService.getCategory();
+			const cate = await CategoryService.getCategory(0);
 			setCate(cate);
 		}
 		fetchApi()

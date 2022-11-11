@@ -1,6 +1,7 @@
 import {
 	FormControl,
 	Grid,
+	Box,
 	Typography,
 	Button,
 	TextField,
@@ -44,7 +45,7 @@ function FormFood() {
 
 	useEffect(() => {
 
-		CategoryService.getListCategories().then(res => {
+		CategoryService.getListCategories(0).then(res => {
 			setDataCategories(res)
 		})
 	}, [])
@@ -52,11 +53,12 @@ function FormFood() {
 	const [loading, setLoading] = React.useState(false);
 	const [success, setSuccess] = React.useState(false);
 
-	async function handleButtonClick() {
+	async function handleButtonClick(e) {
+		e.preventDefault()
 		setLoading(true)
 		uploadIamge()
 	};
-	
+
 	const buttonSx = {
 		...(success && {
 			bgcolor: green[500],
@@ -84,15 +86,15 @@ function FormFood() {
 		console.log(ListImages)
 		setLoading(true)
 		let result = ListImages?.map(async files => {
-			
+
 			const imageOj = { imageURL: "" }
 			const temp = await ImageUtil.uploadImage(files)
-			return {...imageOj,imageURL:temp.url}
+			return { ...imageOj, imageURL: temp.url }
 		})
-		Promise.all(result).then((e)=>{
+		Promise.all(result).then((e) => {
 			setLoading(false)
 			console.log(e)
-			ProductService.saveProduct({...stateForm,imageDtos:e}).then(res =>{
+			ProductService.saveProduct({ ...stateForm, imageDtos: e }).then(res => {
 				console.log(res)
 				nagivate('/admin/foods')
 			})
@@ -115,9 +117,9 @@ function FormFood() {
 				container
 				spacing={2}
 				sx={{ minHeight: "350px", border: 1, paddingY: 5, borderColor: "#979793", borderRadius: 3 }}
-				component={"form"}
+				
 			>
-				<Grid item lg={7} md={7}>
+				<Grid component={"form"} onSubmit={handleButtonClick} item lg={7} md={7}>
 					<Grid container direction="column" gap={2} sx={{ pr: 2 }}>
 						<FormControl
 							sx={{ flexDirection: "row", alignItems: "flex-start", pr: 2 }}
@@ -142,6 +144,7 @@ function FormFood() {
 								<strong>Description:</strong>
 							</Typography>
 							<TextField
+								required
 								size="small"
 								name="description"
 								multiline
@@ -158,6 +161,7 @@ function FormFood() {
 								<strong>Category:</strong>
 							</Typography>
 							<Autocomplete
+								required
 								name="categories"
 								onChange={handleChange}
 								multiple
@@ -202,6 +206,7 @@ function FormFood() {
 							</Typography>
 
 							<Select
+								required
 								labelId="demo-simple-select-standard-label"
 								name="status"
 								size="small"
@@ -258,9 +263,9 @@ function FormFood() {
 								Cancel
 							</Button>
 							<Button
+								type={"submit"}
 								sx={buttonSx}
 								disabled={loading}
-								onClick={handleButtonClick}
 							>
 								Save
 							</Button>

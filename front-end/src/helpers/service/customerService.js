@@ -48,7 +48,7 @@ const getCustomerById = async (id) => {
     }
 }
 
-const getListCustomers = async () => {
+const getListCustomers = async (page,size) => {
     const cookies = new Cookies();
     if (cookies.get(LOCAL_STORAGE_TOKEN_NAME)) {
 		setAuthToken(cookies.get(LOCAL_STORAGE_TOKEN_NAME));
@@ -59,8 +59,8 @@ const getListCustomers = async () => {
     try {
         const res = await axios.get(`${API_CUSTOMER}`, {
             params: {
-                page: 0,
-                size: 8
+                page: page,
+                size: 6
             }
         });
 

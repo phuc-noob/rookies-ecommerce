@@ -5,7 +5,6 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Grid, TableSortLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +12,7 @@ import Button from '@mui/material/Button';
 import { CategoryService } from "../../../helpers/service/categoryService";
 import { ProductContext } from "../../../helpers/context/productContext";
 import moment from 'moment';
+import { Pagination } from "@mui/material";
 
 const columns = [
 	{ id: "cateId", label: "ID", minWidth: 20 },
@@ -53,16 +53,27 @@ export default function Gridcategories() {
 	const {categoryId,setCategoryId} = React.useContext(ProductContext)
     const [listCategories,setListCategories] = React.useState([])
 	const [anchorEl, setAnchorEl] = React.useState(null);
+	const [page, setPage] = React.useState(0)
+	const MaxPage = 5;
 	const nagivate = useNavigate()
 	const [sort, setSort] = React.useState({
 		field: null,
 		order: null,
 	});
 
+	const paginCategory = (e, page) => {
+		CategoryService.getListCategories(page-1).then(res =>{
+			setListCategories(res)
+
+			console.log(res)
+		})
+		console.log(page)
+	}
+
 	const { ListProduct } = React.useContext(ProductContext)
 
     React.useEffect(() => {
-        CategoryService.getListCategories().then(res => {
+        CategoryService.getListCategories(0).then(res => {
             setListCategories(res)
         })
     },[anchorEl])
@@ -204,13 +215,13 @@ export default function Gridcategories() {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<TablePagination
-				component="div"
-				count={ListProduct.length + 1}
-				rowsPerPage={5}
-				page={1}
-				rowsPerPageOptions={[]}
-			/>
+			<Grid container justifyContent={"end"}>
+				<Pagination
+					page={page}
+					onChange={paginCategory}
+					count={MaxPage}
+				/>
+			</Grid>
 		</>
 	);
 }

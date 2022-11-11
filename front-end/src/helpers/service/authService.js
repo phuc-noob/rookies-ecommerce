@@ -33,8 +33,8 @@ const login = async (userForm) => {
 			
 			cookies.set(LOCAL_STORAGE_TOKEN_NAME, res.data.accessToken);
 		}
-		// localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, res.data.accessToken);
-		console.log("login")
+		
+		
 		return res.data;
 	} catch (err) {
 		console.log("err", err, err.response);
