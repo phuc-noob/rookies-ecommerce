@@ -15,7 +15,7 @@ public interface ICategoryService {
 
     CategoryResponseDto updateCategoryById(CategoryDto categoryDto, Long id);
 
-    List<CategoryResponseDto> getALlCategory();
+    List<CategoryResponseDto> getALlCategory(int page,int size);
 
     CategoryResponseDto getCategoryById(Long id);
 

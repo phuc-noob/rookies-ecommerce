@@ -75,7 +75,7 @@ public class AuthControllerTest {
     {
         mvc.perform( MockMvcRequestBuilders
                         .get("/api/auth/register", 1)
-                        .content(asJsonString(new RegisterRequestDto("f","l","a@gmail.com","000","00","000")))
+                        .content(asJsonString(registerRequestDto))
                         .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isMethodNotAllowed());
 

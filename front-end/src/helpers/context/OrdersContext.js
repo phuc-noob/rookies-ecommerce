@@ -1,5 +1,4 @@
 import { ordersService } from "../service/ordersService";
-import { OrderService } from "../service/orderService";
 import { createContext, useReducer } from "react";
 import orderReducer, {
 	initOrdersState,
@@ -11,16 +10,23 @@ export const OrdersContext = createContext();
 function OrdersContextProvider({ children }) {
 	const [ordersState, dispatch] = useReducer(orderReducer, initOrdersState);
 
+
 	const loadListOrders = async ({ page, size, filter }) => {
-		dispatch(ordersAction.setLoading(true));
+		dispatch(ordersAction.setLoading(true));		// ordersState.loading=  true
+
+
 		try {
-			const data = await OrderService.getOrders();
+			const data = await ordersService.getOrders(page, size);
 			const list = {
 				data,
 				page,
 				size,
 				filter,
 			};
+			const statistic = ordersService.statisticStatusOrder(
+				data.map((e) => e.statusOrder)
+			);
+			dispatch(ordersAction.setStatistic(statistic));
 			dispatch(ordersAction.setData(list));
 		} catch (err) {
 			console.log("err", err);

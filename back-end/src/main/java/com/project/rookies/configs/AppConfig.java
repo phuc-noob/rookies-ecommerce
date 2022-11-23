@@ -1,9 +1,5 @@
 package com.project.rookies.configs;
 
-import com.project.rookies.entities.Admin;
-import com.project.rookies.entities.Customer;
-import com.project.rookies.entities.Role;
-import com.project.rookies.entities.enums.ERoleType;
 import com.project.rookies.repositories.AdminRepo;
 import com.project.rookies.repositories.CustomerRepo;
 import com.project.rookies.repositories.RoleRepo;

@@ -15,6 +15,8 @@ import com.project.rookies.repositories.ProductRepo;
 import com.project.rookies.services.inf.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -68,8 +70,9 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public List<CategoryResponseDto> getALlCategory() {
-        return categoryRepo.findAll()
+    public List<CategoryResponseDto> getALlCategory(int page,   int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return categoryRepo.findAll(pageable)
                 .stream()
                 .map(category -> modelMapper.map(category, CategoryResponseDto.class))
                 .collect(Collectors.toList());

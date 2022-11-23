@@ -115,7 +115,7 @@ function FoodCard(pros) {
 									{pros.categories.map(category => category.cateName).join('- ')}
 								</Typography>
 							</Grid>
-							<Grid item>{pros.price}$</Grid>
+							<Grid item>{pros.price} VNĐ</Grid>
 							<HoverRating rate={pros.rating} />
 						</Grid>
 					</CardContent>

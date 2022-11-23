@@ -34,7 +34,7 @@ function AdminCategoiesPage() {
 			<Paper levation={3} sx={{ mr: 3, px: 3, py: 2 }}>
 				<Grid container direction={"column"}>
 					<Grid container>
-						<Typography variant="h6" color="black">
+					<Typography variant="h4" color="black" sx={{ fontWeight: "bold" }}>
 							List Categories
 						</Typography>
 					</Grid>

@@ -1,6 +1,6 @@
 import { Grid, CircularProgress } from "@mui/material";
 
-function Loadding() {
+function Loading() {
 	return (
 		<Grid
 			container
@@ -14,4 +14,4 @@ function Loadding() {
 	);
 }
 
-export default Loadding;
+export default Loading;

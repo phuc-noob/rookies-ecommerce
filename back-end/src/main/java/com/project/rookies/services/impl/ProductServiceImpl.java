@@ -82,6 +82,11 @@ public class ProductServiceImpl implements IProductService {
                 product.setUpdatedAt(LocalDateTime.now());
                 product.setStatus(EProductStatus.ACTIVE);
                 modelMapper.map(product, productResponseDto);
+                // add product to category
+                product.getCategories().clear();
+                for (Long cateId : productDto.getCategoryIds()) {
+                    product.getCategories().add(categoryRepo.getById(cateId));
+                }
                 productRepo.save(product);
             });
             return productResponseDto;

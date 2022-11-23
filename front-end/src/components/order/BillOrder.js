@@ -83,7 +83,7 @@ export default function BillOrder() {
 							}}
 							
 							>
-								<strong>GO ORDER(5)</strong>
+								<strong>GO ORDER</strong>
 
 							</Button>
     </>

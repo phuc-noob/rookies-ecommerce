@@ -1,20 +1,17 @@
-
-
 import axios from "axios";
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 import { axiosPrivate } from "../config/axiosConnect";
 import { ResponseError } from "../util/ResponseError";
 const API_ORDERS = process.env.REACT_APP_API_HOST + "/orders";
-
 
 const API_PRODUCT = "http://localhost:8080/api/products";
 const LOCAL_STORAGE_TOKEN_NAME = process.env.REACT_APP_LOCAL_STORAGE_TOKEN_NAME;
 
 const setAuthToken = (token) => {
 	if (token) {
-		axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+		axiosPrivate.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 	} else {
-		delete axios.defaults.headers.common["Authorization"];
+		delete axiosPrivate.defaults.headers.common["Authorization"];
 	}
 };
 
@@ -60,9 +57,9 @@ function formatResponse(response) {
 
 const getOrders = async (page, size) => {
 	const cookies = new Cookies();
-    if (cookies.get(LOCAL_STORAGE_TOKEN_NAME)) {
+	if (cookies.get(LOCAL_STORAGE_TOKEN_NAME)) {
 		setAuthToken(cookies.get(LOCAL_STORAGE_TOKEN_NAME));
-		console.log(cookies.get(LOCAL_STORAGE_TOKEN_NAME))
+		console.log(cookies.get(LOCAL_STORAGE_TOKEN_NAME));
 	} else {
 		throw Error("Dont have token");
 	}
@@ -75,7 +72,17 @@ const getOrders = async (page, size) => {
 		throw ResponseError(err);
 	}
 };
-
+const statisticStatusOrder = (statuses) => {
+	const statistic = {
+		ORDERED: 0,
+		ACCEPTED: 0,
+		REJECTED: 0,
+	};
+	statuses.forEach((e) => {
+		statistic[e] += 1;
+	});
+	return statistic;
+};
 const setRejectOrder = async (id) => {
 	const body = {
 		orderStatus: "REJECTED",
@@ -101,4 +108,5 @@ export const ordersService = {
 	getOrders,
 	setRejectOrder,
 	setAcceptOrder,
+	statisticStatusOrder,
 };

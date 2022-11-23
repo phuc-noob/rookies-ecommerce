@@ -10,6 +10,11 @@ const initialState = {
 		id: null,
 		loading: false,
 	},
+	statistic: {
+		ORDERED: 0,
+		ACCEPTED: 0,
+		REJECTED: 0,
+	},
 };
 
 const ordersSlice = createSlice({
@@ -36,6 +41,15 @@ const ordersSlice = createSlice({
 				...state.action,
 				id,
 				loading,
+			};
+		},
+		setStatistic(state, action) {
+			const { ORDERED, ACCEPTED, REJECTED } = action.payload;
+			state.statistic = {
+				...state.statistic,
+				ORDERED,
+				ACCEPTED,
+				REJECTED,
 			};
 		},
 	},

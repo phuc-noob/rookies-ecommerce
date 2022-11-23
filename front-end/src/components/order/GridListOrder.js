@@ -1,12 +1,13 @@
 import { Chip, Collapse, IconButton, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { OrdersContext } from "../../helpers/context/OrdersContext";
-import Loadding from "../layout/Loadding";
+import Loading from "../layout/Loading";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import TableRow from "@mui/material/TableRow";
 import { Box } from "@mui/system";
@@ -17,21 +18,21 @@ const columns = [
 	{ id: "fullname", label: "Customer", minWidth: 150, sortable: true },
 	{ id: "address", label: "Address", minWidth: 150 },
 	{
-		id: "updatedAt",
+		id: "createAt",
 		label: "Date",
-		minWidth: 200,
+		minWidth: 170,
 		sortable: true,
 		format: (value) => new Date(value).toLocaleString(),
 	},
 	{
 		id: "totalPrice",
-		label: "Total Price",
+		label: "Amout",
 		minWidth: 170,
 		sortable: true,
-		format: (value) => value.toFixed(0),
+		format: (value) => `${value.toFixed(0)} VND`,
 	},
 	{
-		id: "status",
+		id: "statusOrder",
 		label: "Status Order",
 		minWidth: 170,
 		format: (value) => {
@@ -45,7 +46,7 @@ const columns = [
 	},
 	{
 		id: null,
-		label: "Options",
+		label: "",
 		minWidth: 170,
 		align: "right",
 		format: (value) => <MenuOrder data={value} />,
@@ -54,36 +55,35 @@ const columns = [
 
 const columnsDetail = [
 	{ id: "productName", label: "Product Name", minWidth: 150, sortable: true },
-	{ id: "orderItemPrice", label: "Price", minWidth: 150, sortable: true },
+	{ id: "price", label: "Price", minWidth: 150, sortable: true },
 	{ id: "amount", label: "Amount", minWidth: 150, sortable: true },
-	{ id: "orderItemPrice", label: "Total Price", minWidth: 150, sortable: true },
+	{ id: "totalPrice", label: "Total Price", minWidth: 150, sortable: true },
 ];
 
 function createData(pros, index) {
 	const {
 		id,
-		status,
-		updatedAt,
+		statusOrder,
+		createAt,
 		totalPrice,
-		customer: { firstName,lastName, phone, email, address },
-		oderDetails,
+		customer: { fullname, phone, email, address },
+		orderDetails,
 	} = pros;
 	return {
 		id,
-		status,
+		statusOrder,
 		totalPrice,
-		updatedAt,
-		firstName,
-		lastName,
+		createAt,
+		fullname,
 		phone,
 		email,
 		address,
-		oderDetails,
+		orderDetails,
 	};
 }
 function DropRow({ children }) {
-	const row = createData(children);
-	console.log(row)
+	const row = children;
+
 	const [sort, setSort] = useState({
 		field: null,
 		order: null,
@@ -111,12 +111,9 @@ function DropRow({ children }) {
 					let value;
 					if (column.id) {
 						value = row[column.id];
-						if(column.id==="fullname")
-							value =row["firstName"] + " " + row["lastName"]
 					} else value = row;
 					return (
 						<TableCell key={column.id} align={column.align}>
-							 
 							{column.format ? column.format(value) : value}
 						</TableCell>
 					);
@@ -159,7 +156,7 @@ function DropRow({ children }) {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{row ? row.oderDetails.map((row) => {
+									{row.orderDetails.map((row) => {
 										return (
 											<TableRow
 												hover
@@ -169,16 +166,16 @@ function DropRow({ children }) {
 												sx={{ cursor: "pointer" }}
 											>
 												{columnsDetail.map((column) => {
-													let value = row[column.id];
-													if(column.id ==="productName")value=row["product"].productName									
-													return (<TableCell key={column.id} align={column.align}>
-														{column.format ? column.format(value) : value}
-													</TableCell>)
-												
+													const value = row[column.id];
+													return (
+														<TableCell key={column.id} align={column.align}>
+															{column.format ? column.format(value) : value}
+														</TableCell>
+													);
 												})}
 											</TableRow>
 										);
-									}) : ""}
+									})}
 								</TableBody>
 							</Table>
 						</Box>
@@ -200,13 +197,11 @@ export default function GridFoods() {
 	});
 	useEffect(() => {
 		loadListOrders({ page: 0, size: 10 });
-
 	}, []);
-
 	let rows = [];
-	if (loading) return <Loadding />;
+	if (loading) return <Loading />;
 	else {
-		rows = data;
+		rows = data.map(createData);
 	}
 	return (
 		<>
@@ -248,7 +243,7 @@ export default function GridFoods() {
 					</TableHead>
 					<TableBody>
 						{loading ? (
-							<Loadding />
+							<Loading />
 						) : (
 							rows.map((e) => {
 								return <DropRow>{e}</DropRow>;

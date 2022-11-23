@@ -5,10 +5,12 @@ import { OrderContext } from "../../helpers/context/orderContext"
 import OrderItemHitory from "../../components/order/OrderItemHistory";
 import { CustomersService } from "../../helpers/service/customerService";
 import { AuthContext } from "../../helpers/context/authContext";
+import { Chip, Collapse, IconButton, Typography } from "@mui/material";
 
 function OrderHistoryPAge() {
-    const { ListCart, ListCartOrderPending } = useContext(OrderContext)
+    const { ListCart, ListCartOrderPending } = useContext( OrderContext)
     const [ListOrder, setListOrder] = useState([])
+    console.log(ListOrder)
     const { authState: { user },
     } = useContext(AuthContext);
 
@@ -20,7 +22,15 @@ function OrderHistoryPAge() {
 
     }, [])
 
-    console.log(ListCart)
+    const format= (value) => {
+        const listColor = {
+            ORDERED: "warning",
+            ACCEPTED: "success",
+            REJECTED: "error",
+        };
+        return <Chip label={value} color={listColor[value]} />;
+    }
+
     return (
         <>
             <Container sx={{ marginTop: "150px" }}>
@@ -33,12 +43,12 @@ function OrderHistoryPAge() {
                             return (
                                 <Grid item xs={10}>
                                     <br />
-                                    <h5 > Đơn Hàng: {e.id} </h5>
+                                    <h5 > Đơn Hàng: {e.id} {format(e.status)}</h5>
                                     <p></p>
                                     {
                                         e.oderDetails.map(item => {
                                             return (
-                                                <OrderItemHitory cart={item} />
+                                                <OrderItemHitory cart={item} status={e.status}/>
                                             )
                                         })
                                     }

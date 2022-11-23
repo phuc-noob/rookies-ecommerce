@@ -6,7 +6,7 @@ import {
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useContext, useState } from "react";
 import { OrdersContext } from "../../helpers/context/OrdersContext";
-import Loadding from "../layout/Loadding";
+import Loading from "../layout/Loading";
 
 function MenuOrder({ data }) {
 	const {
@@ -33,8 +33,8 @@ function MenuOrder({ data }) {
 		rejectOrder(data.id);
 	};
 	if (id === data.id && loading) {
-		console.log("loadding");
-		return <Loadding />;
+		console.log("loading");
+		return <Loading />;
 	}
 	if (data.statusOrder !== "ORDERED") {
 		return null;

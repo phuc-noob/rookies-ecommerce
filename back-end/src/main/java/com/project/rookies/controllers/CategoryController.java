@@ -30,9 +30,9 @@ public class CategoryController {
         return categoryService.updateCategoryById(categoryDto, id);
     }
 
-    @GetMapping
-    List<CategoryResponseDto> getListCategory() {
-        return categoryService.getALlCategory();
+    @GetMapping()
+    List<CategoryResponseDto> getListCategory(@RequestParam("page") int page,@RequestParam("size") int size) {
+        return categoryService.getALlCategory(page,size);
     }
 
     @GetMapping("/{id}")

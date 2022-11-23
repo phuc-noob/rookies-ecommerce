@@ -11,26 +11,16 @@ import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import { CategoryService } from "../../../helpers/service/categoryService";
 import { ProductContext } from "../../../helpers/context/productContext";
-import moment from 'moment';
 import { Pagination } from "@mui/material";
 
 const columns = [
-	{ id: "cateId", label: "ID", minWidth: 20 },
+	{ id: "cateId", label: "ID", minWidth: 20,  format: (value) => `#${value}`},
 	{ id: "cateName", label: "Categories Name", minWidth: 150, sortable: true },
 	{
 		id: "description",
 		label: "Description",
 		minWidth: 170,
 		sortable: true,
-		align: "right",
-	},
-	{
-		id: "amount",
-		label: "Total Product",
-		minWidth: 170,
-		align: "right",
-		sortable: true,
-		format: (value) => value.toFixed(0),
 	},
     {
 		id: "createdAt",
@@ -38,8 +28,8 @@ const columns = [
 		minWidth: 250,
 		sortable: true,
 		align: "right",
-		valueFormatter: params =>
-			moment(params?.value).format("DD/MM/YYYY"),
+		format: (value) => new Date(value).toLocaleString(),
+
 	},
 	{
 		id: "options",
@@ -171,7 +161,7 @@ export default function Gridcategories() {
 
 										return (
 											<TableCell key={column.id} align={column.align}>
-												{column.format && typeof value === "number" || typeof value === "datetime"
+												{column.format 
 													? column.format(value)
 													: value
 												}

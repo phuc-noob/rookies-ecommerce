@@ -13,25 +13,26 @@ import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { ProductService } from "../../../helpers/service/productService";
 import { ProductContext } from "../../../helpers/context/productContext";
-import { Pagination } from "@mui/material";
+import { Pagination,Chip } from "@mui/material";
 
 const columns = [
-	{ id: "productId", label: "ID", minWidth: 20, align: "right" },
+	{ id: "productId", label: "ID", minWidth: 20,  format: (value) => `#${value}`  },
 	{ id: "productName", label: "Food\u00a0Name", minWidth: 170, sortable: true, align: "right" },
 	{
 		id: "status",
 		label: "Status",
 		minWidth: 100,
 		align: "right",
-		format: (value) => (value ? "Available" : "Sold Out"),
+		format: (value) => {
+			const listColor = {
+				ACTIVE: "success",
+				ACCEPTED: "warming",
+				REJECTED: "error",
+			};
+			return <Chip label={value} color={listColor[value]} />;
+		},	
 	},
-	{
-		id: "totalSold",
-		label: "Total Sold",
-		minWidth: 130,
-		sortable: true,
-		align: "right",
-	},
+	
 	{
 		id: "createdAt",
 		label: "Created At",
@@ -167,7 +168,7 @@ export default function GridFoods() {
 										return (
 											<>
 												<TableCell key={column.id} align={column.align}>
-													{column.format && typeof value === "number"
+													{column.format
 														? column.format(value)
 														: value
 													}

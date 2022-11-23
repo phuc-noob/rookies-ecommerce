@@ -19,6 +19,8 @@ import com.project.rookies.utils.EmailUtils;
 import com.project.rookies.utils.RandomPassword;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -101,6 +103,7 @@ public class CustomerServiceImpl implements ICustomerService {
         try {
             customerRepo.findById(id).ifPresent(customer -> {
                 modelMapper.map(customerDto, customer);
+                customer.setPassword(passwordEncoder.encode(customerDto.getPassword()));
                 customerRepo.save(customer);
             });
             return modelMapper.map(customerDto, CustomerResponseDto.class);
@@ -124,7 +127,8 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public List<CustomerResponseDto> findListCustomer(int page, int size) {
         try {
-            return customerRepo.findListCustomer(page, size)
+            Pageable pageable = PageRequest.of(page, size);
+            return customerRepo.findAll(pageable)
                     .stream()
                     .map(customer -> modelMapper.map(customer, CustomerResponseDto.class))
                     .collect(Collectors.toList());

@@ -31,75 +31,71 @@ const initFood = {
 	price: 0,
 	categoryIds: [],
 	amount: 0,
-	imageDtos: []
+	imageDtos: [],
 };
-
-
 
 function FormFood() {
 	const [stateForm, setStateForm] = useState(initFood);
 	const [imageURLs, setImageURLs] = useState([]);
-	const [dataCategories, setDataCategories] = useState([])
-	const { ListImages } = useContext(ProductContext)
-	const nagivate = useNavigate()
+	const [dataCategories, setDataCategories] = useState([]);
+	const { ListImages } = useContext(ProductContext);
+	const nagivate = useNavigate();
 
 	useEffect(() => {
-
-		CategoryService.getListCategories(0).then(res => {
-			setDataCategories(res)
-		})
-	}, [])
+		CategoryService.getListCategories(0).then((res) => {
+			setDataCategories(res);
+		});
+	}, []);
 
 	const [loading, setLoading] = React.useState(false);
 	const [success, setSuccess] = React.useState(false);
 
 	async function handleButtonClick(e) {
-		e.preventDefault()
-		setLoading(true)
-		uploadIamge()
-	};
+		e.preventDefault();
+		setLoading(true);
+		uploadIamge();
+	}
 
 	const buttonSx = {
 		...(success && {
 			bgcolor: green[500],
 			"&:hover": {
-				bgcolor: green[700]
-			}
-		})
+				bgcolor: green[700],
+			},
+		}),
 	};
 
-
 	const handleChange = async (e, value) => {
-		console.log(value)
-		const cates = []
-		value.map(e => { cates.push(e.cateId) })
-		console.log(cates)
+		console.log(value);
+		const cates = [];
+		value.map((e) => {
+			cates.push(e.cateId);
+		});
+		console.log(cates);
 		setStateForm((pre) => {
 			return {
 				...pre,
 				categoryIds: cates,
 			};
 		});
-
-	}
+	};
 	async function uploadIamge() {
-		console.log(ListImages)
-		setLoading(true)
-		let result = ListImages?.map(async files => {
-
-			const imageOj = { imageURL: "" }
-			const temp = await ImageUtil.uploadImage(files)
-			return { ...imageOj, imageURL: temp.url }
-		})
+		console.log(ListImages);
+		setLoading(true);
+		let result = ListImages?.map(async (files) => {
+			const imageOj = { imageURL: "" };
+			const temp = await ImageUtil.uploadImage(files);
+			return { ...imageOj, imageURL: temp.url };
+		});
 		Promise.all(result).then((e) => {
-			setLoading(false)
-			console.log(e)
-			ProductService.saveProduct({ ...stateForm, imageDtos: e }).then(res => {
-				console.log(res)
-				nagivate('/admin/foods')
-			})
-		})
-		setLoading(false)
+			setLoading(false);
+			console.log(e);
+			ProductService.saveProduct({ ...stateForm, imageDtos: e }).then((res) => {
+				console.log(res);
+				nagivate("/admin/foods");
+			});
+		});
+		setLoading(false);
 	}
 
 	const handleChangeText = (e) => {
@@ -116,10 +112,21 @@ function FormFood() {
 			<Grid
 				container
 				spacing={2}
-				sx={{ minHeight: "350px", border: 1, paddingY: 5, borderColor: "#979793", borderRadius: 3 }}
-				
+				sx={{
+					minHeight: "350px",
+					border: 1,
+					paddingY: 5,
+					borderColor: "#979793",
+					borderRadius: 3,
+				}}
 			>
-				<Grid component={"form"} onSubmit={handleButtonClick} item lg={7} md={7}>
+				<Grid
+					component={"form"}
+					onSubmit={handleButtonClick}
+					item
+					lg={7}
+					md={7}
+				>
 					<Grid container direction="column" gap={2} sx={{ pr: 2 }}>
 						<FormControl
 							sx={{ flexDirection: "row", alignItems: "flex-start", pr: 2 }}
@@ -170,7 +177,6 @@ function FormFood() {
 								limitTags={2}
 								getOptionLabel={(option) => option.cateName}
 								key={(option) => option.id}
-
 								renderOption={(props, option, { selected }) => (
 									<li {...props}>
 										<Checkbox
@@ -213,7 +219,6 @@ function FormFood() {
 								value={stateForm.status}
 								onChange={handleChangeText}
 								placeholder="Status"
-
 							>
 								<MenuItem value={"ACTIVE"}>ACTIVE</MenuItem>
 								<MenuItem value={"DELETED"}>DELETED</MenuItem>
@@ -238,7 +243,7 @@ function FormFood() {
 								value={stateForm.money}
 							/>
 							<Typography sx={{ paddingX: 1, mr: 1, my: 1, minWidth: "115px" }}>
-								<strong >VNĐ</strong>
+								<strong>VNĐ</strong>
 							</Typography>
 						</FormControl>
 						<FormControl
@@ -262,11 +267,7 @@ function FormFood() {
 							<Button type={"submit"} variant="outlined" color="inherit">
 								Cancel
 							</Button>
-							<Button
-								type={"submit"}
-								sx={buttonSx}
-								disabled={loading}
-							>
+							<Button type={"submit"} sx={buttonSx} disabled={loading}>
 								Save
 							</Button>
 							{loading && (
@@ -278,14 +279,19 @@ function FormFood() {
 										top: "50%",
 										left: "50%",
 										marginTop: "-12px",
-										marginLeft: "-12px"
+										marginLeft: "-12px",
 									}}
 								/>
 							)}
 						</FormControl>
 					</Grid>
 				</Grid>
-				<Grid item lg={5} md={5} sx={{ border: 0, borderRadius: "16px", borderColor: "#5F795C" }}>
+				<Grid
+					item
+					lg={5}
+					md={5}
+					sx={{ border: 0, borderRadius: "16px", borderColor: "#5F795C" }}
+				>
 					<UploadMultipleImages value={imageURLs} setState={setImageURLs} />
 				</Grid>
 			</Grid>

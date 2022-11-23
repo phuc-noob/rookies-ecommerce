@@ -86,7 +86,7 @@ export default function BillOrderDetail() {
             }}
 
             >
-                <strong>CHECK OUT(5)</strong>
+                <strong>CHECK OUT</strong>
 
             </Button>
         </>

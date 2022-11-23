@@ -1,30 +1,30 @@
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Divider, Grid } from "@mui/material";
-function CardStatistic({ title, data, description }) {
+import { useContext } from "react";
+import { OrdersContext } from "../../helpers/context/OrdersContext";
+function CardStatistic({ status }) {
+	const {
+		ordersState: { statistic },
+	} = useContext(OrdersContext);
 	return (
 		<>
 			<Card sx={{ minHeight: 150 }}>
 				<CardContent>
 					<Grid container justifyContent={"center"} direction="column">
 						<Typography
-							sx={{ fontSize: 16 }}
-							color="text.secondary"
+							sx={{ fontSize: 16, fontWeight: 600 }}
+							color="text.primary"
 							gutterBottom
 							justifyContent={"center"}
 						>
-							{title}
+							{status}
 						</Typography>
 						<Divider sx={{ mb: 2, borderColor: "grey.500" }} />
 						<Typography variant="h2" sx={{ fontWeight: "bold" }}>
-							{data}
+							{statistic[status]}
 						</Typography>
-
-						<Typography variant="body2">{description}</Typography>
 					</Grid>
 				</CardContent>
 			</Card>

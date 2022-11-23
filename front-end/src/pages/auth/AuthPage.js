@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import React, { useContext } from "react";
 import { AuthContext } from "../../helpers/context/authContext";
 import styled from "@emotion/styled";
-import Loadding from "../../components/layout/Loadding";
+import Loading from "../../components/layout/Loading";
 import ForgetPasswordForm from "../../components/auth/ForgetPasswordForm";
 function AuthPage({ authRoute }) {
 	const {
@@ -12,19 +12,17 @@ function AuthPage({ authRoute }) {
 	} = useContext(AuthContext);
 	let body;
 	if (authLoading) {
-		body = <Loadding />;
+		body = <Loading />;
 	} else if (isAuthenticated) {
 		return <Navigate to="/" replace />;
-	}
-	else {
-		if( authRoute === "login"){
-			body = <LoginForm/>
-		}else if(authRoute === "forget-password"){
-			body = <ForgetPasswordForm/>
-		}else{
+	} else {
+		if (authRoute === "login") {
+			body = <LoginForm />;
+		} else if (authRoute === "forget-password") {
+			body = <ForgetPasswordForm />;
+		} else {
 			body = <RegisterForm />;
 		}
-		
 	}
 	return <Wrapper className="container-fluid">{body}</Wrapper>;
 }

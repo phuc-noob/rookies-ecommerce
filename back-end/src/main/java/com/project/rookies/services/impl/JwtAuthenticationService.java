@@ -52,7 +52,6 @@ public class JwtAuthenticationService implements IJwtAuthenticationService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-
         String jwt = JwtUtil.generateJwtToken(authentication);
         List<String> roles = userPrinciple
                 .getAuthorities()

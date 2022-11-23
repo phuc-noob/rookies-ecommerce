@@ -1,4 +1,4 @@
-import { Divider, Grid, Paper, Typography } from "@mui/material";
+import { Divider, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Container } from "react-bootstrap";
 import CardStatistic from "../../components/order/CardStatistic";
 import GridListOrder from "../../components/order/GridListOrder";
@@ -16,15 +16,16 @@ function AdminOrderPage() {
 					<Divider sx={{ my: 2, borderColor: "grey.500" }} />
 					<Grid container spacing={4} justifyContent="flex-end">
 						<Grid item lg={2}>
-							<CardStatistic title={"Total order"} data={"12"} />
+							<CardStatistic status={"ORDERED"} />
 						</Grid>
 						<Grid item lg={2}>
-							<CardStatistic title={"Total order"} data={"12"} />
+							<CardStatistic status={"ACCEPTED"} />
 						</Grid>
 						<Grid item lg={2}>
-							<CardStatistic title={"Total order"} data={"12"} />
+							<CardStatistic status={"REJECTED"} />
 						</Grid>
 					</Grid>
+					<Divider sx={{ my: 2 }} />
 
 					<Grid container sx={{ pr: 5, mt: 3 }}>
 						<GridListOrder />
