@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from "react";
 import { OrderContext } from "../../helpers/context/orderContext"
 import OrderItemHitory from "../../components/order/OrderItemHistory";
 import { CustomersService } from "../../helpers/service/customerService";
-import { AuthContext } from "../../helpers/context/authContext";
+import { AuthContext } from "../../helpers/context/AuthContext";
 import { Chip, Collapse, IconButton, Typography } from "@mui/material";
 
 function OrderHistoryPAge() {

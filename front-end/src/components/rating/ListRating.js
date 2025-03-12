@@ -1,7 +1,7 @@
 import { Container, Grid, Button } from "@mui/material";
 import FoodCard from "../food/FoodCard";
 import RatingItem from "./RatingItem";
-import { ProductService } from "../../helpers/service/productService";
+import { ProductService } from "../../helpers/service/ProductService";
 import { useContext, useEffect, useState } from "react";
 import { ProductContext
  } from "../../helpers/context/productContext";

@@ -6,7 +6,7 @@ import {
 	Button,
 } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
-import { AuthContext } from "../../helpers/context/authContext";
+import { AuthContext } from "../../helpers/context/AuthContext";
 import { ProductContext } from "../../helpers/context/productContext";
 import { useNavigate } from "react-router-dom";
 import { OrderContext } from "../../helpers/context/orderContext";

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { CardGiftcard } from "@mui/icons-material";
-import { AuthContext } from "../../../helpers/context/authContext";
+import { AuthContext } from "../../../helpers/context/AuthContext";
 import {
 	AppBar,
 	Button,

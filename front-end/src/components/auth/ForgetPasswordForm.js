@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../helpers/context/authContext";
+import { AuthContext } from "../../helpers/context/AuthContext";
 import AlertMsg from "../layout/AlertMessage";
 import {
 	Grid,

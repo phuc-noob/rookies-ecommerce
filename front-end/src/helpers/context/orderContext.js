@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { CartService } from "../service/cartService";
 import { OrderService } from "../service/orderService";
-import { AuthContext } from "./authContext";
+import { AuthContext } from "./AuthContext";
 const OrderContext = createContext()
 
 function OrderProvider({ children }) {

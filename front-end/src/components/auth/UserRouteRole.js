@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import NotAccessPage from './NotAccessPage';
-import { AuthContext } from '../../helpers/context/authContext';
+import { AuthContext } from '../../helpers/context/AuthContext';
 import Loading from '../layout/Loading';
 
 

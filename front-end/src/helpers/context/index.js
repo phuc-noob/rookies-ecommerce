@@ -1,4 +1,4 @@
-import AuthContextProvider from "./authContext";
+import AuthContextProvider from "./AuthContext";
 import { OrderProvider } from "./orderContext";
 import OrdersContextProvider from "./OrdersContext";
 import { ProductProvider } from "./productContext";

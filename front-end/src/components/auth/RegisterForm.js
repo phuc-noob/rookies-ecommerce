@@ -11,7 +11,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import AlertMsg from "../layout/AlertMessage";
-import { AuthContext } from "../../helpers/context/authContext";
+import { AuthContext } from "../../helpers/context/AuthContext";
 
 export default function RegisterForm() {
 	const { loginUser, registerUser, alertAuth, setAlertFail } = useContext(AuthContext);

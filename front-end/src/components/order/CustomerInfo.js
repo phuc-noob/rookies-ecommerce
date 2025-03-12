@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import { Button } from "@mui/material";
 import { useContext } from "react";
-import { AuthContext } from "../../helpers/context/authContext";
+import { AuthContext } from "../../helpers/context/AuthContext";
 
 export default function CustomerInfo() {
     const {authState: { user },

@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import { CustomersService } from "../../../helpers/service/customerService";
 import moment from 'moment';
 import { useContext } from "react";
-import { AuthContext } from "../../../helpers/context/authContext";
+import { AuthContext } from "../../../helpers/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "@mui/material";
 

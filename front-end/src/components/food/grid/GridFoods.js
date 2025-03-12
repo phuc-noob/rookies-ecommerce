@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import ButtonGroup from '@mui/material/ButtonGroup';
-import { ProductService } from "../../../helpers/service/productService";
+import { ProductService } from "../../../helpers/service/ProductService";
 import { ProductContext } from "../../../helpers/context/productContext";
 import { Pagination,Chip } from "@mui/material";
 

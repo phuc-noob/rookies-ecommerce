@@ -7,7 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { ProductService } from "../../helpers/service/productService";
+import { ProductService } from "../../helpers/service/ProductService";
 import { OrderContext } from "../../helpers/context/orderContext";
 import Button from '@mui/material/Button';
 import { ProductContext } from "../../helpers/context/productContext";

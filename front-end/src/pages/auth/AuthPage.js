@@ -2,7 +2,7 @@ import LoginForm from "../../components/auth/LoginForm";
 import RegisterForm from "../../components/auth/RegisterForm";
 import { Navigate } from "react-router-dom";
 import React, { useContext } from "react";
-import { AuthContext } from "../../helpers/context/authContext";
+import { AuthContext } from "../../helpers/context/AuthContext";
 import styled from "@emotion/styled";
 import Loading from "../../components/layout/Loading";
 import ForgetPasswordForm from "../../components/auth/ForgetPasswordForm";

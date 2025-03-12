@@ -11,7 +11,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { ProductService } from "../../helpers/service/productService";
+import { ProductService } from "../../helpers/service/ProductService";
 import { OrderContext } from "../../helpers/context/orderContext";
 
 export default function OrderItem(pros) {

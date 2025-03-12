@@ -11,7 +11,7 @@ import {
 import { AddShoppingCart } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import HoverRating from "./Rating"
-import { AuthContext } from "../../helpers/context/authContext";
+import { AuthContext } from "../../helpers/context/AuthContext";
 import { useContext } from "react";
 import { ProductContext } from "../../helpers/context/productContext";
 import { useNavigate } from "react-router-dom";

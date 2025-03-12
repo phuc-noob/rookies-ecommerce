@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from "react";
-import { ProductService } from "../../helpers/service/productService";
+import { ProductService } from "../../helpers/service/ProductService";
 import { CategoryService } from "../service/categoryService";
 
 const ProductContext = createContext();

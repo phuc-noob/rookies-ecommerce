@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../helpers/context/authContext";
+import { AuthContext } from "../../../helpers/context/AuthContext";
 import {
 	Button,
 	Box,
