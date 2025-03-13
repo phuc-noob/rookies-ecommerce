@@ -116,12 +116,12 @@ function FoodCard(pros) {
 								</Typography> */}
 							</Grid>
 							<Grid item>
-  <span style={{ textDecoration: 'line-through', marginRight: '8px' }}>
-    {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pros.price)}
-  </span>
-  {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pros.price * 70 / 100)}
-</Grid>
-<HoverRating rate={pros.rating} />
+								<span style={{ textDecoration: 'line-through', marginRight: '8px' }}>
+									{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pros.price)}
+								</span>
+								{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pros.price * 100 / 100)}
+							</Grid>
+							<HoverRating rate={pros.rating} />
 
 
 						</Grid>

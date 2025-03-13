@@ -26,7 +26,7 @@ function TopItems({ dataTopFood }) {
 								"SanomatGrabApp,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
 						}}
 					>
-						Top Food in GoodFood
+						SAN PHAM NOI BAT 
 					</h1>
 				</Grid>
 				<Grid container spacing={2} columnSpacing={4}>
