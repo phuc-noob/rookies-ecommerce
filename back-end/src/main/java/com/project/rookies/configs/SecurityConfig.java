@@ -51,8 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // must have role Admin
         http.authorizeRequests()
                 //.antMatchers(GET,"/api/customers").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
-                .antMatchers(POST, "/api/products", "/api/categories", "/api/voucher").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
-                .antMatchers(PUT, "/api/products").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString())
+                .antMatchers(POST, "/api/products", "/api/categories", "/api/voucher").permitAll()
+                .antMatchers(PUT, "/api/products").permitAll()
                 .antMatchers(DELETE, "/api/categories/**", "/api/products/**").hasAnyAuthority(ERoleType.ROLE_ADMIN.toString());
 
         // permitAll api
