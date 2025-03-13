@@ -26,10 +26,10 @@ function FoodCard(pros) {
 		ProductFilter,
 		loadProductFilter,
 		ListProduct,
-		loadListProductByCate, 
-		ProductDetail, 
-		loadProductDetail ,
-		setProductId} = useContext(ProductContext)
+		loadListProductByCate,
+		ProductDetail,
+		loadProductDetail,
+		setProductId } = useContext(ProductContext)
 	const { CartQuantity, loadQuantity, loadListCart } = useContext(OrderContext)
 
 	const option = pros.edit ? (
@@ -69,12 +69,12 @@ function FoodCard(pros) {
 	}
 
 	const goProductDetailClick = async () => {
-		const arr =[];
-		pros.categories.map(e=>{
+		const arr = [];
+		pros.categories.map(e => {
 			arr.push(e.cateId)
 		})
 		console.log(arr)
-		const filter ={...ProductFilter,category:arr}
+		const filter = { ...ProductFilter, category: arr }
 		loadProductFilter(filter)
 		localStorage.setItem("productId", pros.productId)
 		console.log(ListProduct)
@@ -93,8 +93,8 @@ function FoodCard(pros) {
 				<CardActionArea onClick={goProductDetailClick}>
 					<CardMedia
 						component="img"
-						height="140"
-						image={pros.images.length!==0?pros.images[0].imageURL:""}
+						height="300"
+						image={pros.images.length !== 0 ? pros.images[0].imageURL : ""}
 						alt="image food"
 					// sx={{ p: 3 }}
 					/>
@@ -111,21 +111,28 @@ function FoodCard(pros) {
 								>
 									{pros.productName}
 								</Typography>
-								<Typography variant="body2" color="text.secondary" width={200}>
+								{/* <Typography variant="body2" color="text.secondary" width={200}>
 									{pros.categories.map(category => category.cateName).join('- ')}
-								</Typography>
+								</Typography> */}
 							</Grid>
-							<Grid item>{pros.price} VNĐ</Grid>
-							<HoverRating rate={pros.rating} />
+							<Grid item>
+  <span style={{ textDecoration: 'line-through', marginRight: '8px' }}>
+    {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pros.price)}
+  </span>
+  {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pros.price * 70 / 100)}
+</Grid>
+<HoverRating rate={pros.rating} />
+
+
 						</Grid>
 					</CardContent>
 				</CardActionArea>
 				<CardActions>
 					<Grid onClick={addCartClick} container justifyContent={"flex-end"}>
 						<Button variant="outlined" sx={{
-								color:"#16802C",
-								borderColor:"#16802C"
-							}} fullWidth>
+							color: "#16802C",
+							borderColor: "#16802C"
+						}} fullWidth>
 							<AddShoppingCart fontSize="small" />
 						</Button>
 					</Grid>

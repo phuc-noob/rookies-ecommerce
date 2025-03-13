@@ -6,7 +6,7 @@ function Banner() {
 				style={{
 					height: "500px",
 				}}
-				src="/image/bgHome.png"
+				src="/image/bgsportzone.png"
 				alt="First slide"
 			/>
 		</div>

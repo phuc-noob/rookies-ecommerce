@@ -44,7 +44,7 @@ function NavBar() {
 						<FastfoodRounded />
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{}}>
-						<strong>GoodFood</strong>
+						<strong>SportZone Stores</strong>
 					</Typography>
 					<Box sx={{ flexGrow: 1 }} />
 					<Box >
