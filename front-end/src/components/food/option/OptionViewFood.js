@@ -23,7 +23,7 @@ function OptionViewFoods() {
 				sx={{ minHeight: "150px",maxWidth:"250px", border: 1 }}
 			>
 				<Typography variant="h5" component="h5">
-					My foods
+					Tim Kiem
 				</Typography>
 
 				<Divider />

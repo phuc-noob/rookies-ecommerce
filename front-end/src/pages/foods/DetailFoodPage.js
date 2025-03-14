@@ -23,7 +23,7 @@ function DetailFood() {
 								"SanomatGrabApp,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol",
 						}}
 					>
-						Món Ăn Tương Tự
+						Sản Phẩm Tương Tự
 					</h3>
 					<Divider/>
 				</Grid>

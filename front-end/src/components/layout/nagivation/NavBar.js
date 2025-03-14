@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CardGiftcard } from "@mui/icons-material";
 import { AuthContext } from "../../../helpers/context/AuthContext";
 import {
@@ -9,6 +9,8 @@ import {
 	Toolbar,
 	Typography,
 	Badge,
+	Tabs,
+	Tab,
 	Container,
 } from "@mui/material";
 import { FastfoodRounded } from "@mui/icons-material";
@@ -17,37 +19,43 @@ import { useNavigate } from "react-router-dom";
 import { OrderContext } from "../../../helpers/context/orderContext";
 
 function NavBar() {
-	const {CartQuantity} = useContext(OrderContext)
+	const { CartQuantity } = useContext(OrderContext)
 	const navigation = useNavigate()
-	const foodIconClick =()=>{
+	const foodIconClick = () => {
 		navigation("/")
 	}
 
-	const cartIconClick =() =>{
+	const [value, setValue] = React.useState(0);
+
+	const handleChange = (event, newValue) => {
+		setValue(newValue);
+	};
+
+	const cartIconClick = () => {
 		navigation("/carts/my")
 		window.location.reload(false);
 	}
 
 	return (
-		<AppBar  color={"transparent"} position="fixed" sx={{ zIndex: "10" ,background:"#FFFFFF"}}>
+		<AppBar color={"transparent"} position="fixed" sx={{ zIndex: "50", background: "#FFFFFF" }}>
 			<Container >
 				<Toolbar
 					sx={{ paddingLeft: "0 !important", paddingRight: "0 !important" }}
 				>
-					<IconButton
-						size="large"
-						edge="start"
-						color="inherit"
-						aria-label="menu"
-						onClick={foodIconClick}
-					>
-						<FastfoodRounded />
-					</IconButton>
-					<Typography variant="h6" component="div" sx={{}}>
+					<Typography  variant="h6" component="div" sx={{ width: '300px' }}>
 						<strong>SportZone Stores</strong>
 					</Typography>
+					<Box  sx={{ width: '100%', bgcolor: 'background.paper' }}>
+						<Tabs value={value} onChange={handleChange} centered>
+							<Tab sx={{ fontWeight: 'bold' }} label="Ao Bong Da" />
+							<Tab sx={{ fontWeight: 'bold' }} label="Do Tap Gym" />
+							<Tab sx={{ fontWeight: 'bold' }} label="Giay Bong Da" />
+							<Tab sx={{ fontWeight: 'bold' }} label="Ao Bong Chuyen" />
+							<Tab sx={{ fontWeight: 'bold' }} label="Ao Cau Long" />
+						</Tabs>
+					</Box>
 					<Box sx={{ flexGrow: 1 }} />
-					<Box >
+					<Box sx={{ width: '330px' }}>
 						<IconButton
 							size="large"
 							aria-label="show new order"
